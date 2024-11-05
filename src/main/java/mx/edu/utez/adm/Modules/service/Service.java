@@ -1,4 +1,4 @@
-package mx.edu.utez.adm.service;
+package mx.edu.utez.adm.Modules.service;
 
 public class Service {
     private Long id;

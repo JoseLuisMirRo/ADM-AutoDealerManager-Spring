@@ -13,6 +13,6 @@ public class Brand {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_At", nullable = false)
     private String createdAt;
 }

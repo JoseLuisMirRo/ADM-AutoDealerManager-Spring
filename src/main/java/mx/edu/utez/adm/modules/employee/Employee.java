@@ -26,6 +26,9 @@ public class Employee {
     @Column(name = "lastname", nullable = false)
     private String lastname;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     //Relacion de muchos a uno con rol
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
@@ -39,35 +42,39 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String username, String name, String surname, String lastname) {
+    public Employee(String username, String name, String surname, String lastname, String password) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
+        this.password = password;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
+        this.password = password;
     }
 
-    public Employee(String username, String name, String surname, String lastname, Rol rol) {
+    public Employee(String username, String name, String surname, String lastname, String password, Rol rol) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
+        this.password = password;
         this.rol = rol;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname, Rol rol) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password, Rol rol) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
+        this.password = password;
         this.rol = rol;
     }
 
@@ -125,5 +132,13 @@ public class Employee {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

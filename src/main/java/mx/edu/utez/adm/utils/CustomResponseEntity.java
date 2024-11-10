@@ -1,4 +1,4 @@
-package mx.edu.utez.adm.modules.utils;
+package mx.edu.utez.adm.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

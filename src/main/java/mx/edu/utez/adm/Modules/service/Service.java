@@ -1,4 +1,4 @@
-package mx.edu.utez.adm.service;
+package mx.edu.utez.adm.Modules.service;
 
 import jakarta.persistence.*;
 import mx.edu.utez.adm.modules.car.Car;

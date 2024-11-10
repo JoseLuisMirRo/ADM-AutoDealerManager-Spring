@@ -1,4 +1,4 @@
-package mx.edu.utez.adm.Modules.Employee;
+package mx.edu.utez.adm.modules.employee;
 
 import org.springframework.web.bind.annotation.RestController;
 

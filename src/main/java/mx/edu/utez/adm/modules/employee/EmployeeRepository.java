@@ -1,6 +1,5 @@
-package mx.edu.utez.adm.Modules.Employee;
+package mx.edu.utez.adm.modules.employee;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

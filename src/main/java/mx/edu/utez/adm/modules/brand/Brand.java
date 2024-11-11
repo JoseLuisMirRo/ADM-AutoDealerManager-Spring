@@ -11,7 +11,7 @@ public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -28,7 +28,7 @@ public class Brand {
         this.name = name;
     }
 
-    public Brand(int id, String name) {
+    public Brand(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -38,13 +38,13 @@ public class Brand {
         this.name = name;
     }
 
-    public Brand(int id, String name, List<Car> cars) {
+    public Brand(long id, String name, List<Car> cars) {
         this.id = id;
         this.name = name;
         this.cars = cars;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -1,6 +1,7 @@
 package mx.edu.utez.adm.modules.employee;
 
 import mx.edu.utez.adm.modules.employee.DTO.EmployeeDTO;
+import mx.edu.utez.adm.modules.role.RoleRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private CustomResponseEntity customResponseEntity;
@@ -64,6 +68,9 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public ResponseEntity<?> findAllByIdRol(int idRol){
         List<EmployeeDTO> list = new ArrayList<>();
+        if(!roleRepository.existsById(idRol)){
+            return customResponseEntity.get404Response();
+        }
         String message = "";
         if(employeeRepository.findAllByIdRol(idRol).isEmpty()) {
             message = "Aun no hay registros";

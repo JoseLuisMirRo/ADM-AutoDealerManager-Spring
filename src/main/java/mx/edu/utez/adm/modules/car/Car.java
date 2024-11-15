@@ -1,5 +1,6 @@
 package mx.edu.utez.adm.modules.car;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.customer.Customer;

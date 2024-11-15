@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class CarService {
@@ -28,7 +31,7 @@ public class CarService {
     public ResponseEntity<?> findAll(){
         List<Car> list = new ArrayList<>();
         String message = "";
-        if(brandRepository.findAll().isEmpty()) {
+        if(carRepository.findAll().isEmpty()) {
             message = "Aun no hay registros";
         } else {
             message = "Operacion exitosa";
@@ -54,6 +57,10 @@ public class CarService {
         long brandId = car.getBrand().getId();
         Brand brand = brandRepository.findById(brandId);
 
+        Date currentDay = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
+
+        car.setRegisterDate(sdf.format(currentDay));
         if(brand == null){
             brand = new Brand();
             brand.setName(car.getBrand().getName());

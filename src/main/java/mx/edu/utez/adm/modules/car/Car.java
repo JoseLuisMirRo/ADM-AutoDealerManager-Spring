@@ -22,7 +22,7 @@ public class Car {
     private String color;
 
     @Column(name="register_date", nullable = false)
-    private Date registerDate;
+    private String registerDate;
 
     @Column(name="price", nullable = false)
     private double price;
@@ -50,14 +50,14 @@ public class Car {
     public Car() {
     }
 
-    public Car(String model, String color, Date registerDate, double price) {
+    public Car(String model, String color, String registerDate, double price) {
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
         this.price = price;
     }
 
-    public Car(long id, String model, String color, Date registerDate, double price) {
+    public Car(long id, String model, String color, String registerDate, double price) {
         this.id = id;
         this.model = model;
         this.color = color;
@@ -65,7 +65,7 @@ public class Car {
         this.price = price;
     }
 
-    public Car(String model, String color, Date registerDate, double price, Brand brand, Customer customer, List<Service> services) {
+    public Car(String model, String color, String registerDate, double price, Brand brand, Customer customer, List<Service> services) {
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
@@ -75,7 +75,7 @@ public class Car {
         this.services = services;
     }
 
-    public Car(long id, String model, String color, Date registerDate, double price, Brand brand, Customer customer, List<Service> services) {
+    public Car(long id, String model, String color, String registerDate, double price, Brand brand, Customer customer, List<Service> services) {
         this.id = id;
         this.model = model;
         this.color = color;
@@ -110,11 +110,11 @@ public class Car {
         this.color = color;
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 

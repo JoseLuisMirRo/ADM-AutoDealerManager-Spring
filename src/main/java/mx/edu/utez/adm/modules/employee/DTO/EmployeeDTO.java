@@ -1,16 +1,16 @@
 package mx.edu.utez.adm.modules.employee.DTO;
 
-import mx.edu.utez.adm.modules.rol.Rol;
+import mx.edu.utez.adm.modules.role.Role;
 
 public class EmployeeDTO {
     private long id;
     private String username, name, surname, lastname;
-    private Rol rol;
+    private Role rol;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(long id, String username, String name, String surname, String lastname, Rol rol) {
+    public EmployeeDTO(long id, String username, String name, String surname, String lastname, Role rol) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -59,11 +59,11 @@ public class EmployeeDTO {
         this.lastname = lastname;
     }
 
-    public Rol getRol() {
+    public Role getRol() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRol(Role rol) {
         this.rol = rol;
     }
 

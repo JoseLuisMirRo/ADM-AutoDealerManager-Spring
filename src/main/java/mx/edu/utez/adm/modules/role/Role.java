@@ -1,4 +1,4 @@
-package mx.edu.utez.adm.modules.rol;
+package mx.edu.utez.adm.modules.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "rol")
-public class Rol {
+public class Role {
     //---------Atributos Propios de la Clase---------//
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,24 +23,24 @@ public class Rol {
     private List<Employee> employees;
 
     //---------Constructores---------//
-    public Rol() {
+    public Role() {
     }
 
-    public Rol(String name) {
+    public Role(String name) {
         this.name = name;
     }
 
-    public Rol(int id, String name) {
+    public Role(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Rol(String name, List<Employee> employees) {
+    public Role(String name, List<Employee> employees) {
         this.name = name;
         this.employees = employees;
     }
 
-    public Rol(int id, String name, List<Employee> employees) {
+    public Role(int id, String name, List<Employee> employees) {
         this.id = id;
         this.name = name;
         this.employees = employees;

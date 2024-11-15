@@ -3,7 +3,7 @@ package mx.edu.utez.adm.modules.employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import mx.edu.utez.adm.modules.customer.Customer;
-import mx.edu.utez.adm.modules.rol.Rol;
+import mx.edu.utez.adm.modules.role.Role;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "name", nullable = false)
@@ -32,7 +32,7 @@ public class Employee {
     //Relacion de muchos a uno con rol
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
-    private Rol rol;
+    private Role rol;
 
     //Relacion de uno a muchos con customer
     @OneToMany(mappedBy = "employee")
@@ -59,7 +59,7 @@ public class Employee {
         this.password = password;
     }
 
-    public Employee(String username, String name, String surname, String lastname, String password, Rol rol) {
+    public Employee(String username, String name, String surname, String lastname, String password, Role rol) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -68,7 +68,7 @@ public class Employee {
         this.rol = rol;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname, String password, Rol rol) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password, Role rol) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -118,11 +118,11 @@ public class Employee {
         this.lastname = lastname;
     }
 
-    public Rol getRol() {
+    public Role getRol() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRol(Role rol) {
         this.rol = rol;
     }
 

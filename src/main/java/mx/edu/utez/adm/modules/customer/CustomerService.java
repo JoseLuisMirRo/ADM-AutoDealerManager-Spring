@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,22 +22,25 @@ public class CustomerService {
     // Obtener todos los clientes
     @Transactional(readOnly = true)
     public ResponseEntity<?> findAll() {
-        List<Customer> customers = customerRepository.findAll();
-        if (customers.isEmpty()) {
-            return customResponseEntity.getOkResponse("Aún no hay registros", "OK");
+        List<Customer> list = new ArrayList<>();
+        String message = "";
+        if(customerRepository.findAll().isEmpty()) {
+            message = "Aun no hay registros";
         } else {
-            return customResponseEntity.getOkResponse("Operación exitosa", "OK");
+            message = "Operación exitosa";
+            list = customerRepository.findAll();
         }
+        return customResponseEntity.getOkResponse(message, list);
     }
 
     // Obtener cliente por ID
     @Transactional(readOnly = true)
     public ResponseEntity<?> findById(long id) {
-        Customer customer = customerRepository.findById(id);
-        if (customer == null) {
+        Customer found = customerRepository.findById(id);
+        if(found == null){
             return customResponseEntity.get404Response();
-        } else {
-            return customResponseEntity.getOkResponse("Operación exitosa", "OK");
+        }else{
+            return customResponseEntity.getOkResponse("Operación exitosa", found);
         }
     }
 
@@ -45,9 +49,8 @@ public class CustomerService {
     public ResponseEntity<?> save(Customer customer) {
         try {
             customerRepository.save(customer);
-            return customResponseEntity.getOkResponse("Registro exitoso", "OK");
+            return customResponseEntity.getOkResponse("Registro exitoso", "null");
         } catch (Exception e) {
-            e.printStackTrace();
             return customResponseEntity.get400Response();
         }
     }
@@ -60,18 +63,9 @@ public class CustomerService {
             return customResponseEntity.get404Response();
         } else {
             try {
-                existingCustomer.setName(customer.getName());
-                existingCustomer.setSurname(customer.getSurname());
-                existingCustomer.setLastname(customer.getLastname());
-                existingCustomer.setPhone(customer.getPhone());
-                existingCustomer.setEmail(customer.getEmail());
-                existingCustomer.setEmployee(customer.getEmployee());
-                existingCustomer.setCars(customer.getCars());
-
                 customerRepository.save(existingCustomer);
-                return customResponseEntity.getOkResponse("Actualización exitosa", "OK");
+                return customResponseEntity.getOkResponse("Actualización exitosa", null);
             } catch (Exception e) {
-                e.printStackTrace();
                 return customResponseEntity.get400Response();
             }
         }
@@ -79,15 +73,14 @@ public class CustomerService {
 
     // Eliminar un cliente por ID
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
-    public ResponseEntity<?> deleteById(long id) {
-        if (!customerRepository.existsById(id)) {
+    public ResponseEntity<?> deleteById(Customer customer) {
+        if (!customerRepository.existsById(customer.getId())) {
             return customResponseEntity.get404Response();
         } else {
             try {
-                customerRepository.deleteById(id);
-                return customResponseEntity.getOkResponse("Eliminación exitosa", "OK");
+                customerRepository.deleteById(customer.getId());
+                return customResponseEntity.getOkResponse("Eliminación exitosa", "null");
             } catch (Exception e) {
-                e.printStackTrace();
                 return customResponseEntity.get400Response();
             }
         }

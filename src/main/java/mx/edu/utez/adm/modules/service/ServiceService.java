@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SService {
+public class ServiceService {
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -37,7 +38,7 @@ public class SService {
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
     public ResponseEntity<?> save(mx.edu.utez.adm.modules.service.Service service){
         try {
-            mx.edu.utez.adm.modules.service.Service saved = serviceRepository.save(service);
+            serviceRepository.save(service);
             return customResponseEntity.get201Response("Operación exitosa");
         } catch (Exception e) {
             return customResponseEntity.get400Response();

@@ -1,5 +1,6 @@
 package mx.edu.utez.adm.modules.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import mx.edu.utez.adm.modules.car.Car;
 import mx.edu.utez.adm.modules.employee.Employee;
@@ -38,6 +39,7 @@ public class Customer {
 
     //Relacion de uno a muchos con car
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Car> cars;
 
     public Customer() {

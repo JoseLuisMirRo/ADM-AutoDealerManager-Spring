@@ -63,7 +63,7 @@ public class CustomerService {
             return customResponseEntity.get404Response();
         } else {
             try {
-                customerRepository.save(existingCustomer);
+                customerRepository.save(customer);
                 return customResponseEntity.getOkResponse("Actualización exitosa", null);
             } catch (Exception e) {
                 return customResponseEntity.get400Response();

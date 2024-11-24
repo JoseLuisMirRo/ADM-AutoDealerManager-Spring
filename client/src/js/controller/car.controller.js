@@ -1,6 +1,8 @@
 const URL = 'http://localhost:8080'
 
-let carList = {};
+let carList = [];
+let brandList = [];
+let car = {};
 
 const findAllCars = async()=> {
     await fetch(`${URL}/adm/car`, {
@@ -82,6 +84,7 @@ const createCarCard = car => {
     await loadCards();
 })()
 
+//Funcion para cargar datos en boton de ver mas 
 document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
     const button = event.relatedTarget;
     const carId = button.getAttribute('data-car-id');
@@ -102,4 +105,137 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
         document.getElementById("carServices").value = services;
     }
 });
+
+//Funcion para cargar clientes para registrar nuevo auto
+const findAllCustomers = async()=> {
+    await fetch(`${URL}/adm/customer`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        customerList = response.data;
+    }).catch(console.log);
+}
+
+//Funcion para cargar marcas para registrar nuevo auto 
+const findAllBrands = async()=> {
+    await fetch(`${URL}/adm/brand`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        brandList = response.data;
+    }).catch(console.log);
+}
+
+//Funcion para cargar servicios para registar nuevo auto 
+const findAllServices = async()=> {
+    await fetch([`${URL}/adm/service`], {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        serviceList = response.data;
+    }).catch(console.log);
+}
+
+//Funcion para cargar los clientes para los select
+const loadCustomers = async()=> {
+    await findAllCustomers();
+
+    let customerSelect = document.getElementById('addCustomer');
+    let content = '<option value="" disabled selected>Seleccione un cliente</option>';
+
+    if(customerList.length === 0){
+        content += '<opton>No hay clientes registrados</opton>'
+    }else{
+        customerList.forEach(item => {
+            content += `<option value=${item.id}>${item.name} ${item.lastname} ${item.surname}</option>`
+        });
+    }
+    customerSelect.innerHTML = content;
+
+}
+
+//Funcion para cargar las marcas para los select
+const loadBrands = async()=> {
+    await findAllBrands();
+
+    let brandSelect = document.getElementById('addBrand');
+    let content = '<option value="" disabled selected>Seleccione una marca</option>';
+
+    if(brandList.length === 0){
+        content += '<opton>No hay marcas registradas</opton>'
+    }else{
+        brandList.forEach(item => {
+            content += `<option value=${item.id}>${item.name}</option>`
+        });
+    }
+    brandSelect.innerHTML = content;
+
+}
+
+//Funcion para cargar los servicios para los select
+const loadServices = async()=> {
+    await findAllServices();
+
+    let serviceSelect = document.getElementById('addServices');
+    let content = '<option value="" disabled selected>Seleccione un servicio</option> <option value="">Ninguno</option></option>';
+
+    if(serviceList.length === 0){
+        content += '<opton>No hay servicios registrados</opton>'
+    }else{
+        serviceList.forEach(item => {
+            content += `<option value=${item.id}>${item.name} | $${item.price}</option>`
+        });
+    }
+    serviceSelect.innerHTML = content;
+}
+
+const loadAddData = async()=>{
+    await loadCustomers();
+    await loadBrands();
+    await loadServices();
+}
+
+const saveCar = async()=>{
+    let form = document.getElementById('saveCarForm')
+    const selectedServices = Array.from(document.querySelectorAll('#addServices option:checked'))
+                                .map(option => option.value);
+    console.log(selectedServices);
+
+    car = {
+        model: document.getElementById('addModel').value,
+        color: document.getElementById('addColor').value,
+        price: document.getElementById('addPrice').value,
+        brand:{
+            id: document.getElementById('addBrand').value
+        },
+        customer: {
+            id: document.getElementById('addCustomer').value
+        },
+        services: selectedServices.map(serviceId => ({id: parseInt(serviceId)}))
+    };
+
+    await fetch(`${URL}/adm/car`,{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(car)
+    }).then(response => response.json()).then(async response=>{
+        console.log(car);
+        console.log(response);
+        car={};
+        await loadCards();
+        form.reset();
+    }).catch(console.log);
+}
 

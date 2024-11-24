@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cached" />
     <title>AutoDealerManager-Catálogo</title>
 </head>
@@ -12,7 +12,7 @@
         <!--//////// BANNER (contenido: menú y cerrar sesión) /////////-->
         <section>
             <div class="d-flex align-items-center">
-                <img src="/src/img/logoADM.png" style="height: 45px; width: 70px;"> 
+                <img src="../../img/logoADM.png" style="height: 45px; width: 70px;"> 
                 <h1 class="me-auto mb-0"> ADM </h1>
                 <a href="/ADM-AutoDealerManager-Spring/client/catalog.html" class="btn"><strong>Catálogo</strong></a>
                 <a href="/ADM-AutoDealerManager-Spring/client/" class="btn"><strong>Marcas</strong></a>
@@ -20,7 +20,7 @@
                 <a href="/ADM-AutoDealerManager-Spring/client/" class="btn" ><strong>Clientes</strong></a>
                 <a href="/ADM-AutoDealerManager-Spring/client/" class="btn"><strong>Empleados</strong></a>
 
-                <button class="btn btn-outline-light" onclick="logOut()"><img src="/src/img/logOutIcon.svg"></button>
+                <button class="btn btn-outline-light" onclick="logOut()"><img src="../../img/logOutIcon.svg"></button>
             </div>
             <hr>
             
@@ -44,8 +44,8 @@
                 <!-- Sección del boton Circular para agregar un nuevo automóvil -->
                 <div class="col-auto text-end" style="color: #3d728f" ><h6>Agregar automóvil</h6></div>
                 <div class="col-auto text-end">
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar">
-                        <img src="/src/img/addIcon.svg">
+                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadAddData()">
+                        <img src="../../img/addIcon.svg">
                     </button>
                 </div>
             </div>
@@ -75,17 +75,11 @@
             </div>
 
             <div class="modal-body">
-                <form action="" method="post" class="mb-0">
+                <form action="" method="post" class="mb-0" id="saveCarForm">
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="addBrand"><small>Marca del automóvil</small></label>
-                        <select name="addBrand" id="addBrand" class="form-select">
-                                <option value="" disabled selected>Seleccione una marca</option>
-                                <!-- Aquí va un forEach para iterar las marcas -->
-                                <option value="1">Toyota</option>
-                                <option value="2">Ford</option>
-                                <option value="3">Chevrolet</option>
-                        </select>
+                        <select name="addBrand" id="addBrand" class="form-select"></select>
                     </div>
                     <div class="col-12">
                         <label for="addModel"><small>Modelo del automóvil</small></label>
@@ -101,14 +95,18 @@
                         <input type="text" id="addColor" name="carColor" autocomplete="false" class="form-control">
                     </div>
                     <div class="col-12">
-                        <label for="registrationDate"><small>Fecha</small></label>
-                        <input type="date" id="registrationDate" name="registrationDate" autocomplete="false" class="form-control">
+                        <label for="addCustomer"><small>Cliente</small></label>
+                        <select name="addCustomer" id="addCustomer" class="form-select"></select>
+                    </div>
+                    <div class="col-12">
+                        <label for="addServices"><small>Servicios</small></label>
+                        <select id="addServices" name="addServices" class="form-select" multiple></select>
                     </div>
 
                     <!--Botones del modal -->
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="button" onclick="saveCar()" data-bs-dismiss="modal" class="btn btn-primary">Registrar</button>
                     </div>
                     
                 </div>
@@ -262,7 +260,7 @@
     </div>
 </div>
 
-    <script src="/src/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="/src/js/controller/car.controller.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/controller/car.controller.js"></script>
 </body>
 </html>

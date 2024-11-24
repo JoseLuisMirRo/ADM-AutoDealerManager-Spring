@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href='/src/css/bootstrap.min.css'>
+    <style>
+        /* Cambiar color de los labels a blanco */
+        label {
+            color: #b0c4de; /* Luz suave azulada */
+        }
+
+        /* Estilo del contenedor del formulario con efecto de iluminación LED azul */
+        .led-effect {
+            width: 100%;
+            max-width: 400px;
+            background-color: rgba(9, 8, 8, 0.753);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.7), 0 0 30px rgba(0, 123, 255, 0.5), 0 0 45px rgba(0, 123, 255, 0.3);
+            border: 1px solid rgba(0, 123, 255, 0.5); /* Borde tenue en azul */
+        }
+
+        /* Estilo de los inputs para que combinen con el tema */
+        .form-control {
+            background-color: #333333;
+            color: #b0c4de; /* Texto en azul suave */
+            border: 1px solid rgba(0, 123, 255, 0.5); /* Borde azul tenue */
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+            border-color: rgba(0, 123, 255, 0.7);
+        }
+
+        /* Estilo del botón de inicio de sesión */
+        .btn-primary {
+            background-color: rgba(0, 123, 255, 0.8);
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(0, 123, 255, 1);
+        }
+    </style>
+</head>
+<body style="background: url('./src/img/sports-car-5000-x-3000-background-cqypmrf4erl0d9w0.jpg') no-repeat center center fixed; background-size: cover; font-family: Arial, sans-serif; margin: 0; padding: 0;">
+
+    <!-- Contenedor centrado para el formulario -->
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4 led-effect">
+            <h3 class="text-center mb-4" style="color: #b0c4de;">Bienvenido</h3>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+                <p class="text-center mt-3"><a href="#" class="text-primary-emphasis">¿Olvidaste tu contraseña?</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

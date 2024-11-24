@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceController {
 
     @Autowired
-    private SService sService;
+    private ServiceService serviceService;
 
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        return sService.findAll();
+        return serviceService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
-        return sService.findById(id);
+        return serviceService.findById(id);
     }
 
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody Service service) {
-        return sService.save(service);
+        return serviceService.save(service);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Service service, @PathVariable long id) {
-        return sService.update(service, id);
+        return serviceService.update(service, id);
     }
 }

@@ -2,6 +2,7 @@ package mx.edu.utez.adm.modules.car;
 
 import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.brand.BrandRepository;
+import mx.edu.utez.adm.modules.customer.CustomerRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,9 @@ public class CarService {
 
     @Autowired
     private CustomResponseEntity customResponseEntity;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     //Traer todos los autos
     @Transactional(readOnly = true)
@@ -55,7 +59,14 @@ public class CarService {
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> save(Car car){
         long brandId = car.getBrand().getId();
-        Brand brand = brandRepository.findById(brandId);
+        String brandName = car.getBrand().getName();
+
+        Brand brand;
+        if(brandId==0){
+            brand = brandRepository.findByName(brandName);
+        }else{
+            brand = brandRepository.findById(brandId);
+        }
 
         Date currentDay = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
@@ -75,6 +86,7 @@ public class CarService {
                     null
             );
         }catch (Exception e){
+            e.printStackTrace();
             return customResponseEntity.get400Response();
         }
     }
@@ -82,7 +94,7 @@ public class CarService {
     //Actualizar carro
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> update(Car car){
-        Brand found = brandRepository.findById(car.getId());
+        Car found = carRepository.findById(car.getId());
         if(found == null){
             return customResponseEntity.get404Response();
         }else{
@@ -96,6 +108,8 @@ public class CarService {
             }
 
             car.setBrand(brand);
+
+            car.setRegisterDate(found.getRegisterDate());
 
             try{
                 carRepository.save(car);
@@ -112,12 +126,12 @@ public class CarService {
     //Eliminar carro
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> deleteById(Car car){
-        Brand found = brandRepository.findById(car.getId());
+        Car found = carRepository.findById(car.getId());
         if(found == null){
             return customResponseEntity.get404Response();
         }else{
             try{
-                brandRepository.deleteById(car.getId());
+                carRepository.deleteById(car.getId());
                 return customResponseEntity.getOkResponse(
                         "Eliminacion exitosa",
                         null

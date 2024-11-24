@@ -30,15 +30,14 @@ public class CustomerController {
     }
 
     // Actualizar un cliente existente
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable long id, @RequestBody Customer customer) {
-        customer.setId(id); // Asegura que el ID de la entidad coincide con el de la URL
+    @PutMapping("")
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {// Asegura que el ID de la entidad coincide con el de la URL
         return customerService.update(customer);
     }
 
-    // Eliminar un cliente por ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable long id) {
-        return customerService.deleteById(id);
+    // Eliminar un cliente
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer) {
+        return customerService.deleteById(customer);
     }
 }

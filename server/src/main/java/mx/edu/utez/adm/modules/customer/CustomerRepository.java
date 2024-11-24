@@ -24,11 +24,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // Guardar/Actualizar un cliente
     Customer save(Customer customer);
 
-    // Eliminar un cliente por ID
-    @Modifying
-    @Query(value = "DELETE FROM customer WHERE id = :customerId", nativeQuery = true)
-    void deleteById(@Param("customerId") long id);
-
     // Buscar clientes por su email
     @Query(value = "SELECT * FROM customer WHERE email = :email", nativeQuery = true)
     Customer findByEmail(@Param("email") String email);

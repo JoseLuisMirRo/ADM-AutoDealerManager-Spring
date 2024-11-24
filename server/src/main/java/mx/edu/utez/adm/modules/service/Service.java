@@ -1,5 +1,6 @@
 package mx.edu.utez.adm.modules.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import mx.edu.utez.adm.modules.car.Car;
 
@@ -27,6 +28,7 @@ public class Service {
     //Atributos de relacion
     //Relacion de muchos a muchos con car
     @ManyToMany(mappedBy = "services")
+    @JsonIgnore
     private List<Car> cars;
 
     public Service() {

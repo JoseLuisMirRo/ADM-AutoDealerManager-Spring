@@ -1,35 +1,29 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    //let spinner = document.getElementById('spinner'); //Animacion de carga
-    //spinner.classList.remove('visually-hidden');
-    await fetchAndRenderCards();
-    //spinner.classList.add('visually-hidden');
-});
+const URL = 'http://localhost:8080'
 
-const fetchAndRenderCards = async () => {
-    try {
-        //Configuracion
-        const response = await fetch('http://localhost:8080/adm/car', {
-            method:'GET',
-            headers: {
-                "Accept": "application/json"
-            }
-        });
+let carList = {};
 
-        //Transformacion
-        const cars = await response.json();
-        renderCards(cars.data); //Renderizar las cards con los datos obtenidos
-    }catch(e){
-        console.error('Error obteniendo autos:', e);
-    }
-};
+const findAllCars = async()=> {
+    await fetch(`${URL}/adm/car`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        carList = response.data;
+    }).catch(console.log);
+}
 
-const renderCards = cars => {
-    let cardContainer = document.getElementById('cardContainer'); //Contenedor de las cards
-    cardContainer.innerHTML = ''; //Limpiamos tarjetas anteriores
-    cars.forEach(car => {
-        cardContainer.innerHTML += createCarCard(car); //Agregamos cada tarjeta
+const loadCards = async()=> {
+    await findAllCars();
+    let cardContainer = document.getElementById('cardContainer');
+    let content = '';
+    carList.forEach(car => {
+        content += createCarCard(car); //Agregamos cada tarjeta
+        cardContainer.innerHTML = content;
     });
-};
+
+}
 
 const createCarCard = car => {
     return `
@@ -83,4 +77,8 @@ const createCarCard = car => {
                     </div>
                 `;
 };
+
+(async () =>{
+    await loadCards();
+})()
 

@@ -4,7 +4,7 @@ import mx.edu.utez.adm.modules.role.Role;
 
 public class EmployeeDTO {
     private long id;
-    private String username, name, surname, lastname;
+    private String username, name, lastname, surname;
     private Role rol;
 
     public EmployeeDTO() {

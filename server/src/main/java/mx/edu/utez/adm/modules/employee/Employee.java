@@ -20,11 +20,11 @@ public class Employee {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
-
     @Column(name = "lastname", nullable = false)
     private String lastname;
+
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
     @Column(name = "password", nullable = false)
     private String password;

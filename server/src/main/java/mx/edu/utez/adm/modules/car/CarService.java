@@ -2,6 +2,7 @@ package mx.edu.utez.adm.modules.car;
 
 import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.brand.BrandRepository;
+import mx.edu.utez.adm.modules.car.DTO.CarSaleDTO;
 import mx.edu.utez.adm.modules.customer.CustomerRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,6 @@ public class CarService {
     public ResponseEntity<?> save(Car car){
         long brandId = car.getBrand().getId();
         String brandName = car.getBrand().getName();
-
         Brand brand;
         if(brandId==0){
             brand = brandRepository.findByName(brandName);
@@ -72,6 +72,8 @@ public class CarService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
 
         car.setRegisterDate(sdf.format(currentDay));
+        car.setOnSale(true);
+        car.setTotalPrice(car.getBasePrice());
         if(brand == null){
             brand = new Brand();
             brand.setName(car.getBrand().getName());
@@ -88,6 +90,33 @@ public class CarService {
         }catch (Exception e){
             e.printStackTrace();
             return customResponseEntity.get400Response();
+        }
+    }
+
+    //Vender carro - Actualizar status, fecha de venta, dueño y precio total
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
+    public ResponseEntity<?> sell(CarSaleDTO carSaleDTO){
+        Car found = carRepository.findById(carSaleDTO.getId());
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            Date currentDay = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
+
+            found.setOnSale(false);
+            found.setSaleDate(sdf.format(currentDay));
+            found.setTotalPrice(carSaleDTO.getTotalPrice());
+            found.setCustomer(customerRepository.findById(carSaleDTO.getCustomer().getId()));
+            found.setServices(carSaleDTO.getServices());
+            try{
+                carRepository.save(found);
+                return customResponseEntity.getOkResponse(
+                        "Vehiculo registrado como vendido exitosamente",
+                        null
+                );
+            }catch (Exception e){
+                return customResponseEntity.get400Response();
+            }
         }
     }
 

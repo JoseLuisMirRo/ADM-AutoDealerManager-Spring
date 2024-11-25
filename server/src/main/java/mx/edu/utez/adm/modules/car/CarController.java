@@ -1,5 +1,6 @@
 package mx.edu.utez.adm.modules.car;
 
+import mx.edu.utez.adm.modules.car.DTO.CarSaleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class CarController {
         return carService.findById(idCar);
     }
 
+    //Vender auto
+    @PutMapping("/sell")
+    private ResponseEntity<?> sellCar(@RequestBody CarSaleDTO car){
+        return carService.sell(car);
+    }
     @PostMapping("")
     private ResponseEntity<?> save(@RequestBody Car car){
         return carService.save(car);

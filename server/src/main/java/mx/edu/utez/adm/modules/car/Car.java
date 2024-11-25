@@ -16,17 +16,26 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="model", nullable = false)
+    @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name="color", nullable = false)
+    @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name="register_date", nullable = false)
+    @Column(name = "register_date", nullable = false)
     private String registerDate;
 
-    @Column(name="price", nullable = false)
-    private double price;
+    @Column(name = "sale_date")
+    private String saleDate;
+
+    @Column(name = "base_price", nullable = false)
+    private double basePrice;
+
+    @Column(name = "total_price", nullable = false)
+    private double totalPrice;
+
+    @Column(name = "onSale", nullable = false)
+    private boolean onSale;
 
     //Atributos de relacion
     //Relacion de muchos a uno con brand
@@ -34,9 +43,9 @@ public class Car {
     @JoinColumn(name = "id_brand", nullable = false)
     private Brand brand;
 
-    //Relacion de uno a muchos con customer
+    //Relacion de uno a muchos con customer - Opcional por que no tiene customer cuando esta en venta
     @ManyToOne
-    @JoinColumn(name = "id_customer", nullable = false)
+    @JoinColumn(name = "id_customer")
     private Customer customer;
 
     //Relacion de muchos a muchos con service
@@ -51,37 +60,48 @@ public class Car {
     public Car() {
     }
 
-    public Car(String model, String color, String registerDate, double price) {
+    public Car(String model, String color, String registerDate, double basePrice, double totalPrice, boolean onSale) {
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
-        this.price = price;
+        this.basePrice = basePrice;
+        this.totalPrice = totalPrice;
+        this.onSale = onSale;
     }
 
-    public Car(long id, String model, String color, String registerDate, double price) {
+    public Car(long id, String model, String color, String registerDate, String saleDate, double basePrice, double totalPrice, boolean onSale) {
         this.id = id;
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
-        this.price = price;
+        this.saleDate = saleDate;
+        this.basePrice = basePrice;
+        this.totalPrice = totalPrice;
+        this.onSale = onSale;
     }
 
-    public Car(String model, String color, String registerDate, double price, Brand brand, Customer customer, List<Service> services) {
+    public Car(String model, String color, String registerDate, String saleDate, double basePrice, double totalPrice, boolean onSale, Brand brand, Customer customer, List<Service> services) {
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
-        this.price = price;
+        this.saleDate = saleDate;
+        this.basePrice = basePrice;
+        this.totalPrice = totalPrice;
+        this.onSale = onSale;
         this.brand = brand;
         this.customer = customer;
         this.services = services;
     }
 
-    public Car(long id, String model, String color, String registerDate, double price, Brand brand, Customer customer, List<Service> services) {
+    public Car(long id, String model, String color, String registerDate, String saleDate, double basePrice, double totalPrice, boolean onSale, Brand brand, Customer customer, List<Service> services) {
         this.id = id;
         this.model = model;
         this.color = color;
         this.registerDate = registerDate;
-        this.price = price;
+        this.saleDate = saleDate;
+        this.basePrice = basePrice;
+        this.totalPrice = totalPrice;
+        this.onSale = onSale;
         this.brand = brand;
         this.customer = customer;
         this.services = services;
@@ -119,12 +139,36 @@ public class Car {
         this.registerDate = registerDate;
     }
 
-    public double getPrice() {
-        return price;
+    public String getSaleDate() {
+        return saleDate;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSaleDate(String saleDate) {
+        this.saleDate = saleDate;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public boolean isOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
     }
 
     public Brand getBrand() {
@@ -151,3 +195,5 @@ public class Car {
         this.services = services;
     }
 }
+
+

@@ -44,7 +44,7 @@
                 <!-- Sección del boton Circular para agregar un nuevo automóvil -->
                 <div class="col-auto text-end" style="color: #3d728f" ><h6>Agregar automóvil</h6></div>
                 <div class="col-auto text-end">
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadAddData()">
+                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands()">
                         <img src="../../img/addIcon.svg">
                     </button>
                 </div>
@@ -94,14 +94,6 @@
                         <label for="addColor"><small>Color</small></label>
                         <input type="text" id="addColor" name="carColor" autocomplete="false" class="form-control">
                     </div>
-                    <div class="col-12">
-                        <label for="addCustomer"><small>Cliente</small></label>
-                        <select name="addCustomer" id="addCustomer" class="form-select"></select>
-                    </div>
-                    <div class="col-12">
-                        <label for="addServices"><small>Servicios</small></label>
-                        <select id="addServices" name="addServices" class="form-select" multiple></select>
-                    </div>
 
                     <!--Botones del modal -->
                     <div class="col-12 text-end">
@@ -119,7 +111,7 @@
     
 <!-- Modal Ver más información del automóvil  -->
 <div class="modal fade" id="seeMore"  tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-center">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
@@ -162,17 +154,17 @@
                             <input type="date" id="carDate" name="carDate" class="form-control" disabled>
                         </div>
                         
-                        <div class="modal-header">
+                        <div class="modal-header" id="saleHeader">
                             <h5 class="mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                                 </svg>
-                                Información del Cliente
+                                Información de la venta
                             </h5>
                         </div>
 
                         <!-- Campo: Nombre cliente -->
                         <div class="col-12">
-                            <label for="clientName"><small>Nombre completo</small></label>
+                            <label for="clientName"><small>Nombre del cliente</small></label>
                             <input type="text" id="clientName" name="clientName" class="form-control" disabled>
                         </div>
 
@@ -180,6 +172,18 @@
                         <div class="col-12">
                             <label for="carServices"><small>Servicio(s) adquiridos</small></label>
                             <input type="text" id="carServices" name="carServices" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Precio total-->
+                         <div class="col-6">
+                            <label for="totalPriceField"><small>Precio total</small></label>
+                            <input type="text" id="totalPriceField" name="totalPriceField" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Fecha de venta-->
+                        <div class="col-6">
+                            <label for="saleDate"><small>Fecha de venta</small></label>
+                            <input type="date" id="saleDate" name="saleDate" class="form-control" disabled>
                         </div>
                     </div>
                 </form>
@@ -191,7 +195,7 @@
 
 <!-- Modal Actualización de información del vehiculo  -->
 <div class="modal fade" id="updateCar" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-center">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <h4>Actualizar información del automóvil</h4>
@@ -231,6 +235,59 @@
                         <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="saleCarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Encabezado del modal Corregir icono de carrito-->
+            <div class="modal-header">
+                <h5>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
+                    Realizar Venta
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Cuerpo del modal -->
+            <div class="modal-body">
+                <form action="" method="post" class="mb-0" id="salceCarForm">
+                    <input type="hidden" id="saleCarId" name="saleCarId">
+                    <div class="row g-3">
+                        <!-- Campo: Precio base -->
+                        <div class="col-6">
+                            <label for="salePrice"><small>Precio base:</small></label>
+                            <input type="text" id="salePrice" name="salePrice" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Precio total -->
+                        <div class="col-6">
+                            <label for="totalPriceFieldAdd"><small>Precio total:</small></label>
+                            <input type="text" id="totalPriceFieldAdd" name="totalPriceField" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Cliente -->
+                        <div class="col-12">
+                            <label for="addCustomer"><small>Cliente</small></label>
+                            <select name="addCustomer" id="addCustomer" class="form-select"></select>
+                        </div>
+
+                        <!-- Campo: Servicios -->
+                        <div class="col-12">
+                            <label for="addServices"><small>Servicios</small></label>
+                            <select id="addServices" name="addServices" class="form-select" multiple></select>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick="sellCar()" class="btn btn-primary" data-bs-dismiss="modal">Vender</button>
+                        </div>  
+                    </div>
                 </form>
             </div>
         </div>

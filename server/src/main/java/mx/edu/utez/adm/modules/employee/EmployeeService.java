@@ -1,6 +1,7 @@
 package mx.edu.utez.adm.modules.employee;
 
 import mx.edu.utez.adm.modules.employee.DTO.EmployeeDTO;
+import mx.edu.utez.adm.modules.role.Role;
 import mx.edu.utez.adm.modules.role.RoleRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class EmployeeService {
             e.getName(),
             e.getSurname(),
             e.getLastname(),
-                e.getRol()
+                e.getRol(),
+                e.isStatus()
         );
     }
 
@@ -86,6 +88,9 @@ public class EmployeeService {
     //Guardar un empleado
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> save(Employee employee){
+        employee.setStatus(true);
+        employee.setPassword(employee.getUsername());
+        employee.setRol(new Role(1,"OPERATOR"));
         try{
             employeeRepository.save(employee);
             return customResponseEntity.getOkResponse(
@@ -93,6 +98,7 @@ public class EmployeeService {
                     null
             );
         }catch (Exception e){
+            e.printStackTrace();
             return customResponseEntity.get400Response();
         }
     }

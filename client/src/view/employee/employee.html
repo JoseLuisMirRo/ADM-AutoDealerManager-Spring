@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-6">
                         <label for="addLastname"><small>Apellido Paterno</small></label>
-                        <input type="text" id="addLasname" name="addLastname" class="form-control">
+                        <input type="text" id="addLastname" name="addLastname" class="form-control">
                     </div>
                     
                     <div class="col-6">
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="button" onclick="saveEmployee()" class="btn btn-primary" data-bs-dismiss="modal">Registrar</button>
                     </div>
                 </div>
                 </form>
@@ -114,7 +114,7 @@
             <div class="modal-body">
                 <h4>Actualizar información de cliente</h4>
                 <hr>
-                <form action="" method="post" class="mb-0">
+                <form action="" method="post" class="mb-0" id="saveEmployeeForm">
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="addUsername"><small>Nombre de usuario</small></label>
@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button type="button" onclick="saveEmployee()" class="btn btn-primary">Actualizar</button>
                     </div>
                 </div>
                 </form>

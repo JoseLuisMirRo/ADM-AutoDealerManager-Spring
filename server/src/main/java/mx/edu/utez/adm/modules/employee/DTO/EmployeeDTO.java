@@ -6,17 +6,19 @@ public class EmployeeDTO {
     private long id;
     private String username, name, lastname, surname;
     private Role rol;
+    private boolean status;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(long id, String username, String name, String surname, String lastname, Role rol) {
+    public EmployeeDTO(long id, String username, String name, String surname, String lastname, Role rol, boolean status) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.rol = rol;
+        this.status = status;
     }
 
     public long getId() {
@@ -66,5 +68,15 @@ public class EmployeeDTO {
     public void setRol(Role rol) {
         this.rol = rol;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+
 
 }

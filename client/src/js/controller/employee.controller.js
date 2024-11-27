@@ -51,3 +51,32 @@ const loadTable = async () => {
     await loadTable();
 })();
 
+//Funcion para guardar empleado 
+const saveEmployee = async () => {
+    let form = document.getElementById('saveEmployeeForm');
+
+    employee = {
+        username: document.getElementById('addUsername').value,
+        name: document.getElementById('addName').value,
+        lastname: document.getElementById('addLastname').value,
+        surname: document.getElementById('addSurname').value,
+    };
+
+    await fetch(`${URL}/adm/employee`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(employee)
+    }).then(response => response.json()).then(async response => {
+        console.log(employee);
+        console.log(response);
+        employee={};
+        await loadTable();
+        form.reset();
+    }).catch(console.log);
+};
+
+
+

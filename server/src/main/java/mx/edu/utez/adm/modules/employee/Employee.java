@@ -29,6 +29,9 @@ public class Employee {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //Relacion de muchos a uno con rol
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
@@ -42,40 +45,46 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String username, String name, String surname, String lastname, String password) {
+    public Employee(String username, String name, String surname, String lastname, String password, boolean status) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.password = password;
+        this.status = status;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname, String password) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password, boolean status) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.password = password;
+        this.status = status;
     }
 
-    public Employee(String username, String name, String surname, String lastname, String password, Role rol) {
+    public Employee(String username, String name, String surname, String lastname, String password, boolean status, Role rol, List<Customer> customers) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.password = password;
+        this.status = status;
         this.rol = rol;
+        this.customers = customers;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname, String password, Role rol) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password, boolean status, Role rol, List<Customer> customers) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.password = password;
+        this.status = status;
         this.rol = rol;
+        this.customers = customers;
     }
 
     public long getId() {
@@ -124,6 +133,14 @@ public class Employee {
 
     public void setRol(Role rol) {
         this.rol = rol;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public List<Customer> getCustomers() {

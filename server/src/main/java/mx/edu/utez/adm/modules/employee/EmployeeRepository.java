@@ -1,6 +1,7 @@
 package mx.edu.utez.adm.modules.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,8 @@ public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     Employee save(Employee employee);
 
     void deleteById(long id);
+
+    @Modifying
+    @Query(value = "UPDATE employee SET status = :status WHERE id = :id", nativeQuery = true)
+    void changeStatus(long id, boolean status);
 }

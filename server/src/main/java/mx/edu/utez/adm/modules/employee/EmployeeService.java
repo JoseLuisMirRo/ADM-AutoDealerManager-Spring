@@ -126,6 +126,27 @@ public class EmployeeService {
         }
     }
 
+    //Cambiar estado de un empleado
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
+    public ResponseEntity<?> changeStatus(Employee employee){
+        Employee found = employeeRepository.findById(employee.getId());
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            try{
+                found.setStatus(employee.isStatus());
+                employeeRepository.changeStatus(found.getId(), found.isStatus());
+                return customResponseEntity.getOkResponse(
+                        "Actualizacion de estado exitosa",
+                        null
+                );
+            }catch (Exception e){
+                e.printStackTrace();
+                return customResponseEntity.get400Response();
+            }
+        }
+    }
+
     //Eliminar un empleado
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> deleteById(Employee employee){

@@ -42,6 +42,12 @@ public class EmployeeController {
         return employeeService.update(employee);
     }
 
+    //Cambiar estado de empleado
+    @PutMapping("/status")
+    private ResponseEntity<?> changeStatus(@RequestBody Employee employee){
+        return employeeService.changeStatus(employee);
+    }
+
     //Eliminar empleado
     @DeleteMapping("")
     private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){

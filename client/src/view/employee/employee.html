@@ -70,14 +70,14 @@
     </main> 
 
 
-<!-- Modal Agregar marca  -->
+<!-- Modal Agregar Empleado  -->
 <div class="modal fade" id="addEmployee" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <h4>Registrar Empleado</h4>
                 <hr>
-                <form action="" method="post" class="mb-0">
+                <form action="" method="post" class="mb-0" id="saveEmployeeForm">
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="addUsername"><small>Nombre de usuario</small></label>
@@ -108,34 +108,35 @@
 </div>
 
 <!-- Modal Actualización de información del cliente  -->
-<div class="modal fade" id="updateEmployee" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updateEmployeeModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <h4>Actualizar información de cliente</h4>
                 <hr>
-                <form action="" method="post" class="mb-0" id="saveEmployeeForm">
+                <form action="" method="post" class="mb-0" id="updateEmployeeForm">
+                <input type="hidden" id="updateId" name="updateId">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="addUsername"><small>Nombre de usuario</small></label>
-                        <input type="text" id="addUsername" name="addUsername" autocomplete="false" class="form-control">
+                        <label for="updateUsername"><small>Nombre de usuario</small></label>
+                        <input type="text" id="updateUsername" name="updateUsername" autocomplete="false" class="form-control">
                     </div>
                     <div class="col-12">
-                        <label for="addName"><small>Nombre(s)</small></label>
-                        <input type="text" id="addName" name="addName" autocomplete="false" class="form-control">
+                        <label for="updateName"><small>Nombre(s)</small></label>
+                        <input type="text" id="updateName" name="updateName" autocomplete="false" class="form-control">
                     </div>
                     <div class="col-6">
-                        <label for="addLastname"><small>Apellido Paterno</small></label>
-                        <input type="text" id="addLasname" name="addLastname" class="form-control">
+                        <label for="updateLastname"><small>Apellido Paterno</small></label>
+                        <input type="text" id="updateLastname" name="updateLastname" class="form-control">
                     </div>
                     
                     <div class="col-6">
-                        <label for="addSurname"><small>Apellido Materno</small></label>
-                        <input type="text" id="addSurname" name="addSurname" class="form-control">
+                        <label for="updateSurname"><small>Apellido Materno</small></label>
+                        <input type="text" id="updateSurname" name="updateSurname" class="form-control">
                     </div>
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="saveEmployee()" class="btn btn-primary">Actualizar</button>
+                        <button type="button" onclick="updateEmployee()" class="btn btn-primary">Actualizar</button>
                     </div>
                 </div>
                 </form>

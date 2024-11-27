@@ -110,6 +110,7 @@ const updateEmployee = async () => {
     let form = document.getElementById('updateEmployeeForm');
 
     employee = {
+        id: employee.id,
         username: document.getElementById('updateUsername').value,
         name: document.getElementById('updateName').value,
         lastname: document.getElementById('updateLastname').value,

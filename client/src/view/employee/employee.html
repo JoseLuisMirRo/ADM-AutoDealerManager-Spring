@@ -151,22 +151,35 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h4>Deshabilitar empleado</h4>
+                <h4 id="changeStatusTitle">Cambiar estado del empleado</h4>
                 <hr>
                 <form action="" method="post" class="mb-0">
                     <input type="hidden" id="ch_id" name="id">
-                    <div class="col-12">
-                        ¿Está seguro de deshabilitar este empleado?
+                    <input type="hidden" id="ch_status" name="status">
+                    <div class="col-12" id="changeStatusMessage">
+                        ¿Está seguro de cambiar el estado de este empleado?
                     </div>
-                        <div class="col-12 mt-3 text-end">
-                            <button type="reset" class="btn btn-outline-secondary">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Deshabilitar</button>
-                        </div>
+                    <div class="col-12 mt-3 text-end">
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="changeStatusButton" onclick="changeEmployeeStatus()" data-bs-dismiss="modal" class="btn btn-warning">Cambiar estado</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function openChangeStatusModal(employeeId, currentStatus) {
+        document.getElementById('ch_id').value = employeeId;
+        document.getElementById('ch_status').value = currentStatus === 'habilitado' ? 'deshabilitado' : 'habilitado';
+        document.getElementById('changeStatusTitle').innerText = currentStatus === 'habilitado' ? 'Deshabilitar empleado' : 'Habilitar empleado';
+        document.getElementById('changeStatusMessage').innerText = currentStatus === 'habilitado' ? '¿Está seguro de deshabilitar este empleado?' : '¿Está seguro de habilitar este empleado?';
+        document.getElementById('changeStatusButton').innerText = currentStatus === 'habilitado' ? 'Deshabilitar' : 'Habilitar';
+        var changeStatusModal = new bootstrap.Modal(document.getElementById('changeEmployeeStatusModal'));
+        changeStatusModal.show();
+    }
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../../js/controller/employee.controller.js"></script>

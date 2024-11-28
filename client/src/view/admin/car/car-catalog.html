@@ -313,20 +313,21 @@
 
 
 <!--MODAL PARA CONFIRMAR EL CAMBIO DE ESTADO O SE PUEDE IMPLEMENTAR UNA ALERTA, A CONSIDERACION-->
-<div class="modal fade" id="changeCarStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteCarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h4>Deshabilitar automóvil</h4>
+                <h4>Eliminar automóvil</h4>
                 <hr>
-                <form action="" method="post" class="mb-0">
-                    <input type="hidden" id="ch_id" name="id">
+                <form action="" method="post" class="mb-0" id="deleteCarForm">
+                    <input type="hidden" id="delete_id" name="id">
                     <div class="col-12">
                         ¿Está seguro de deshabilitar este automóvil?
+                        ¡Esta acción no se puede deshacer!
                     </div>
                         <div class="col-12 mt-3 text-end">
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Deshabilitar</button>
+                            <button type="button" onclick="deleteCar()" data-bs-dismiss="modal" class="btn btn-warning">Eliminar</button>
                         </div>
                 </form>
             </div>

@@ -31,7 +31,7 @@ public class EmployeeService {
             e.getName(),
             e.getSurname(),
             e.getLastname(),
-                e.getRol(),
+                e.getRole(),
                 e.isStatus()
         );
     }
@@ -90,7 +90,7 @@ public class EmployeeService {
     public ResponseEntity<?> save(Employee employee){
         employee.setStatus(true);
         employee.setPassword(employee.getUsername());
-        employee.setRol(new Role(2,null));
+        employee.setRole(new Role(2,null));
         try{
             employeeRepository.save(employee);
             return customResponseEntity.getOkResponse(
@@ -111,7 +111,7 @@ public class EmployeeService {
             return customResponseEntity.get404Response();
         }else{
             try{
-                employee.setRol(found.getRol());
+                employee.setRole(found.getRole());
                 employee.setStatus(found.isStatus());
                 employee.setPassword(found.getPassword());
                 employeeRepository.save(employee);

@@ -103,7 +103,7 @@ public class CarService {
             Date currentDay = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
 
-            found.setOnSale(false);
+            found.setOnSale(false); //REVISAR VALICACIONES
             found.setSaleDate(sdf.format(currentDay));
             found.setTotalPrice(carSaleDTO.getTotalPrice());
             found.setCustomer(customerRepository.findById(carSaleDTO.getCustomer().getId()));
@@ -139,6 +139,7 @@ public class CarService {
             car.setBrand(brand);
 
             car.setRegisterDate(found.getRegisterDate());
+            car.setOnSale(found.isOnSale());
 
             try{
                 carRepository.save(car);

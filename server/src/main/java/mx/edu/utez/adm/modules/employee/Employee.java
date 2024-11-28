@@ -34,8 +34,8 @@ public class Employee {
 
     //Relacion de muchos a uno con rol
     @ManyToOne
-    @JoinColumn(name = "id_rol", nullable = false)
-    private Role rol;
+    @JoinColumn(name = "id_role", nullable = false)
+    private Role role;
 
     //Relacion de uno a muchos con customer
     @OneToMany(mappedBy = "employee")
@@ -64,18 +64,18 @@ public class Employee {
         this.status = status;
     }
 
-    public Employee(String username, String name, String surname, String lastname, String password, boolean status, Role rol, List<Customer> customers) {
+    public Employee(String username, String name, String surname, String lastname, String password, boolean status, Role role, List<Customer> customers) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.password = password;
         this.status = status;
-        this.rol = rol;
+        this.role = role;
         this.customers = customers;
     }
 
-    public Employee(long id, String username, String name, String surname, String lastname, String password, boolean status, Role rol, List<Customer> customers) {
+    public Employee(long id, String username, String name, String surname, String lastname, String password, boolean status, Role role, List<Customer> customers) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -83,7 +83,7 @@ public class Employee {
         this.lastname = lastname;
         this.password = password;
         this.status = status;
-        this.rol = rol;
+        this.role = role;
         this.customers = customers;
     }
 
@@ -127,12 +127,12 @@ public class Employee {
         this.lastname = lastname;
     }
 
-    public Role getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(Role rol) {
-        this.rol = rol;
+    public void setRole(Role rol) {
+        this.role = rol;
     }
 
     public boolean isStatus() {

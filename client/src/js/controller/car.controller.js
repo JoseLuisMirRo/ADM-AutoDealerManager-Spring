@@ -44,7 +44,7 @@ const createCarCard = car => {
                                                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
                                                     </svg>
                                                 </button>
-                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar" data-car-id="${car.id}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                                                     </svg>
@@ -107,7 +107,7 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
     const carId = button.getAttribute('data-car-id');
 
     const car = carList.find(c => c.id == carId);
-    console.log
+
     if(car) {
         document.getElementById("carBrand").value = car.brand.name;
         document.getElementById("carModel").value = car.model;
@@ -199,14 +199,14 @@ const loadCustomers = async()=> {
 }
 
 //Funcion para cargar las marcas para los select
-const loadBrands = async()=> {
+const loadBrands = async (selectId) => {
     await findAllBrands();
-
-    let brandSelect = document.getElementById('addBrand');
+    console.log(selectId);
+    let brandSelect = document.getElementById(selectId);
     let content = '<option value="" disabled selected>Seleccione una marca</option>';
 
     if(brandList.length === 0){
-        content += '<opton>No hay marcas registradas</opton>'
+        content += '<option>No hay marcas registradas</option>'
     }else{
         brandList.forEach(item => {
             content += `<option value=${item.id}>${item.name}</option>`
@@ -338,3 +338,49 @@ const sellCar = async()=>{
     }).catch(console.log);
 }
 
+//Funcion para cargar los datos en el modal de actualizacion
+document.getElementById('updateCar').addEventListener('show.bs.modal', async event => {
+    const button = event.relatedTarget;
+    const carId = button.getAttribute('data-car-id');
+
+    await loadBrands('updateBrand');
+
+    car = carList.find(c => c.id == carId);
+
+    if(car){
+        document.getElementById('updateId').value = car.id;
+        document.getElementById('updateBrand').value = car.brand.id;
+        document.getElementById('updateModel').value = car.model;
+        document.getElementById('updatePrice').value = car.basePrice;
+        document.getElementById('updateColor').value = car.color;
+    }
+});
+
+//Funcion para actualizar un auto
+const updateCar = async()=>{
+    let form = document.getElementById('updateCarForm');
+
+    car = {
+        id: document.getElementById('updateId').value,
+        model: document.getElementById('updateModel').value,
+        color: document.getElementById('updateColor').value,
+        basePrice: document.getElementById('updatePrice').value,
+        brand:{
+            id: document.getElementById('updateBrand').value
+        }
+    };
+
+    await fetch(`${URL}/adm/car`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(car)
+    }).then(response => response.json()).then(async response => {
+        console.log(response);
+        car = {};
+        await loadCards();
+        form.reset();
+    }).catch(console.log);
+}

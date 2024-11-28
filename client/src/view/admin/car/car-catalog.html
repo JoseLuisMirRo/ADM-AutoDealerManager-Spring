@@ -44,7 +44,7 @@
                 <!-- Sección del boton Circular para agregar un nuevo automóvil -->
                 <div class="col-auto text-end" style="color: #3d728f" ><h6>Agregar automóvil</h6></div>
                 <div class="col-auto text-end">
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands()">
+                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands('addBrand')">
                         <img src="../../../img/addIcon.svg">
                     </button>
                 </div>
@@ -92,7 +92,19 @@
                     
                     <div class="col-6">
                         <label for="addColor"><small>Color</small></label>
-                        <input type="text" id="addColor" name="carColor" autocomplete="false" class="form-control">
+                        <select id="addColor" name="carColor" class="form-select">
+                            <option value="" disabled selected>Seleccione un color</option>
+                            <option value="BLANCO">Blanco</option>
+                            <option value="NEGRO">Negro</option>
+                            <option value="GRIS">Gris Metálico</option>
+                            <option value="PLATEADO">Plateado</option>
+                            <option value="AZUL">Azul</option>
+                            <option value="ROJO">Rojo</option>
+                            <option value="BEIGE">Beige Champaña</option>
+                            <option value="VERDE">Verde Oscuro</option>
+                            <option value="AMARILLO">Amarillo</option>
+                            <option value="MARRON">Marrón Bronce</option>
+                          </select>
                     </div>
 
                     <!--Botones del modal -->
@@ -200,39 +212,44 @@
             <div class="modal-body">
                 <h4>Actualizar información del automóvil</h4>
                 <hr>
-                <form action="" method="post" class="mb-0">
+                <form action="" method="post" class="mb-0" id="updateCarForm">
                 <div class="row g-3">
                     <!-- Campo:  Marca -->
-                    <div class="col-12">
-                        <label for="updateBrand"><small>Marca del automóvil</small></label>
-                        <select name="updateBrand" id="updateBrand" class="form-select">  
-                        </select>
-                    </div>
-                    <!-- Campo: Modelo -->
-                    <div class="col-12">
-                        <label for="updateModel"><small>Modelo del vehiculo</small></label>
-                        <select name="updateModel" id="updateModel" class="form-select">
+                    <div class="row g-3">
+                        <input type="hidden" id="updateId" name="updateId">
+                        <div class="col-12">
+                            <label for="updateBrand"><small>Marca del automóvil</small></label>
+                            <select name="updateBrand" id="updateBrand" class="form-select"></select>
+                        </div>
+                        <div class="col-12">
+                            <label for="updateModel"><small>Modelo del automóvil</small></label>
+                            <input type="text" id="updateModel" name="addModel" autocomplete="false" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <label for="updatePrice"><small>Precio</small></label>
+                            <input type="number" id="updatePrice" name="addPrice" autocomplete="false" class="form-control">
+                        </div>
                         
-                        </select>
-                    </div>
-                    <!-- Campo: Precio -->
-                    <div class="col-6">
-                        <label for="updatePrice"><small>Precio</small></label>
-                        <input name="updatePrice" id="updatePrice" class="form-control">
-                    </div>
-                    <!-- Campo: Color -->
-                    <div class="col-6">
-                        <label for="updateColor"><small>Color</small></label>
-                        <input name="updateColor" id="updateColor" class="form-control">
-                    </div>
-                    <!-- Campo: Fecha -->
-                    <div class="col-12">
-                        <label for="carDate"><small>Fecha de registro</small></label>
-                        <input type="date" id="carDate" name="carDate" class="form-control" disabled>
+                        <div class="col-6">
+                            <label for="updateColor"><small>Color</small></label>
+                            <select id="updateColor" name="updateColor" class="form-select">
+                                <option value="" disabled selected>Seleccione un color</option>
+                                <option value="BLANCO">Blanco</option>
+                                <option value="NEGRO">Negro</option>
+                                <option value="GRIS">Gris Metálico</option>
+                                <option value="PLATEADO">Plateado</option>
+                                <option value="AZUL">Azul</option>
+                                <option value="ROJO">Rojo</option>
+                                <option value="BEIGE">Beige Champaña</option>
+                                <option value="VERDE">Verde Oscuro</option>
+                                <option value="AMARILLO">Amarillo</option>
+                                <option value="MARRON">Marrón Bronce</option>
+                              </select>
+                        </div>
                     </div>
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button type="button" onclick="updateCar()" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
                     </div>
                 </div>
                 </form>

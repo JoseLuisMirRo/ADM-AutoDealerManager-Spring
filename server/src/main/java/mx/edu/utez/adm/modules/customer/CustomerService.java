@@ -49,7 +49,7 @@ public class CustomerService {
     public ResponseEntity<?> save(Customer customer) {
         try {
             customerRepository.save(customer);
-            return customResponseEntity.getOkResponse("Registro exitoso", "null");
+            return customResponseEntity.get201Response("Registro exitoso");
         } catch (Exception e) {
             return customResponseEntity.get400Response();
         }

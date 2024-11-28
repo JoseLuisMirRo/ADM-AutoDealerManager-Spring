@@ -4,6 +4,7 @@ import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.brand.BrandRepository;
 import mx.edu.utez.adm.modules.car.DTO.CarSaleDTO;
 import mx.edu.utez.adm.modules.customer.CustomerRepository;
+import mx.edu.utez.adm.modules.service.ServiceRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class CarService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     //Traer todos los autos
     @Transactional(readOnly = true)
@@ -100,6 +103,9 @@ public class CarService {
         if(found == null){
             return customResponseEntity.get404Response();
         }else{
+            if(!found.isOnSale()){
+                return customResponseEntity.get400Response();
+            }
             Date currentDay = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "MX"));
 
@@ -127,6 +133,9 @@ public class CarService {
         if(found == null){
             return customResponseEntity.get404Response();
         }else{
+            if(!found.isOnSale()){
+                return customResponseEntity.get400Response();
+            }
             long brandId= car.getBrand().getId();
             Brand brand = brandRepository.findById(brandId);
 
@@ -160,8 +169,13 @@ public class CarService {
         if(found == null){
             return customResponseEntity.get404Response();
         }else{
+            if(!found.isOnSale()){
+                return customResponseEntity.get400Response();
+            }
             try{
                 carRepository.deleteById(car.getId());
+                //Eliminar en cascada los servicios
+                serviceRepository.deleteByCarId(car.getId());
                 return customResponseEntity.getOkResponse(
                         "Eliminacion exitosa",
                         null

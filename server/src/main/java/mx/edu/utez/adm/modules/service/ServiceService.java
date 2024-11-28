@@ -37,6 +37,7 @@ public class ServiceService {
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
     public ResponseEntity<?> save(mx.edu.utez.adm.modules.service.Service service){
         try {
+            service.setStatus(true);
             serviceRepository.save(service);
             return customResponseEntity.get201Response("Operación exitosa");
         } catch (Exception e) {

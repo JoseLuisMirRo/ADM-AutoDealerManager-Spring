@@ -58,14 +58,15 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>Code</th>
                             <th>Nombre</th>
+                            <th>Code</th>
                             <th>Descripción</th>
                             <th>Precio</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="servicesContainer">
+                    <tbody id="services-table">
                         <!-- Los servicios se inyectarán aquí dinámicamente -->
                     </tbody>
                 </table>
@@ -98,7 +99,8 @@
                         <label for="servicePrice" class="form-label">Precio</label>
                         <input type="number" id="servicePrice" class="form-control" required>
                     </div>
-                    <button type="button" class="btn btn-success" onclick="saveService()">Guardar</button>
+                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss = "modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="saveService()" data-bs-dismiss = "modal">Guardar</button>
                 </form>
             </div>
         </div>
@@ -114,7 +116,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="updateServiceForm">
+                <form action="" method="post" class="mb-0" id="updateServiceForm">
                     <div class="mb-3">
                         <label for="updateServiceCode" class="form-label">Código del servicio</label>
                         <input type="text" id="updateServiceCode" class="form-control" required>
@@ -131,7 +133,30 @@
                         <label for="updateServicePrice" class="form-label">Precio</label>
                         <input type="number" id="updateServicePrice" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss = "modal">Cerrar</button>
+                        <button type="button" onclick="updateService()" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeServiceStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 id="changeStatusTitle">Cambiar estado del servicio</h4>
+                <hr>
+                <form action="" method="post" class="mb-0" id="changeServiceStatusForm">
+                    <input type="hidden" id="ch_id" name="id">
+                    <input type="hidden" id="ch_status" name="status">
+                    <div class="col-12" id="changeStatusMessage">
+                        ¿Está seguro de cambiar el estado de este empleado?
+                    </div>
+                    <div class="col-12 mt-3 text-end">
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="changeStatusButton" onclick="changeEmployeeStatus()" data-bs-dismiss="modal" class="btn btn-warning">Cambiar estado</button>
+                    </div>
                 </form>
             </div>
         </div>

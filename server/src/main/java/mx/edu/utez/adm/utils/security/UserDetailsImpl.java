@@ -1,10 +1,10 @@
 package mx.edu.utez.adm.utils.security;
 
 
+import mx.edu.utez.adm.modules.employee.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import utez.edu.mx.gestionProyectos.modules.employee.Employee;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,7 +16,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(employee.getRol().getName()));
+        return Collections.singleton(new SimpleGrantedAuthority(employee.getRole().getName()));
     }
 
     @Override

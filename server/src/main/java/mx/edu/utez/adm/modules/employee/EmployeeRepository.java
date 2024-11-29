@@ -3,6 +3,7 @@ package mx.edu.utez.adm.modules.employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,7 +27,8 @@ public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     void changeStatus(long id, boolean status);
 
     //Auth
-    @Modifying
-    @Query(value = "SELECT * FROM employee WHERE password = :password AND (email = :email OR username = :username);", nativeQuery = true)
-    Employee findByPasswordAndEmailOrUsername(String password, String username);
+    @Query(value = "SELECT * FROM employee WHERE password = :password AND username = :username;", nativeQuery = true)
+    Employee findByPasswordAndEmailOrUsername(@Param("password") String password, @Param("username") String username);
+
+    Employee findByUsername(String username);
 }

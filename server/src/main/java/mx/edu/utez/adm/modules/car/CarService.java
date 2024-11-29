@@ -7,6 +7,7 @@ import mx.edu.utez.adm.modules.car.DTO.FindCarDTO;
 import mx.edu.utez.adm.modules.customer.Customer;
 import mx.edu.utez.adm.modules.customer.CustomerRepository;
 import mx.edu.utez.adm.modules.customer.DTO.CustomerDTOForCar;
+import mx.edu.utez.adm.modules.service.DTO.ServiceCarDTO;
 import mx.edu.utez.adm.modules.service.ServiceRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,6 @@ public class CarService {
         );
     }
 
-
     //Transformar Car a CarDTO
     public FindCarDTO transformCarToDTO(Car c){
         return new FindCarDTO(
@@ -63,8 +63,22 @@ public class CarService {
                 c.isOnSale(),
                 c.getBrand(),
                 c.getCustomer() != null ? transformCustomerToDTO(c.getCustomer()) : null,
-                c.getServices()
+                c.getServices() != null ? transformServicesToDTOs(c.getServices()) : null
         );
+    }
+
+    //Transformar Service a ServiceDTO
+    public List<ServiceCarDTO> transformServicesToDTOs(List<mx.edu.utez.adm.modules.service.Service> s){
+        List<ServiceCarDTO> list = new ArrayList<>();
+        for(mx.edu.utez.adm.modules.service.Service service : s){
+            list.add(new ServiceCarDTO(
+                    service.getId(),
+                    service.getName(),
+                    service.getCode(),
+                    service.getDescription()
+            ));
+        }
+        return list;
     }
 
     public List<FindCarDTO> transformCarsToDTOs(List<Car> cars){

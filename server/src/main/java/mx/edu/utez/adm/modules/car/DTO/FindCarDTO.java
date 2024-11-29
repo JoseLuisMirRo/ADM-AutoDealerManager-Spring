@@ -2,6 +2,7 @@ package mx.edu.utez.adm.modules.car.DTO;
 
 import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.customer.DTO.CustomerDTOForCar;
+import mx.edu.utez.adm.modules.service.DTO.ServiceCarDTO;
 import mx.edu.utez.adm.modules.service.Service;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public class FindCarDTO {
     private boolean onSale;
     private Brand brand;
     private CustomerDTOForCar customer;
-    private List<Service> services;
+    private List<ServiceCarDTO> services;
 
     public FindCarDTO() {
     }
 
-    public FindCarDTO(long id, String model, String color, String registerDate, String saleDate, double basePrice, double totalPrice, boolean onSale, Brand brand, CustomerDTOForCar customer, List<Service> services) {
+    public FindCarDTO(long id, String model, String color, String registerDate, String saleDate, double basePrice, double totalPrice, boolean onSale, Brand brand, CustomerDTOForCar customer, List<ServiceCarDTO> services) {
         this.id = id;
         this.model = model;
         this.color = color;
@@ -116,12 +117,11 @@ public class FindCarDTO {
         this.customer = customer;
     }
 
-    public List<Service> getServices() {
+    public List<ServiceCarDTO> getServices() {
         return services;
     }
 
-    public void setServices(List<Service> services) {
+    public void setServices(List<ServiceCarDTO> services) {
         this.services = services;
     }
-    
 }

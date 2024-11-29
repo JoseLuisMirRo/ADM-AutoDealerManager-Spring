@@ -11,5 +11,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     @Modifying
     @Query(value = "DELETE FROM car_has_service WHERE id_car = :id", nativeQuery = true)
     void deleteByCarId(long id);
+
+    Service findById(long id);
 }
 

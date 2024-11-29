@@ -24,4 +24,9 @@ public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     @Modifying
     @Query(value = "UPDATE employee SET status = :status WHERE id = :id", nativeQuery = true)
     void changeStatus(long id, boolean status);
+
+    //Auth
+    @Modifying
+    @Query(value = "SELECT * FROM employee WHERE password = :password AND (email = :email OR username = :username);", nativeQuery = true)
+    Employee findByPasswordAndEmailOrUsername(String password, String username);
 }

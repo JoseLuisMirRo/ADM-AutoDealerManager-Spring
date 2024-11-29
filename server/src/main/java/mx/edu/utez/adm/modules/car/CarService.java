@@ -3,7 +3,11 @@ package mx.edu.utez.adm.modules.car;
 import mx.edu.utez.adm.modules.brand.Brand;
 import mx.edu.utez.adm.modules.brand.BrandRepository;
 import mx.edu.utez.adm.modules.car.DTO.CarSaleDTO;
+import mx.edu.utez.adm.modules.car.DTO.FindCarDTO;
+import mx.edu.utez.adm.modules.customer.Customer;
 import mx.edu.utez.adm.modules.customer.CustomerRepository;
+import mx.edu.utez.adm.modules.customer.DTO.CustomerDTOForCar;
+import mx.edu.utez.adm.modules.service.DTO.ServiceCarDTO;
 import mx.edu.utez.adm.modules.service.ServiceRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +35,70 @@ public class CarService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private ServiceRepository serviceRepository;
+
+
+    //Transformar Customer a CustomerDTOForCar
+    public CustomerDTOForCar transformCustomerToDTO(Customer c){
+        return new CustomerDTOForCar(
+                c.getId(),
+                c.getName(),
+                c.getLastname(),
+                c.getSurname()
+        );
+    }
+
+    //Transformar Car a CarDTO
+    public FindCarDTO transformCarToDTO(Car c){
+        return new FindCarDTO(
+                c.getId(),
+                c.getModel(),
+                c.getColor(),
+                c.getRegisterDate(),
+                c.getSaleDate(),
+                c.getBasePrice(),
+                c.getTotalPrice(),
+                c.isOnSale(),
+                c.getBrand(),
+                c.getCustomer() != null ? transformCustomerToDTO(c.getCustomer()) : null,
+                c.getServices() != null ? transformServicesToDTOs(c.getServices()) : null
+        );
+    }
+
+    //Transformar Service a ServiceDTO
+    public List<ServiceCarDTO> transformServicesToDTOs(List<mx.edu.utez.adm.modules.service.Service> s){
+        List<ServiceCarDTO> list = new ArrayList<>();
+        for(mx.edu.utez.adm.modules.service.Service service : s){
+            list.add(new ServiceCarDTO(
+                    service.getId(),
+                    service.getName(),
+                    service.getCode(),
+                    service.getDescription()
+            ));
+        }
+        return list;
+    }
+
+    public List<FindCarDTO> transformCarsToDTOs(List<Car> cars){
+        List<FindCarDTO> list = new ArrayList<>();
+        for(Car c : cars){
+            list.add(transformCarToDTO(c));
+        }
+        return list;
+    }
 
     //Traer todos los autos
     @Transactional(readOnly = true)
     public ResponseEntity<?> findAll(){
-        List<Car> list = new ArrayList<>();
+        List<FindCarDTO> list = new ArrayList<>();
         String message = "";
         if(carRepository.findAll().isEmpty()) {
             message = "Aun no hay registros";
         } else {
             message = "Operacion exitosa";
-            for(Car c :carRepository.findAll()){
-                list.add(c);
-            }
+            list = transformCarsToDTOs(carRepository.findAll());
         }
         return customResponseEntity.getOkResponse(message, list);
     }
@@ -53,7 +106,7 @@ public class CarService {
     //Traer auto por id
     @Transactional(readOnly = true)
     public ResponseEntity<?> findById(long id){
-        Car found = carRepository.findById(id);
+        FindCarDTO found = transformCarToDTO(carRepository.findById(id));
         return (found == null)
                 ? customResponseEntity.get404Response()
                 : customResponseEntity.getOkResponse("Operacion exitosa", found);

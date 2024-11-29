@@ -53,11 +53,12 @@
         <!-- Contenido principal -->
         <div class="container mt-5">
             <!-- Tabla de servicios -->
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
+            <div class="table-responsive mt-5">
+                <table class="table table-hover">
+                    <thead class="table-light">
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
+                            <th>Code</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Precio</th>
@@ -72,34 +73,71 @@
         </div>
 
         <!-- Modal para agregar servicio -->
-        <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addServiceLabel">Agregar Nuevo Servicio</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceLabel">Agregar Nuevo Servicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addServiceForm">
+                    <div class="mb-3">
+                        <label for="serviceCode" class="form-label">Código del servicio</label>
+                        <input type="text" id="serviceCode" class="form-control" required>
                     </div>
-                    <div class="modal-body">
-                        <form id="addServiceForm">
-                            <div class="mb-3">
-                                <label for="serviceName" class="form-label">Nombre del servicio</label>
-                                <input type="text" id="serviceName" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="serviceDescription" class="form-label">Descripción</label>
-                                <textarea id="serviceDescription" class="form-control" rows="3" required></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="servicePrice" class="form-label">Precio</label>
-                                <input type="number" id="servicePrice" class="form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                        </form>
+                    <div class="mb-3">
+                        <label for="serviceName" class="form-label">Nombre del servicio</label>
+                        <input type="text" id="serviceName" class="form-control" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="serviceDescription" class="form-label">Descripción</label>
+                        <textarea id="serviceDescription" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="servicePrice" class="form-label">Precio</label>
+                        <input type="number" id="servicePrice" class="form-control" required>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="saveService()">Guardar</button>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
+</div>
+
+<!-- Modal para actualizar servicio -->
+<div class="modal fade" id="updateServiceModal" tabindex="-1" aria-labelledby="updateServiceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateServiceLabel">Actualizar Servicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateServiceForm">
+                    <div class="mb-3">
+                        <label for="updateServiceCode" class="form-label">Código del servicio</label>
+                        <input type="text" id="updateServiceCode" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateServiceName" class="form-label">Nombre del servicio</label>
+                        <input type="text" id="updateServiceName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateServiceDescription" class="form-label">Descripción</label>
+                        <textarea id="updateServiceDescription" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateServicePrice" class="form-label">Precio</label>
+                        <input type="number" id="updateServicePrice" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../../../js/controller/admin/service/service.controller.js"></script>"

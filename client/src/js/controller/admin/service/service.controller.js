@@ -1,108 +1,144 @@
 const URL = 'http://localhost:8080';
+
+// Variables
 let serviceList = [];
+let service = {};
 
-// Obtener servicios
-const fetchServices = async () => {
-    try {
-        const response = await fetch(`${URL}/adm/service`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        });
-        const data = await response.json();
-        serviceList = data.data || [];
-        console.log(serviceList)
-    } catch (error) {
-        console.error('Error al obtener servicios:', error);
-    }
+// Obtener todos los servicios
+const findAllServices = async () => {
+    await fetch(`${URL}/adm/service`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        serviceList = response.data;
+    })
+    .catch(console.log);
 };
 
-// Cargar servicios en pantalla
-const loadServices = async () => {
-    await fetchServices();
-    const servicesContainer = document.getElementById('servicesContainer');
+// Cargar tabla de servicios
+const loadTable = async () => {
+    await findAllServices();
+
+    const tbody = document.getElementById('tbody');
     let content = '';
-    serviceList.forEach(service => {
+    serviceList.forEach((item, index) => {
         content += `
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5>${service.name}</h5>
-                        <p>${service.description}</p>
-                        <p><strong>Precio:</strong> ${service.price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
-                    </div>
-                </div>
-            </div>
-        `;
+            <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${item.code}</td>
+                <td>${item.name}</td>
+                <td>${item.description}</td>
+                <td>${item.price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
+                <td class="text-center">
+                    <button class="btn btn-outline-danger" data-bs-target="#deleteModal" onclick="findServiceById(${item.id})" data-bs-toggle="modal">Eliminar</button>
+                    <button class="btn btn-outline-primary" data-bs-target="#updateModal" onclick="loadService(${item.id})" data-bs-toggle="modal">Editar</button>
+                </td>
+            </tr>`;
     });
-    servicesContainer.innerHTML = content;
+    tbody.innerHTML = content;
 };
 
-// Buscar servicios
-document.getElementById('searchButton').addEventListener('click', () => {
-    const filter = document.getElementById('searchFilter').value.toLowerCase();
-    const filteredServices = serviceList.filter(service =>
-        service.name.toLowerCase().includes(filter) ||
-        service.description.toLowerCase().includes(filter)
-    );
-    renderServices(filteredServices);
-});
-
-// Renderizar servicios filtrados
-const renderServices = (services) => {
-    const servicesContainer = document.getElementById('servicesContainer');
-    let content = '';
-    services.forEach(service => {
-        content += `
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5>${service.name}</h5>
-                        <p>${service.description}</p>
-                        <p><strong>Precio:</strong> ${service.price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-    servicesContainer.innerHTML = content;
+// Buscar servicio por ID
+const findServiceById = async id => {
+    await fetch(`${URL}/adm/service/${id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        service = response.data;
+    })
+    .catch(console.log);
 };
 
-// Agregar nuevo servicio
-document.getElementById('addServiceForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const newService = {
+// Guardar un nuevo servicio
+const saveService = async () => {
+    const form = document.getElementById('addServiceForm');
+    service = {
+        code: document.getElementById('serviceCode').value,
         name: document.getElementById('serviceName').value,
         description: document.getElementById('serviceDescription').value,
         price: parseFloat(document.getElementById('servicePrice').value)
     };
 
-    try {
-        const response = await fetch(`${URL}/adm/service`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(newService)
-        });
+    await fetch(`${URL}/adm/service`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(service)
+    })
+    .then(response => response.json())
+    .then(async response => {
+        console.log(response);
+        service = {};
+        await loadTable();
+        form.reset();
+    })
+    .catch(console.log);
+};
 
-        if (response.ok) {
-            document.getElementById('addServiceForm').reset();
-            document.querySelector('#addServiceModal .btn-close').click();
-            loadServices();
-        } else {
-            console.error('Error al agregar servicio');
+
+// Actualizar un servicio
+const updateService = async () => {
+    const form = document.getElementById('updateServiceForm');
+    const updated = {
+        id: service.id,
+        code: document.getElementById('updateServiceCode').value,
+        name: document.getElementById('updateServiceName').value,
+        description: document.getElementById('updateServiceDescription').value,
+        price: parseFloat(document.getElementById('updateServicePrice').value)
+    };
+
+    await fetch(`${URL}/adm/service/${service.id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(updated)
+    })
+    .then(response => response.json())
+    .then(async response => {
+        console.log(response);
+        service = {};
+        await loadTable();
+        form.reset();
+    })
+    .catch(console.log);
+};
+
+
+// Eliminar un servicio
+const deleteService = async () => {
+    await fetch(`${URL}/adm/service/${service.id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         }
-    } catch (error) {
-        console.error('Error al guardar el servicio:', error);
-    }
-});
+    })
+    .then(response => response.json())
+    .then(async response => {
+        console.log(response);
+        service = {};
+        await loadTable();
+    })
+    .catch(console.log);
+};
 
-// Inicializar
+// Inicializar la tabla
 (async () => {
-    await loadServices();
+    await loadTable();
 })();

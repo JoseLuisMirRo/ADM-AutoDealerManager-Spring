@@ -34,7 +34,8 @@ const createCarCard = car => {
                 <div class="card-body mb-1">
                     <div class="d-flex justify-content-between">
                         <h4>${car.brand.name}</h4>
-                        <div class="px-2 boton-status"> Disponible </div>
+                        ${car.onSale ? `<div class="px-2 badge-soldAuto"> Vendido </div>` : `<div class="px-2 badge-activeAuto"> Disponible </div>` }
+                        
                     </div>
                     <h4>${car.model}</h4>
                         <div class="row align-items-center">
@@ -63,8 +64,8 @@ const createCarCard = car => {
                                     </div>
                                     ${car.onSale ? `
                                             <div class="col col-md col-lg text-end">
-                                                <button class=" btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}">
-                                                    <img src="/src/img/moneda.png" class="img-dollar">
+                                                <button class=" btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}"> 
+                                                    <img src="/client/src/img/moneda.png" style="height: 43px; width: 43px;">
                                                 </button>
                                             </div>
                                     ` : ''}

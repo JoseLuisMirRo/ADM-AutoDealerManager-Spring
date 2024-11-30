@@ -1,3 +1,4 @@
+/*Bagde de status, especiales para las tablas*/
 .badge-active-status{
     display: inline-block;
     background-color: #d1f3f9;
@@ -16,6 +17,27 @@
     padding: 0.25em 0.80em; 
     border-radius: 0.60rem; 
     text-align: center;
+}
+
+/*Bagde de status de los automoviles, especiales para las cards*/
+.badge-activeAuto{
+    border-radius: 16px;
+    height: 32px;
+    line-height: 32px; 
+    padding: 0 12px; 
+    width: fit-content;
+    background-color:#deecfa;
+    color:#22313f;
+}
+
+.badge-soldAuto{
+    border-radius: 16px;
+    height: 32px;
+    line-height: 32px; 
+    padding: 0 12px; 
+    width: fit-content;
+    background-color:#d1f6da;
+    color:#223f34;
 }
 
 /* DISEÑOS DEL NAVBAR */
@@ -39,3 +61,51 @@
 .btn-outline-light {
     padding: 6px 12px; 
 }
+
+/**/
+.boton-gris{
+    background-color:#f3f9fa;
+    color:#22313f;
+    border-color: #22313f;
+}
+
+.boton-verMas{
+    background-color:#f3f9fa;
+    color:#22313f;
+    border-color: #22313f;  
+}
+.boton-verMas:hover{
+    background-color:rgb(162, 232, 245);
+    color:#22313f;
+    border-color: #0d404a;   
+}
+
+.boton-editar{
+    background-color:#f3f9fa;
+    color:#22313f;
+    border-color: #22313f;  
+}
+.boton-editar:hover{
+    background-color:rgb(162, 232, 245);
+    color:#22313f;
+    border-color: #0d404a;  
+}
+.boton-eliminar{
+    background-color:#f3f9fa;
+    color:#22313f;
+    border-color: #22313f;  
+}
+.boton-eliminar:hover{
+    
+    background-color:rgb(227, 175, 178);;
+    color:#783838;
+    border-color: #8b3333;;  
+}
+
+.boton-eliminarAuto{
+    
+    background-color:rgb(227, 175, 178);;
+    color:#783838;
+    border-color: #8b3333;;  
+}
+

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cached" />
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>AutoDealerManager-Marcas</title>
+</head>
+<body>
+    <main class="px-5 mt-3">
+        <!--//////// BANNER (contenido: menú y cerrar sesión) /////////-->
+        <section>
+            <div class="d-flex align-items-center">
+                <img src="../../img/logoADM.png" style="height: 45px; width: 70px;"> 
+                <h1 class="me-auto mb-0"> ADM </h1>
+                <a href="../Car/car-catalog.html" class="btn"><strong>Catálogo</strong></a>
+                <a href="../brand/brands.html" class="btn"><strong>Marcas</strong></a>
+                <a href="../Service/service.html" class="btn"><strong>Servicios</strong></a>
+                <a href="../customer/customer.html" class="btn" ><strong>Clientes</strong></a>
+                <a href="/ADM-AutoDealerManager-Spring/client/" class="btn"><strong>Empleados</strong></a>
+
+                <button class="btn btn-outline-light" onclick="logOut()"><img src="../../img/logOutIcon.svg"></button>
+            </div>
+            <hr>
+            
+        <!-- SECCION DE FILTRO Y BOTON PARA AGREGAR AUTO -->
+        <section>
+            <div class="row justify-content-end align-items-center">
+                <!-- Filtro de búsqueda -->
+                <div class="col-md-6 text-start mb-1">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Filtro de búsqueda" aria-label="Search">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!--NO BORRAR-->
+                <div class="col"></div>
+                <!-- Sección del boton Circular para agregar un nuevo automóvil -->
+                <div class="col-auto text-end" style="color: #3d728f" ><h6>Agregar marca</h6></div>
+                <div class="col-auto text-end">
+                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar">
+                        <img src="../../img/addIcon.svg">
+                    </button>
+                </div>
+            </div>
+        </section> 
+        
+    
+        <table class="table mt-0 table-sm text-center mt-5">
+            <thead class="table-header">
+                <tr class="table-header">
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre de la marca</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <!--Nombre Marca-->
+                    <td>Toyota</td>
+                    <td>
+                        <span class="badge bg-primary">Activa</span>
+                    </td>
+                    <!--Acciones-->
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Grupo de botones">
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#seeMore">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" onclick="changeStatus()" data-bs-toggle="modal" data-bs-target="#changeCarStatusModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Nissan</td>
+                    <td>
+                        <span class="badge bg-primary">Activa</span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Grupo de botones">
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#seeMore">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" onclick="changeStatus()" data-bs-toggle="modal" data-bs-target="#changeCarStatusModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Chevrolet</td>
+                    <td>
+                        <span class="badge bg-primary">Activa</span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Grupo de botones">
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#seeMore">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" onclick="changeStatus()" data-bs-toggle="modal" data-bs-target="#changeCarStatusModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+    </table>
+
+    </main> 
+
+
+<!-- Modal Agregar marca  -->
+<div class="modal fade" id="addBrand" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Registrar Marca</h4>
+                <hr>
+                <form action="" method="post" class="mb-0">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="addBrand"><small>Marca del automóvil</small></label>
+                        <select name="addBrand" id="addBrand" class="form-select">
+                                <option value="" disabled selected>Seleccione una marca</option>
+                                <!-- Aquí va un forEach para iterar las marcas -->
+                                <option value="1">Toyota</option>
+                                <option value="2">Ford</option>
+                                <option value="3">Chevrolet</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="addModel"><small>Modelo del automóvil</small></label>
+                        <input type="text" id="addModel" name="addModel" autocomplete="false" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <label for="addPrice"><small>Precio</small></label>
+                        <input type="number" id="addPrice" name="addPrice" autocomplete="false" class="form-control">
+                    </div>
+                    
+                    <div class="col-6">
+                        <label for="addColor"><small>Color</small></label>
+                        <input type="text" id="addColor" name="carColor" autocomplete="false" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label for="registrationDate"><small>Fecha</small></label>
+                        <input type="date" id="registrationDate" name="registrationDate" autocomplete="false" class="form-control">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+<!-- Modal Ver más información del automóvil  -->
+<div class="modal fade" id="seeMore"  tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Más información sobre el automóvil</h4>
+                <hr>
+                <form action="" method="post" class="mb-0">
+                    <div class="row g-3">
+                        <!-- Campo: Marca -->
+                        <div class="col-12">
+                            <label for="carBrand"><small>Marca del automóvil</small></label>
+                            <input id="carBrand" name="carBrand" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Modelo -->  
+                        <div class="col-12">
+                            <label for="carModel"><small>Modelo del automóvil</small></label>
+                            <input type="text" id="carModel" name="carModel" autocomplete="off" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Precio -->
+                        <div class="col-6">
+                            <label for="carPrice"><small>Precio</small></label>
+                            <input type="number" id="carPrice" name="carPrice" min="0" step="0.01" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Color -->
+                        <div class="col-6">
+                            <label for="carColor"><small>Color</small></label>
+                            <input type="text" id="carColor" name="carColor" autocomplete="off" class="form-control" disabled>
+                        </div>
+
+                        <!-- Campo: Fecha -->
+                        <div class="col-12">
+                            <label for="carDate"><small>Fecha de registro</small></label>
+                            <input type="date" id="carDate" name="carDate" class="form-control" disabled>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="col-12 text-end">
+                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Actualización de información del vehiculo  -->
+<div class="modal fade" id="updateCar" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Actualizar información de automóvil</h4>
+                <hr>
+                <form action="" method="post" class="mb-0">
+                <div class="row g-3">
+                    <!-- Campo:  Marca -->
+                    <div class="col-12">
+                        <label for="updateBrand"><small>Marca del automóvil</small></label>
+                        <select name="updateBrand" id="updateBrand" class="form-select">  
+                        </select>
+                    </div>
+                    <!-- Campo: Modelo -->
+                    <div class="col-12">
+                        <label for="updateModel"><small>Modelo del vehiculo</small></label>
+                        <select name="updateModel" id="updateModel" class="form-select">
+                        <!--Aqui va un forEach para iterar los modelos de autos-->
+                        </select>
+                    </div>
+                    <!-- Campo: Precio -->
+                    <div class="col-6">
+                        <label for="updatePrice">Precio</label>
+                        <input name="updatePrice" id="updatePrice" class="form-control">
+                    </div>
+                    <!-- Campo: Color -->
+                    <div class="col-6">
+                        <label for="updateColor"><small>Color</small></label>
+                        <input name="updateColor" id="updateColor" class="form-control">
+                    </div>
+                    <!-- Campo: Fecha -->
+                    <div class="col-12">
+                        <label for="carDate"><small>Fecha de registro</small></label>
+                        <input type="date" id="carDate" name="carDate" class="form-control" disabled>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--MODAL PARA CONFIRMAR EL CAMBIO DE ESTADO O SE PUEDE IMPLEMENTAR UNA ALERTA, A CONSIDERACION-->
+<div class="modal fade" id="changeCarStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Deshabilitar automóvil</h4>
+                <hr>
+                <form action="" method="post" class="mb-0">
+                    <input type="hidden" id="ch_id" name="id">
+                    <div class="col-12">
+                        ¿Está seguro de deshabilitar este automóvil?
+                    </div>
+                        <div class="col-12 mt-3 text-end">
+                            <button type="reset" class="btn btn-outline-secondary">Cancelar</button>
+                            <button type="submit" class="btn btn-warning">Deshabilitar</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

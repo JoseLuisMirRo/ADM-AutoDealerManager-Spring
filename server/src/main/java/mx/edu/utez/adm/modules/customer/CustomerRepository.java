@@ -35,10 +35,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             @Param("surname") String surname,
             @Param("lastname") String lastname
     );
-
-    @Modifying
-    @Query("DELETE FROM Customer c WHERE c.id = :id")
-    void deleteById(@Param("id") Long id);
-     }
-
+}
 

@@ -369,7 +369,6 @@ const updateCar = async()=>{
             id: document.getElementById('updateBrand').value
         }
     };
-
     await fetch(`${URL}/adm/car`, {
         method: 'PUT',
         headers: {

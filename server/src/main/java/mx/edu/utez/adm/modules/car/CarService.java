@@ -187,7 +187,7 @@ public class CarService {
             return customResponseEntity.get404Response();
         }else{
             if(!found.isOnSale()){
-                return customResponseEntity.get400Response();
+                return customResponseEntity.get405Response();
             }
             long brandId= car.getBrand().getId();
             Brand brand = brandRepository.findById(brandId);
@@ -210,6 +210,7 @@ public class CarService {
                         null
                 );
             }catch (Exception e){
+                e.printStackTrace();
                 return customResponseEntity.get400Response();
             }
         }

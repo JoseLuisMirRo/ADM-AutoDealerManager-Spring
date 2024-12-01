@@ -1,5 +1,8 @@
 package mx.edu.utez.adm.modules.customer;
 
+import mx.edu.utez.adm.modules.customer.DTO.CustomerDTO;
+import mx.edu.utez.adm.modules.employee.DTO.EmployeeCustomerDTO;
+import mx.edu.utez.adm.modules.employee.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,16 +22,49 @@ public class CustomerService {
     @Autowired
     private CustomResponseEntity customResponseEntity;
 
+    //Transformar Employee a EmployeeCustomerDTO
+    public EmployeeCustomerDTO transformEmployeeToDTO(Employee e){
+        return new EmployeeCustomerDTO(
+            e.getId(),
+            e.getName(),
+            e.getLastname(),
+            e.getSurname()
+        );
+    }
+
+    //Transformar Customer a CustomerDTOForCar
+    public CustomerDTO transformCustomerToDTO(Customer c){
+        return new CustomerDTO(
+                c.getId(),
+                c.getName(),
+                c.getLastname(),
+                c.getSurname(),
+                c.getPhone(),
+                c.getEmail(),
+                c.isStatus(),
+                transformEmployeeToDTO(c.getEmployee())
+        );
+    }
+
+    //Transformar lista de Customer a lista de CustomerDTO
+    public List<CustomerDTO> transformCustomersToDTOs(List<Customer> customers){
+        List<CustomerDTO> list = new ArrayList<>();
+        for(Customer c : customers){
+            list.add(transformCustomerToDTO(c));
+        }
+        return list;
+    }
+
     // Obtener todos los clientes
     @Transactional(readOnly = true)
     public ResponseEntity<?> findAll() {
-        List<Customer> list = new ArrayList<>();
+        List<CustomerDTO> list = new ArrayList<>();
         String message = "";
         if(customerRepository.findAll().isEmpty()) {
             message = "Aun no hay registros";
         } else {
             message = "Operación exitosa";
-            list = customerRepository.findAll();
+            list = transformCustomersToDTOs(customerRepository.findAll());
         }
         return customResponseEntity.getOkResponse(message, list);
     }
@@ -36,7 +72,7 @@ public class CustomerService {
     // Obtener cliente por ID
     @Transactional(readOnly = true)
     public ResponseEntity<?> findById(long id) {
-        Customer found = customerRepository.findById(id);
+        CustomerDTO found = transformCustomerToDTO(customerRepository.findById(id));
         if(found == null){
             return customResponseEntity.get404Response();
         }else{

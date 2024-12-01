@@ -29,71 +29,50 @@ const loadCards = async()=> {
 
 const createCarCard = car => {
     return `
-        <div class="col-12 col-md-6 col-lg-3">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col"><h3>${car.brand.name} ${car.model}</h3></div>
-                                    
-                                    <div class="col text-end mt-1 ms-auto">
-                                        <div class="d-flex flex-column align-items-end">
-                                            <div class="btn-group" role="group" aria-label="Grupo de botones">
-                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#seeMore" data-car-id="${car.id}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-                                                    </svg>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateCar" data-car-id="${car.id}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                                    </svg>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCarModal" data-car-id="${car.id}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            ${car.onSale ? `
-                                            <!-- Botón Vender HACER MAS GRANDE-->
-                                            <button type="button" class="btn btn-outline-warning mt-2" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}">
-                                            Vender
-                                            </button>
-                                            ` : ''}
-                                        </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card shadow">
+                    <div class="card-body mb-1">
+                        <div class="d-flex justify-content-between">
+                            <h4>${car.brand.name}</h4>
+                            ${car.onSale ? `<div class="px-2 badge-activeAuto"> Disponible</div>` : `<div class="px-2 badge-soldAuto"> Vendido</div>`}
+                        </div>
+                        <h4>${car.model}</h4>
+                        <div class="row align-items-center">
+                            <div class="col text-start m-3 ms-0">
+                                <div class="d-flex justify-content-between">
+                                    <div class="btn-group " role="group" aria-label="Grupo de botones">
+                                        <button type="button" class="btn boton-verMas" data-bs-toggle="modal" data-bs-target="#seeMore" data-car-id="${car.id}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn boton-editar" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn boton-eliminar" onclick="confirmDeleteCar(${car.id})">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                            </svg>
+                                        </button>
                                     </div>
-                                </div>    
-                                <hr>
-
-                               ${!car.onSale ? `
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <h5 style="color:#3d728f">Propietario: ${car.customer.name} ${car.customer.lastname} ${car.customer.surname}</h5>
-                                        </div>
-                                    </div>
-                                ` : `
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <h5 style="color: green;">Disponible</h5>
-                                        </div>
-                                    </div>
-                                `}
-                                
-                                
-                                <div class="row mb-2">
-                                    <div class="col-6">
-                                        <label><strong>Precio: </strong><span>${car.basePrice.toLocaleString("es-MX", { style: "currency", currency: "MXN" })}</span></label>
-                                    </div>
-                                    <div class="col-6">
-                                    <label><strong>Color: </strong><span>${car.color}</span></label>
-                                    </div>
-                                </div>  
                                 </div>
                             </div>
+                            ${car.onSale ? `
+                            <div class="col col-md col-lg text-end">
+                                <button class=" btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}"> 
+                                    <img src="../../../img/moneda.png" style="height: 43px; width: 43px;">
+                                </button>
+                                `: ``}
+                            </div>
                         </div>
+                        
                     </div>
+                </div>
+            </div>
                 `;
 };
 
@@ -384,33 +363,58 @@ const updateCar = async()=>{
     }).catch(console.log);
 }
 
-//Funcion para eliminar un auto 
-document.getElementById('deleteCarModal').addEventListener('show.bs.modal', event => {
-    const button = event.relatedTarget;
-    const carId = button.getAttribute('data-car-id');
+//Funcion sweetalert para eliminar auto 
+const confirmDeleteCar = id => {
+    Swal.fire({
+        title: '¿Estás seguro de eliminar este auto?',
+        text: "¡Esta acción no se puede revertir!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: '¡Sí, eliminar!',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try{
+                const response = await fetch(`${URL}/adm/car`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({id: id})
+                });
 
-    document.getElementById('delete_id').value = carId;
-    console.log(carId);
-});
-
-const deleteCar = async() => {
-    car = {
-        id: document.getElementById('delete_id').value
-    };
-    console.log(car);
-
-    await fetch(`${URL}/adm/car`, {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(car)
-    }).then(response => response.json()).then(async response => {
-        console.log(response);
-        car = {};
-        await loadCards();
-    }).catch(console.log);
+                if(response.ok){
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'El auto ha sido eliminado.',
+                        'success'
+                    );
+                    await loadCards();
+                } else  if (response.status === 405) {
+                    Swal.fire(
+                        '¡Error!',
+                        'No se puede eliminar el auto porque está vendido.',
+                        'error'
+                    );
+                } else {
+                    Swal.fire(
+                        '¡Error!',
+                        'Ocurrió un error al eliminar el auto.',
+                        'error'
+                    );
+                }
+            }catch{
+                Swal.fire(
+                    '¡Error!',
+                    'Ocurrió un error al eliminar el auto.',
+                    'error'
+                );
+            }
+        }
+    });
 }
 
 

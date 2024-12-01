@@ -37,8 +37,14 @@ public class CustomerController {
     }
 
     // Eliminar un cliente
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer) {
-        return customerService.deleteById(customer);
+    //@DeleteMapping("")
+    //public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer) {
+    //    return customerService.deleteById(customer);
+    //}
+
+    // Cambiar el estado de un cliente
+    @PutMapping("/status")
+    public ResponseEntity<?> changeStatus(@RequestBody Customer customer) {
+        return customerService.changeStatus(customer);
     }
 }

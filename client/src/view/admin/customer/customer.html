@@ -3,22 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
     <title>AutoDealerManager</title>
 </head>
 <body>
+    <!-- Modal para Agregar/Editar Cliente -->
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerModalLabel">Agregar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customerForm">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="customerName" required>
+                            <div class="invalid-feedback" id="errorCustomerName"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerLastName" class="form-label">Apellido Paterno</label>
+                            <input type="text" class="form-control" id="customerLastName" required>
+                            <div class="invalid-feedback" id="errorCustomerLastName"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerSurName" class="form-label">Apellido Materno</label>
+                            <input type="text" class="form-control" id="customerSurName" required>
+                            <div class="invalid-feedback" id="errorCustomerSurName"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="customerPhone" required>
+                            <div class="invalid-feedback" id="errorCustomerPhone"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="customerEmail" required>
+                            <div class="invalid-feedback" id="errorCustomerEmail"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerEmployee" class="form-label">Empleado</label>
+                            <select class="form-select" id="customerEmployee" required>
+                                <!-- Aquí se cargarán dinámicamente los empleados -->
+                            </select>
+                            
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveCustomer">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Agregar/Editar Cliente -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Actualizar Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <!-- Campo oculto para el ID del cliente -->
+                    <input type="hidden" id="customerId">
+
+                    <div class="mb-3">
+                        <label for="u_customerName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="u_customerName" required>
+                        <div class="invalid-feedback" id="errorCustomerName"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u_customerLastName" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="u_customerLastName" required>
+                        <div class="invalid-feedback" id="errorCustomerLastName"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u_customerSurName" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="u_customerSurName" required>
+                        <div class="invalid-feedback" id="errorCustomerSurName"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u_customerPhone" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="u_customerPhone" required>
+                        <div class="invalid-feedback" id="errorCustomerPhone"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u_customerEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="u_customerEmail" required>
+                        <div class="invalid-feedback" id="errorCustomerEmail"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="u_customerEmployee" class="form-label">Empleado</label>
+                        <select class="form-select" id="u_customerEmployee" >
+                            <!-- Aquí se cargarán dinámicamente los empleados -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="updateCustomer" onclick="update()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <main class="px-5 mt-3">
         <!--//////// BANNER (contenido: menú y cerrar sesión) /////////-->
         <section>
             <div class="d-flex align-items-center">
                 <img src="../../../img/logoADM.png" style="height: 45px; width: 70px;"> 
                 <h1 class="me-auto mb-0"> ADM </h1>
-                <a href="../car/car-catalog.html" class="btn"><strong>Catálogo</strong></a>
+                <a href="../Car/car-catalog.html" class="btn"><strong>Catálogo</strong></a>
                 <a href="../brand/brands.html" class="btn"><strong>Marcas</strong></a>
-                <a href="../service/service.html" class="btn"><strong>Servicios</strong></a>
+                <a href="/ADM-AutoDealerManager-Spring/client/" class="btn"><strong>Servicios</strong></a>
                 <a href="../customer/customer.html" class="btn" ><strong>Clientes</strong></a>
-                <a href="../employee/employee.html" class="btn"><strong>Empleados</strong></a>
-
+                <a href="/ADM-AutoDealerManager-Spring/client/" class="btn"><strong>Empleados</strong></a>
                 <button class="btn btn-outline-light" onclick="logOut()"><img src="../../../img/logOutIcon.svg"></button>
             </div>
             <hr>
@@ -31,7 +147,7 @@
                 <div class="col-md-6 text-start">
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Filtro de búsqueda" aria-label="Search">
-                        <button class="btn btn-outline-secondary" type="submit">
+                        <button class="btn btn-outline-secondary" type="submit" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                             </svg>
@@ -43,7 +159,7 @@
                 <!-- Botón para agregar cliente -->
                 <div class="col-auto text-end" style="color: #3d728f"><h6>Agregar Cliente</h6></div>
                 <div class="col-auto text-end">
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f;">
+                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f;"data-bs-toggle="modal" data-bs-target="#customerModal">
                         <img src="../../../img/addIcon.svg">
                     </button>
                 </div>
@@ -56,43 +172,24 @@
                 <thead class="table-light">
                     <tr>
                         <th>Nombre Completo</th>
-                        <th>Email</th>
                         <th>Teléfono</th>
+                        <th>Email</th>
                         <th>Empleado</th>
+                        <th>Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableCustomers">
                     <tr>
-                        <td>Piero Vargas Ledesma</td>
-                        <td>leoled710212@gmail.com</td>
-                        <td>+52 777 369 0035</td>
-                        <td>Fernando López</td>
-                        <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Armando Vargas Gracia</td>
-                        <td>armando748390@gmail.com</td>
-                        <td>+52 777 793 641</td>
-                        <td>Carla Gómez</td>
-                        <td class="text-center">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
-                            </div>
-                        </td>
+                      
                     </tr>
                 </tbody>
             </table>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/controller/admin/customer/customer.controller.js"></script>
+    <script src="../../../js/sweetalert2.all.min.js"></script>
 </body>
 </html>
-

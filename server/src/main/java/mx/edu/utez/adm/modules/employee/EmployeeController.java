@@ -49,8 +49,8 @@ public class EmployeeController {
     }
 
     //Eliminar empleado
-    @DeleteMapping("")
-    private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){
-        return employeeService.deleteById(idEmployee);
-    }
+    //@DeleteMapping("")
+    //private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){
+      //  return employeeService.deleteById(idEmployee);
+    //}
 }

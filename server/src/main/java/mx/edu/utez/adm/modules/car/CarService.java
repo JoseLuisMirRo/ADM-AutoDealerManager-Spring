@@ -224,7 +224,7 @@ public class CarService {
             return customResponseEntity.get404Response();
         }else{
             if(!found.isOnSale()){
-                return customResponseEntity.get400Response();
+                return customResponseEntity.get405Response();
             }
             try{
                 carRepository.deleteById(car.getId());

@@ -49,6 +49,7 @@ public class BrandService {
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> save(Brand brand){
         try{
+            brand.setStatus(true);
             brandRepository.save(brand);
             return customResponseEntity.getOkResponse(
                     "Registro exitoso",
@@ -67,6 +68,7 @@ public class BrandService {
             return customResponseEntity.get404Response();
         }else{
             try{
+                brand.setStatus(found.isStatus());
                 brandRepository.save(brand);
                 return customResponseEntity.getOkResponse(
                         "Actualizacion exitosa",
@@ -89,6 +91,26 @@ public class BrandService {
                 brandRepository.deleteById(brand.getId());
                 return customResponseEntity.getOkResponse(
                         "Eliminacion exitosa",
+                        null
+                );
+            }catch (Exception e){
+                return customResponseEntity.get400Response();
+            }
+        }
+    }
+
+    //Cambiar estado de una marca
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
+    public ResponseEntity<?> changeStatus(Brand brand){
+        Brand found = brandRepository.findById(brand.getId());
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            try{
+                found.setStatus(brand.isStatus());
+                brandRepository.changeStatus(found.getId(), found.isStatus());
+                return customResponseEntity.getOkResponse(
+                        "Actualizacion de estado exitosa",
                         null
                 );
             }catch (Exception e){

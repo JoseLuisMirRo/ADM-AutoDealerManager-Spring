@@ -32,9 +32,14 @@ public class BrandController {
         return brandService.update(brand);
     }
 
-    @DeleteMapping("")
-    private ResponseEntity<?> deleteById(@RequestBody Brand brand){
-        return brandService.deleteById(brand);
+    //@DeleteMapping("")
+    //private ResponseEntity<?> deleteById(@RequestBody Brand brand){
+        //return brandService.deleteById(brand);
+    //}
+    
+    @PutMapping("/status")
+    private ResponseEntity<?> changeStatus(@RequestBody Brand brand){
+        return brandService.changeStatus(brand);
     }
 
 }

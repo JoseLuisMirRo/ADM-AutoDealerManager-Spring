@@ -48,6 +48,7 @@ public class CustomerService {
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
     public ResponseEntity<?> save(Customer customer) {
         try {
+            customer.setStatus(true);
             customerRepository.save(customer);
             return customResponseEntity.get201Response("Registro exitoso");
         } catch (Exception e) {
@@ -63,6 +64,7 @@ public class CustomerService {
             return customResponseEntity.get404Response();
         } else {
             try {
+                customer.setStatus(existingCustomer.isStatus());
                 customerRepository.save(customer);
                 return customResponseEntity.getOkResponse("Actualización exitosa", null);
             } catch (Exception e) {
@@ -81,6 +83,26 @@ public class CustomerService {
                 customerRepository.deleteById(customer.getId());
                 return customResponseEntity.getOkResponse("Eliminación exitosa", "null");
             } catch (Exception e) {
+                return customResponseEntity.get400Response();
+            }
+        }
+    }
+
+    //Cambiar el estado de un cliente
+    @Transactional(rollbackFor = {SQLException.class, Exception.class})
+    public ResponseEntity<?> changeStatus(Customer customer){
+        Customer found = customerRepository.findById(customer.getId());
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            try{
+                found.setStatus(customer.isStatus());
+                customerRepository.changeStatus(found.getId(), found.isStatus());
+                return customResponseEntity.getOkResponse(
+                        "Actualizacion de estado exitosa",
+                        null
+                );
+            }catch (Exception e){
                 return customResponseEntity.get400Response();
             }
         }

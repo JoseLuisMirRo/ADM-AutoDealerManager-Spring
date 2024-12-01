@@ -1,4 +1,5 @@
 const URL = 'http://localhost:8080'
+const token = localStorage.getItem('token');
 
 let carList = [];
 let brandList = [];
@@ -8,6 +9,7 @@ const findAllCars = async()=> {
     await fetch(`${URL}/adm/car`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -125,6 +127,7 @@ const findAllCustomers = async()=> {
     await fetch(`${URL}/adm/customer`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -151,6 +154,7 @@ const findAllServices = async()=> {
     await fetch([`${URL}/adm/service`], {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -228,6 +232,7 @@ const saveCar = async()=>{
     await fetch(`${URL}/adm/car`,{
         method:"POST",
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
@@ -306,6 +311,7 @@ const sellCar = async()=>{
     await fetch(`${URL}/adm/car/sell`, {
         method: 'PUT',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
@@ -351,6 +357,7 @@ const updateCar = async()=>{
     await fetch(`${URL}/adm/car`, {
         method: 'PUT',
         headers: {
+            "authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
@@ -380,6 +387,7 @@ const confirmDeleteCar = id => {
                 const response = await fetch(`${URL}/adm/car`, {
                     method: 'DELETE',
                     headers: {
+                        "Authorization": `Bearer ${token}`,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },

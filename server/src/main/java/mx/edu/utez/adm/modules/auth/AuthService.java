@@ -12,6 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class AuthService {
     @Autowired
@@ -34,9 +38,15 @@ public class AuthService {
         } else {
             try {
                 UserDetails userDetails = new UserDetailsImpl(found);
+                String token = jwtUtil.generateToken(userDetails);
+                int roleId = found.getRole().getId();
+
+                Map<String, Object> responseData = new HashMap<>();
+                responseData.put("token", token);
+                responseData.put("roleId", roleId);
                 return customResponseEntity.getOkResponse(
                         "Inicio de sesión exitoso",
-                        jwtUtil.generateToken(userDetails)
+                        responseData
                 );
             } catch (Exception e) {
                 System.out.println(e.getMessage());

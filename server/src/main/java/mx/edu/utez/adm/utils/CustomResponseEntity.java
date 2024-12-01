@@ -35,4 +35,8 @@ public class CustomResponseEntity {
     public ResponseEntity<?> get400Response() {
         return createResponse("Error al realizar la operación", HttpStatus.BAD_REQUEST, null);
     }
+
+    public ResponseEntity<?> get405Response() {
+        return createResponse("Método no permitido", HttpStatus.METHOD_NOT_ALLOWED, null);
+    }
 }

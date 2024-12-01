@@ -24,4 +24,5 @@ public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     @Modifying
     @Query(value = "UPDATE employee SET status = :status WHERE id = :id", nativeQuery = true)
     void changeStatus(long id, boolean status);
+
 }

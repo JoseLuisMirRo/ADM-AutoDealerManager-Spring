@@ -13,58 +13,45 @@
     <main class="px-5 mt-3">
         <!--//////// BANNER  /////////-->
         <section>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-                    <a href="../Car/car-catalog.html">
-                    <img src="../../img/logoADM.png" style="height: 45px; width: 70px;">
-=======
-                    <a href="../car/car-catalog.html">
-                    <img src="../../../img/logoADM.png" style="height: 45px; width: 70px;">
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
+                    <a class="navbar-brand d-flex text-end" href="../car/car-catalog.html">
+                        <img src="/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
+                        <h1 class="mb-0 ms-2">ADM</h1>
                     </a>
-                <h1 class="me-auto mb-0 ms-2">ADM</h1>
-
-                    <div class="d-flex align-items-center">
-                        <!-- Botón Toggle -->
-                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <!-- Botón Cerrar Sesión -->
-                        <button class="btn btn-outline-light" onclick="logOut()">
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-                        <img src="../../img/logOutIcon.svg" alt="Cerrar Sesión">
-=======
-                        <img src="../../../img/logOutIcon.svg" alt="Cerrar Sesión">
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
-                        </button>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">   
+                                <a href="../../car/car-catalog.html" class="nav-link"><strong class="text-info-emphasis">Catálogo</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../brand/brands.html" class="nav-link"><strong class="text-info-emphasis">Marcas</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../service/service.html" class="nav-link"><strong class="text-info-emphasis">Servicios</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../customer/customer.html" class="nav-link"><strong class="text-info-emphasis">Clientes</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../employee/employee.html" class="nav-link"><strong class="text-info-emphasis">Empleados</strong></a>
+                            </li>
+                            <hr>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-light nav-link" onclick="logOut()">
+                                    <strong class="text-info-emphasis">Cerrar sesión</strong>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!-- Menú Desplegable -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../brand/brands.html"><strong>Marcas</strong></a>
-                        </li>
-                        <li class="nav-item">
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-                            <a class="nav-link active" href="/ADM-AutoDealerManager-Spring/client/"><strong>Servicios</strong></a>
-=======
-                            <a class="nav-link active" href="../service/service.html"><strong>Servicios</strong></a>
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../customer/customer.html"><strong>Clientes</strong></a>
-                        </li>
-                        <li class="nav-item">
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-                            <a class="nav-link active" href="/ADM-AutoDealerManager-Spring/client/"><strong>Empleados</strong></a>
-=======
-                            <a class="nav-link active" href="../employee/employee.html"><strong>Empleados</strong></a>
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
-                        </li>
-                </ul>
-                </div>
+            </nav>
+            
             </nav>
             <hr>
             
@@ -88,13 +75,8 @@
                 <!-- Sección del boton Circular para agregar un nuevo automóvil -->
                 <div class="col-auto text-end mt-3" style="color: #3d728f" ><h6>Agregar automóvil</h6></div>
                 <div class="col-auto text-end mt-3">
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands()">
-                        <img src="../../img/addIcon.svg">
-=======
                     <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands('addBrand')">
                         <img src="../../../img/addIcon.svg">
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
                     </button>
                 </div>
             </div>
@@ -103,55 +85,6 @@
         <!--//////// SECCIÓN DE CARDS /////////-->
         <div class="row g-3 mt-1" id="cardContainer">
             <!--Se genera con JS-->
-
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card shadow">
-                    <div class="card-body mb-1">
-                        <div class="d-flex justify-content-between">
-                            <h4>TESLA</h4>
-                            <div class="px-2 badge-activeAuto"> Disponible</div>
-                            
-                        </div>
-                        <h4>CYBERTRUCK</h4>
-                        <div class="row align-items-center">
-                            <div class="col text-start m-3 ms-0">
-                                <div class="d-flex justify-content-between">
-                                    <div class="btn-group " role="group" aria-label="Grupo de botones">
-                                        <button type="button" class="btn boton-verMas" data-bs-toggle="modal" data-bs-target="#seeMore" data-car-id="${car.id}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="btn boton-editar" data-bs-toggle="modal" data-bs-target="#updateCar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="btn boton-eliminar" onclick="confirmDelete()">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col col-md col-lg text-end">
-                                <button class=" btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}"> 
-                                    <img src="/client/src/img/moneda.png" style="height: 43px; width: 43px;">
-                                </button>
-                            </div>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-=======
-            <!-- REVISA EL ARCHIVO CAR.CONTROLLER, SI QUIERES HACER PRUEBAS PEGA AQUI EL CODIGO Y LUEGO LO BORRAS-->
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
         </div>
 
 
@@ -170,7 +103,7 @@
                     <h4 class="mb-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
                             <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
-                        </svg> Registrar automóvil</h4>
+                        </svg> Agregar automóvil</h4>
                     <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addBrandModal">Registrar marca</button>
                 </div>
             </div>
@@ -205,12 +138,12 @@
                             <option value="VERDE">Verde Oscuro</option>
                             <option value="AMARILLO">Amarillo</option>
                             <option value="MARRON">Marrón Bronce</option>
-                          </select>
+                        </select>
                     </div>
                     <!--Botones del modal -->
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="saveCar()" data-bs-dismiss="modal" class="btn btn-primary">Registrar</button>
+                        <button type="button" onclick="saveCar()" data-bs-dismiss="modal" class="btn btn-primary">Agregar</button>
                     </div>
                     
                 </div>
@@ -344,7 +277,7 @@
                                 <option value="VERDE">Verde Oscuro</option>
                                 <option value="AMARILLO">Amarillo</option>
                                 <option value="MARRON">Marrón Bronce</option>
-                              </select>
+                            </select>
                         </div>
                     </div>
                     <div class="col-12 text-end">
@@ -411,28 +344,24 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD:client/src/view/Car/car-catalog.html
+
 
 <!-- Modal Agregar marca  -->
 <div class="modal fade" id="addBrandModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <h4>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg> Registrar Marca</h4>
+                <h4>Agregar Marca</h4>
                 <hr>
                 <form id="saveBrandForm" method="post" class="mb-0">
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="nameBrand"><small>Marca del automóvil</small></label>
-                        <input type="text" class="form-control" name="nameBrand">
+                        <input type="text" class="form-control" name="nameBrand" autocomplete="false">
                     </div>
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
                     </div>
                 </div>
                 </form>
@@ -442,65 +371,9 @@
 </div>
 
 
-<!--ALERTA PARA CONFIRMAR ELIMINACION-->
-<script>
-    function confirmDelete() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta acción deshabilitará la marca.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#eab32e',
-            cancelButtonColor: '#d3d2d0',
-            confirmButtonText: 'Sí, deshabilitar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-            'Marca deshabilitada',
-            'La marca ha sido deshabilitada exitosamente.',
-            'success'
-            );
-        }
-        });
-    }
-</script>
-
-<!--ALERTA DE REGISTRO EXITOSO DE MARCA-->
-<script>
-    document.getElementById('saveBrandForm').addEventListener('submit', function(event) {
-        event.preventDefault(); 
-
-        const nameBrand = document.querySelector('input[name="nameBrand"]').value.trim();
-        if (nameBrand === '') {
-            Swal.fire({
-                icon: 'error',
-                title: '¡Error!',
-                text: 'Campos incompletos.',
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Marca registrada!',
-                text: 'La marca se ha registrado exitosamente.',
-                confirmButtonText: 'Cerrar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#addBrandModal').modal('hide');
-                    document.getElementById('saveBrandForm').reset();
-                }
-            });
-        }
-    });
-</script>
-
-
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/controller/car.controller.js"></script>
-=======
     <script src="../../../js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/controller/admin/car/car.controller.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
->>>>>>> ea3398d82ba48fadb81225b2b620abacf3bc9b13:client/src/view/admin/car/car-catalog.html
+
 </body>
 </html>

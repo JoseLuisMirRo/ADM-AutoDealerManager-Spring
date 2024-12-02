@@ -40,29 +40,7 @@
     color:#223f34;
 }
 
-/* DISEÑOS DEL NAVBAR */
-.navbar-collapse {
-    left: 0;
-    right: auto;
-    position: absolute; 
-    background-color: #ffffff; 
-    z-index: 1050;
-    width: 250px; 
-    transform: translateX(-100%); 
-    transition: transform 0.3s ease-in-out; 
-}  
-.navbar-collapse.show {
-    transform: translateX(0); 
-}
-
-.navbar-toggler {
-    margin-right: 8px;
-}  
-.btn-outline-light {
-    padding: 6px 12px; 
-}
-
-/**/
+/*Diseño en botones para catalogo con HOVER*/
 .boton-gris{
     background-color:#f3f9fa;
     color:#22313f;

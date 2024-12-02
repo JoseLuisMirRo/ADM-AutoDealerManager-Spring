@@ -28,7 +28,7 @@ public class ServiceService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<?> findById(long id){
-        mx.edu.utez.adm.modules.service.Service found = serviceRepository.findById(id).orElse(null);
+        mx.edu.utez.adm.modules.service.Service found = serviceRepository.findById(id);
         return found == null
                 ? customResponseEntity.get404Response()
                 : customResponseEntity.getOkResponse("Operación exitosa", found);
@@ -37,6 +37,7 @@ public class ServiceService {
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
     public ResponseEntity<?> save(mx.edu.utez.adm.modules.service.Service service){
         try {
+            service.setStatus(true);
             serviceRepository.save(service);
             return customResponseEntity.get201Response("Operación exitosa");
         } catch (Exception e) {
@@ -46,9 +47,11 @@ public class ServiceService {
 
     @Transactional(rollbackFor = {SQLException.class, Exception.class})
     public ResponseEntity<?> update(mx.edu.utez.adm.modules.service.Service service, long id){
-        if (serviceRepository.findById(id).isPresent()) {
+        mx.edu.utez.adm.modules.service.Service found = serviceRepository.findById(id);
+        if (found != null) {
             service.setId(id);
             try {
+                service.setStatus(found.isStatus());
                 mx.edu.utez.adm.modules.service.Service updated = serviceRepository.save(service);
                 return customResponseEntity.getOkResponse("Actualización exitosa", updated);
             } catch (Exception e) {

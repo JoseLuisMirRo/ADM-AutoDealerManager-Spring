@@ -35,5 +35,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             @Param("surname") String surname,
             @Param("lastname") String lastname
     );
+
+    // Cambiar el estado de un cliente
+    @Modifying
+    @Query(value = "UPDATE customer SET status = :status WHERE id = :id", nativeQuery = true)
+    void changeStatus(long id, boolean status);
 }
 

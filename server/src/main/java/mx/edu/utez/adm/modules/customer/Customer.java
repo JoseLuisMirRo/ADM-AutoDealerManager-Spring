@@ -31,6 +31,9 @@ public class Customer {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //Atributos de relaciones
     //Relacion de muchos a uno con employee
     @ManyToOne
@@ -45,40 +48,44 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String surname, String lastname, String phone, String email) {
+    public Customer(String name, String surname, String lastname, String phone, String email, boolean status) {
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.status = status;
     }
 
-    public Customer(long id, String name, String surname, String lastname, String phone, String email) {
+    public Customer(long id, String name, String surname, String lastname, String phone, String email, boolean status) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.status = status;
     }
 
-    public Customer(String name, String surname, String lastname, String phone, String email, Employee employee, List<Car> cars) {
+    public Customer(String name, String surname, String lastname, String phone, String email, boolean status, Employee employee, List<Car> cars) {
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.status = status;
         this.employee = employee;
         this.cars = cars;
     }
 
-    public Customer(long id, String name, String surname, String lastname, String phone, String email, Employee employee, List<Car> cars) {
+    public Customer(long id, String name, String surname, String lastname, String phone, String email, boolean status,  Employee employee, List<Car> cars) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.status = status;
         this.employee = employee;
         this.cars = cars;
     }
@@ -129,6 +136,14 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Employee getEmployee() {

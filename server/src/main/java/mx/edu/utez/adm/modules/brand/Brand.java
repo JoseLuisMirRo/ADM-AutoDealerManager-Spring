@@ -17,6 +17,9 @@ public class Brand {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //Atributos de relacion
     //Relacion de uno a muchos con car
     @OneToMany(mappedBy = "brand")
@@ -26,23 +29,27 @@ public class Brand {
     public Brand() {
     }
 
-    public Brand(String name) {
+    public Brand(String name, boolean status) {
         this.name = name;
+        this.status = status;
     }
 
-    public Brand(long id, String name) {
+    public Brand(long id, String name, boolean status) {
         this.id = id;
         this.name = name;
+        this.status = status;
     }
 
-    public Brand(List<Car> cars, String name) {
+    public Brand(List<Car> cars, String name, boolean status) {
         this.cars = cars;
         this.name = name;
+        this.status = status;
     }
 
-    public Brand(long id, String name, List<Car> cars) {
+    public Brand(long id, String name, boolean status,List<Car> cars) {
         this.id = id;
         this.name = name;
+        this.status = status;
         this.cars = cars;
     }
 
@@ -60,6 +67,14 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public List<Car> getCars() {

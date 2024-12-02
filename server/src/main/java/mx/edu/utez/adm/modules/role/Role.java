@@ -7,7 +7,7 @@ import mx.edu.utez.adm.modules.employee.Employee;
 import java.util.List;
 
 @Entity
-@Table(name = "rol")
+@Table(name = "role")
 public class Role {
     //---------Atributos Propios de la Clase---------//
     @Id
@@ -18,7 +18,7 @@ public class Role {
     private String name;
 
     //---------Atributos de Relacion---------//
-    @OneToMany(mappedBy = "rol")
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
     private List<Employee> employees;
 

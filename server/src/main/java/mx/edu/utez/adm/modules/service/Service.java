@@ -25,6 +25,9 @@ public class Service {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
     //Atributos de relacion
     //Relacion de muchos a muchos con car
     @ManyToMany(mappedBy = "services")
@@ -34,35 +37,39 @@ public class Service {
     public Service() {
     }
 
-    public Service(String name, String code, String description, Double price) {
+    public Service(String name, String code, String description, Double price, boolean status) {
         this.name = name;
         this.code = code;
         this.description = description;
         this.price = price;
+        this.status = status;
     }
 
-    public Service(Long id, String name, String code, String description, Double price) {
+    public Service(Long id, String name, String code, String description, Double price, boolean status) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
         this.price = price;
+        this.status = status;
     }
 
-    public Service(String name, String code, String description, Double price, List<Car> cars) {
+    public Service(String name, String code, String description, Double price, Boolean status, List<Car> cars) {
         this.name = name;
         this.code = code;
         this.description = description;
         this.price = price;
+        this.status = status;
         this.cars = cars;
     }
 
-    public Service(Long id, String name, String code, String description, Double price, List<Car> cars) {
+    public Service(Long id, String name, String code, String description, Double price, boolean status, List<Car> cars) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
         this.price = price;
+        this.status = status;
         this.cars = cars;
     }
 
@@ -113,4 +120,13 @@ public class Service {
     public void setCars(List<Car> cars) {
         this.cars = cars;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
 }

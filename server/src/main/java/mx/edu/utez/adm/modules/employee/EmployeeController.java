@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/adm/employee")
 public class EmployeeController {
@@ -41,9 +42,15 @@ public class EmployeeController {
         return employeeService.update(employee);
     }
 
-    //Eliminar empleado
-    @DeleteMapping("")
-    private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){
-        return employeeService.deleteById(idEmployee);
+    //Cambiar estado de empleado
+    @PutMapping("/status")
+    private ResponseEntity<?> changeStatus(@RequestBody Employee employee){
+        return employeeService.changeStatus(employee);
     }
+
+    //Eliminar empleado
+    //@DeleteMapping("")
+    //private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){
+      //  return employeeService.deleteById(idEmployee);
+    //}
 }

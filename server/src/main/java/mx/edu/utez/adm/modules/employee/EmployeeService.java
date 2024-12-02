@@ -1,6 +1,7 @@
 package mx.edu.utez.adm.modules.employee;
 
 import mx.edu.utez.adm.modules.employee.DTO.EmployeeDTO;
+import mx.edu.utez.adm.modules.role.Role;
 import mx.edu.utez.adm.modules.role.RoleRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class EmployeeService {
             e.getName(),
             e.getSurname(),
             e.getLastname(),
-                e.getRol()
+                e.getRole(),
+                e.isStatus()
         );
     }
 
@@ -86,6 +88,9 @@ public class EmployeeService {
     //Guardar un empleado
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> save(Employee employee){
+        employee.setStatus(true);
+        employee.setPassword(employee.getUsername());
+        employee.setRole(new Role(2,null));
         try{
             employeeRepository.save(employee);
             return customResponseEntity.getOkResponse(
@@ -93,6 +98,7 @@ public class EmployeeService {
                     null
             );
         }catch (Exception e){
+            e.printStackTrace();
             return customResponseEntity.get400Response();
         }
     }
@@ -105,6 +111,8 @@ public class EmployeeService {
             return customResponseEntity.get404Response();
         }else{
             try{
+                employee.setRole(found.getRole());
+                employee.setStatus(found.isStatus());
                 employee.setPassword(found.getPassword());
                 employeeRepository.save(employee);
                 return customResponseEntity.getOkResponse(
@@ -112,6 +120,28 @@ public class EmployeeService {
                         null
                 );
             }catch (Exception e){
+                e.printStackTrace();
+                return customResponseEntity.get400Response();
+            }
+        }
+    }
+
+    //Cambiar estado de un empleado
+    @Transactional(rollbackFor = {Exception.class, SQLException.class})
+    public ResponseEntity<?> changeStatus(Employee employee){
+        Employee found = employeeRepository.findById(employee.getId());
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            try{
+                found.setStatus(employee.isStatus());
+                employeeRepository.changeStatus(found.getId(), found.isStatus());
+                return customResponseEntity.getOkResponse(
+                        "Actualizacion de estado exitosa",
+                        null
+                );
+            }catch (Exception e){
+                e.printStackTrace();
                 return customResponseEntity.get400Response();
             }
         }

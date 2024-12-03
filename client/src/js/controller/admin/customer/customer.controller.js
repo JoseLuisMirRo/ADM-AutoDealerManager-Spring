@@ -1,14 +1,51 @@
 const URL = 'http://localhost:8080';
+const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
+const mainContent = document.getElementById('mainContent');
+
 let customerList = []
 let customer={}
 let employeeList = []
 let employee = {}
 let customerIdToDelete = null;  // Variable global para almacenar el ID del cliente a eliminar
 
+const validateSessionAndRole = (requiredRoles) => {
+    if(!token) { //Redirigir a login si no hay sesion validada
+        window.location.href = '../../../../index.html';
+        return false;
+    }
+
+    if(!requiredRoles.includes(role)){
+        Swal.fire({
+            title: '¡Acceso denegado!',
+            text: 'Error 401 - No cuentas con los permisos necesarios para acceder a esta página.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar y volver al inicio',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar sesión',
+        }).then((result) => {
+            if(!result.isConfirmed){
+                localStorage.clear();
+                window.location.href = '../../../../index.html';
+            }else{
+                window.location.href = '../../operator/car/car.html';
+            }
+     
+        });
+        return false;
+    }
+    mainContent.classList.remove('hidden');
+    return true;
+};
+
 const findAllCustomers = async()=> {
     await fetch(`${URL}/adm/customer`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -31,10 +68,13 @@ document.getElementById('saveCustomer').addEventListener('click', async () => {
     // Validación de los campos
     if (validateCustomer(customer)) {
         try {
+            
             const response = await fetch(`${URL}/adm/customer`, {
                 method: 'POST',
                 headers: {
+                    "Authorization": `Bearer ${token}`,
                     'Content-Type': 'application/json',
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify(customer),
             });
@@ -175,6 +215,7 @@ const findAllEmployees = async () => {
     await fetch(`${URL}/adm/employee`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
@@ -197,6 +238,8 @@ const loadSelect = async () => {
     selectEmployee.innerHTML = content;
 };
 (async () => {
+    const requiredRoles = ['1', '2'];
+    if(!validateSessionAndRole(requiredRoles)) return;
     await loadSelect();
 })();
 
@@ -250,6 +293,7 @@ const confirmChangeStatusCustomer = (id, status) => {
                 const response = await fetch(`${URL}/adm/customer/status`, {
                     method: 'PUT',
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                         'accept': 'application/json'
                     },
@@ -292,6 +336,7 @@ const findById = async id => {
     await fetch(`${URL}/adm/customer/${id}`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -343,6 +388,7 @@ const update = async () => {
                 const response = await fetch(`${URL}/adm/customer`, {
                     method: 'PUT',
                     headers: {
+                        "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },

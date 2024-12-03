@@ -32,7 +32,7 @@ const login = async () => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('role', response.data.roleId);
             if(response.data.roleId === 1) window.location.href = 'src/view/admin/car/car-catalog.html';
-            if(response.data.roleId === 2) window.location.href = 'rc/view/operator/car/car-catalog.html';
+            if(response.data.roleId === 2) window.location.href = 'src/view/operator/car/car-catalog.html';
         
         }else if (response.code === 404) {
             spinner.classList.add('visually-hidden');

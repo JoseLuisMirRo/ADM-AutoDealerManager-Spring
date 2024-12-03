@@ -113,7 +113,7 @@ const createCarCard = car => {
 };
 
 (async () =>{
-    const requiredRoles = [2];
+    const requiredRoles = ['1'];
 
     if (!validateSessionAndRole(requiredRoles)) return;
 

@@ -10,6 +10,7 @@
     <title>AutoDealerManager-Marcas</title>
 </head>
 <body>
+    <div id="mainContent" class="hidden">
     <main class="px-5 mt-3">
         <!--//////// BANNER (contenido: menú y cerrar sesión) /////////-->
         <section>
@@ -120,31 +121,7 @@
         </div>
     </div>
 </div>
-
-<!--ALERTA PARA CONFIRMAR ELIMINACION-->
-<script>
-    function confirmDelete() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta acción deshabilitará la marca.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#eab32e',
-            cancelButtonColor: '#d3d2d0',
-            confirmButtonText: 'Sí, deshabilitar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-            'Marca deshabilitada',
-            'La marca ha sido deshabilitada exitosamente.',
-            'success'
-            );
-        }
-        });
-    }
-</script>
-
+    </div>
     <script src="../../../js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
     <script src="../../../js/controller/admin/brand/brand.controller.js"></script>"

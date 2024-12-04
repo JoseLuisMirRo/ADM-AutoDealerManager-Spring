@@ -1,14 +1,50 @@
 const URL = 'http://localhost:8080';
+const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
+const mainContent = document.getElementById('mainContent');
 
 // Variables
 let serviceList = [];
 let service = {};
+
+const validateSessionAndRole = (requiredRoles) => {
+    if(!token) { //Redirigir a login si no hay sesion validada
+        window.location.href = '../../../../index.html';
+        return false;
+    }
+
+    if(!requiredRoles.includes(role)){
+        Swal.fire({
+            title: '¡Acceso denegado!',
+            text: 'Error 401 - No cuentas con los permisos necesarios para acceder a esta página.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar y volver al inicio',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar sesión',
+        }).then((result) => {
+            if(!result.isConfirmed){
+                localStorage.clear();
+                window.location.href = '../../../../index.html';
+            }else{
+                window.location.href = '../../operator/car/car.html';
+            }
+     
+        });
+        return false;
+    }
+    mainContent.classList.remove('hidden');
+    return true;
+};
 
 // Obtener todos los servicios
 const findAllServices = async () => {
     await fetch(`${URL}/adm/service`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -60,6 +96,7 @@ const findServiceById = async id => {
     await fetch((`${URL}/adm/service/${id}`), {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -82,6 +119,7 @@ const saveService = async () => {
     await fetch(`${URL}/adm/service`, {
         method: 'POST',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
@@ -122,6 +160,7 @@ const updateService = async () => {
     await fetch(`${URL}/adm/service/${service.id}`, {
         method: 'PUT',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
@@ -141,6 +180,7 @@ const deleteService = async () => {
     await fetch(`${URL}/adm/service/${service.id}`, {
         method: 'DELETE',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -156,5 +196,7 @@ const deleteService = async () => {
 
 // Inicializar la tabla
 (async () => {
+    const requiredRoles = ['1'];
+    if(!validateSessionAndRole(requiredRoles)) return;
     await loadTable();
 })();

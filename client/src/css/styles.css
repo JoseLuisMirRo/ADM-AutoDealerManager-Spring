@@ -40,6 +40,11 @@
     color:#223f34;
 }
 
+.banner-style{
+    background-color: #0d404a;
+    color: #ffff;
+}
+
 /*Diseño en botones para catalogo con HOVER*/
 .boton-gris{
     background-color:#f3f9fa;

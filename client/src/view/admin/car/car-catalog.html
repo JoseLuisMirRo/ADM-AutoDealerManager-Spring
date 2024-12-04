@@ -10,13 +10,13 @@
     <title>AutoDealerManager-Catálogo</title>
 </head>
 <body>
-    <main class="px-5 mt-3">
+    <main class="px-3 mt-2">
         <!--//////// BANNER  /////////-->
         <section>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #24465e;">
+                <div class="container-fluid" >
                     <a class="navbar-brand d-flex text-end" href="../car/car-catalog.html">
-                        <img src="/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
+                        <img src="/ADM-AutoDealerManager-Spring/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
                         <h1 class="mb-0 ms-2">ADM</h1>
                     </a>
                     
@@ -82,7 +82,19 @@
             </div>
         </section> 
             
-        <!--//////// SECCIÓN DE CARDS /////////-->
+    
+        <!--//////// SECCIÓN DE CARDS incompleto el tab/////////-->
+        <div class="container my-4">
+            <!--NAVS AND TABS-->
+            <ul class="nav nav-tabs" id="cardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active">Disponibles</button>                
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active">Vendidas</button>                
+                </li>
+            </ul>
+        </div>
         <div class="row g-3 mt-1" id="cardContainer">
             <!--Se genera con JS-->
         </div>

@@ -1,12 +1,48 @@
 const URL = 'http://localhost:8080'
+const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
+const mainContent = document.getElementById('mainContent');
 
 let employeeList = []
 let employee = {}
+
+const validateSessionAndRole = (requiredRoles) => {
+    if(!token) { //Redirigir a login si no hay sesion validada
+        window.location.href = '../../../../index.html';
+        return false;
+    }
+
+    if(!requiredRoles.includes(role)){
+        Swal.fire({
+            title: '¡Acceso denegado!',
+            text: 'Error 401 - No cuentas con los permisos necesarios para acceder a esta página.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar y volver al inicio',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar sesión',
+        }).then((result) => {
+            if(!result.isConfirmed){
+                localStorage.clear();
+                window.location.href = '../../../../index.html';
+            }else{
+                window.location.href = '../../operator/car/car.html';
+            }
+     
+        });
+        return false;
+    }
+    mainContent.classList.remove('hidden');
+    return true;
+};
 
 const findAllEmployees = async () => {
     await fetch(`${URL}/adm/employee`, {
         method: 'GET',
         headers: {
+            'AUthorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
@@ -48,6 +84,9 @@ const loadTable = async () => {
     });
 };
 (async () => {
+    const requiredRoles = ['1'];
+    if(!validateSessionAndRole(requiredRoles)) return;
+
     await loadTable();
 })();
 
@@ -56,6 +95,7 @@ const findEmployeeById = async id => {
     await fetch((`${URL}/adm/employee/${id}`), {
         method: 'GET',
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
@@ -79,6 +119,7 @@ const saveEmployee = async () => {
     await fetch(`${URL}/adm/employee`, {
         method: 'POST',
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
@@ -130,6 +171,7 @@ const updateEmployee = async () => {
     await fetch(`${URL}/adm/employee`, {
         method: 'PUT',
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
@@ -156,6 +198,7 @@ const changeEmployeeStatus = async () => {
     await fetch(`${URL}/adm/employee/status`, {
         method: 'PUT',
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
@@ -168,6 +211,3 @@ const changeEmployeeStatus = async () => {
         form.reset();
     }).catch(console.log);
 }
-
-
-

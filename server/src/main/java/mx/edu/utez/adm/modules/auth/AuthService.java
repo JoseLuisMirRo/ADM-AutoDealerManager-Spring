@@ -40,10 +40,12 @@ public class AuthService {
                 UserDetails userDetails = new UserDetailsImpl(found);
                 String token = jwtUtil.generateToken(userDetails);
                 int roleId = found.getRole().getId();
+                long employeeId = found.getId();
 
                 Map<String, Object> responseData = new HashMap<>();
                 responseData.put("token", token);
                 responseData.put("roleId", roleId);
+                responseData.put("employeeId", employeeId);
                 return customResponseEntity.getOkResponse(
                         "Inicio de sesión exitoso",
                         responseData

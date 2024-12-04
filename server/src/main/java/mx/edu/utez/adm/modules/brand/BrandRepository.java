@@ -19,4 +19,6 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Modifying
     @Query(value = "UPDATE brand SET status = :status WHERE id = :id", nativeQuery = true)
     void changeStatus(long id, boolean status);
+
+
 }

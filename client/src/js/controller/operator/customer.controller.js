@@ -1,6 +1,7 @@
 const URL = 'http://localhost:8080';
 const token = localStorage.getItem('token');
 const role = localStorage.getItem('role');
+const employeeId = localStorage.getItem('employeeId');
 const mainContent = document.getElementById('mainContent');
 
 let customerList = []
@@ -42,7 +43,7 @@ const validateSessionAndRole = (requiredRoles) => {
 };
 
 const findAllCustomers = async()=> {
-    await fetch(`${URL}/adm/customer`, {
+    await fetch(`${URL}/adm/customer/employee/${employeeId}`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -62,7 +63,7 @@ document.getElementById('saveCustomer').addEventListener('click', async () => {
         surname: document.getElementById('customerSurName').value.trim(),
         phone: document.getElementById('customerPhone').value.trim(),
         email: document.getElementById('customerEmail').value.trim(),
-        employee: { id: document.getElementById('customerEmployee').value }
+        employee: { id: employeeId }
     };
 
     // Validación de los campos
@@ -208,41 +209,6 @@ function clearErrors() {
     });
 }
 
-
-
-
-const findAllEmployees = async () => {
-    await fetch(`${URL}/adm/employee`, {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(response => response.json()).then(response => {
-        employeeList = response.data;
-    }).catch(console.log);
-}
-const loadSelect = async () => {
-    await findAllEmployees(); // Asegúrate de que esta función llena employeeList
-    let selectEmployee = document.getElementById('customerEmployee');
-    let content = '<option value="" disabled selected>Seleccione un empleado</option>';
-
-    if (employeeList.length === 0) {
-        content += '<option>No hay empleados registrados</option>';
-    } else {
-        employeeList.forEach(employee => {
-            content += `<option value="${employee.id}">${employee.name}</option>`;
-        });
-    }
-    selectEmployee.innerHTML = content;
-};
-(async () => {
-    const requiredRoles = ['1'];
-    if(!validateSessionAndRole(requiredRoles)) return;
-    await loadSelect();
-})();
-
 const loadCustomers = async () => {
     await findAllCustomers();
     let tbody = document.getElementById('tableCustomers');
@@ -252,7 +218,6 @@ const loadCustomers = async () => {
             <td>${customer.name} ${customer.lastname} ${customer.surname}</td>
             <td>${customer.phone}</td>
             <td>${customer.email}</td>
-            <td>${customer.employee.name} ${customer.employee.lastname} ${customer.employee.surname}</td>
             <td>
             ${customer.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
             </td>
@@ -327,13 +292,9 @@ const confirmChangeStatusCustomer = (id, status) => {
         }
     });
 };
-// Cargar los clientes al inicio
-(async () => {
-    await loadCustomers();
-})();
 
 const findById = async id => {
-    await fetch(`${URL}/adm/customer/${id}`, {
+    await fetch(`${URL}/adm/customer/employee/${employeeId}/${id}`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -360,7 +321,6 @@ const loadInfo = async id => {
         document.getElementById('u_customerSurName').value = customer.surname || '';
         document.getElementById('u_customerPhone').value = customer.phone || '';
         document.getElementById('u_customerEmail').value = customer.email || '';
-        document.getElementById('u_customerEmployee').value = customer.employee?.id || '';
 
 };
 
@@ -373,7 +333,7 @@ const update = async () => {
         phone: document.getElementById('u_customerPhone').value,
         email: document.getElementById('u_customerEmail').value,
         employee: {
-            id: document.getElementById('u_customerEmployee').value
+            id: employeeId
         }
     };
 
@@ -423,20 +383,9 @@ const update = async () => {
         }
     });
 };
-const loadSelectU = async () => {
-    await findAllEmployees(); // Asegúrate de que esta función llena employeeList
-    let selectEmployee = document.getElementById('u_customerEmployee');
-    let content = '<option value="" disabled selected>Seleccione un empleado</option>';
 
-    if (employeeList.length === 0) {
-        content += '<option>No hay empleados registrados</option>';
-    } else {
-        employeeList.forEach(employee => {
-            content += `<option value="${employee.id}">${employee.name}</option>`;
-        });
-    }
-    selectEmployee.innerHTML = content;
-};
 (async () => {
-    await loadSelectU();
+    const requiredRoles = ['2'];
+    if (!validateSessionAndRole(requiredRoles)) return false;
+    await loadCustomers();
 })();

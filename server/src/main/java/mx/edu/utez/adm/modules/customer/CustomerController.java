@@ -14,17 +14,31 @@ public class CustomerController {
     private CustomerService customerService;
 
     // Obtener todos los clientes
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllCustomers() {
         return customerService.findAll();
     }
 
     // Obtener un cliente por ID
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable long id) {
         return customerService.findById(id);
+    }
+
+    //Traer clientes por empleado
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @GetMapping("/employee/{idEmployee}")
+    public ResponseEntity<?> findAllByIdEmployee(@PathVariable long idEmployee) {
+        return customerService.findAllByEmployeeId(idEmployee);
+    }
+
+    //Traer clientes por empleado y por id
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @GetMapping("/employee/{idEmployee}/{idCustomer}")
+    public ResponseEntity<?> findByIdEmployee(@PathVariable long idEmployee, @PathVariable long idCustomer) {
+        return customerService.findByIdEmployee(idEmployee, idCustomer);
     }
 
     // Crear un nuevo cliente

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BrandService {
@@ -53,7 +54,7 @@ public class BrandService {
             brandRepository.save(brand);
             return customResponseEntity.getOkResponse(
                     "Registro exitoso",
-                    null
+                    Map.of("id", brand.getId())
             );
         }catch (Exception e){
             return customResponseEntity.get400Response();

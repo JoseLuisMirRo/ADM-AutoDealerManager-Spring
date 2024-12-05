@@ -2,6 +2,7 @@ package mx.edu.utez.adm.modules.brand;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -12,23 +13,27 @@ public class BrandController {
     private BrandService brandService;
 
     //ENDPOINTS
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("")
-    private ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll(){
         return brandService.findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{idBrand}")
-    private ResponseEntity<?> findById(@PathVariable long idBrand){
+    public ResponseEntity<?> findById(@PathVariable long idBrand){
         return brandService.findById(idBrand);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
-    private ResponseEntity<?> save(@RequestBody Brand brand){
+    public ResponseEntity<?> save(@RequestBody Brand brand){
         return brandService.save(brand);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
-    private ResponseEntity<?> update(@RequestBody Brand brand){
+    public ResponseEntity<?> update(@RequestBody Brand brand){
         return brandService.update(brand);
     }
 
@@ -36,9 +41,10 @@ public class BrandController {
     //private ResponseEntity<?> deleteById(@RequestBody Brand brand){
         //return brandService.deleteById(brand);
     //}
-    
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/status")
-    private ResponseEntity<?> changeStatus(@RequestBody Brand brand){
+    public ResponseEntity<?> changeStatus(@RequestBody Brand brand){
         return brandService.changeStatus(brand);
     }
 

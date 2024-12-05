@@ -3,6 +3,7 @@ package mx.edu.utez.adm.modules.customer;
 import mx.edu.utez.adm.modules.customer.DTO.CustomerDTO;
 import mx.edu.utez.adm.modules.employee.DTO.EmployeeCustomerDTO;
 import mx.edu.utez.adm.modules.employee.Employee;
+import mx.edu.utez.adm.modules.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class CustomerService {
 
     @Autowired
     private CustomResponseEntity customResponseEntity;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     //Transformar Employee a EmployeeCustomerDTO
     public EmployeeCustomerDTO transformEmployeeToDTO(Employee e){
@@ -73,6 +77,37 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public ResponseEntity<?> findById(long id) {
         CustomerDTO found = transformCustomerToDTO(customerRepository.findById(id));
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            return customResponseEntity.getOkResponse("Operación exitosa", found);
+        }
+    }
+
+    //Traer todos los clientes por empleado asignado
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllByEmployeeId(long employeeId){
+        List<CustomerDTO> list = new ArrayList<>();
+        String message = "";
+        if(employeeRepository.findById(employeeId) == null){
+            return customResponseEntity.get404Response();
+        }
+        if(customerRepository.findAllByEmployeeId(employeeId).isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            list = transformCustomersToDTOs(customerRepository.findAllByEmployeeId(employeeId));
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
+
+    //Traer cliente por empleado y por id
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findByIdEmployee(long employeeId, long customerId){
+        CustomerDTO found = transformCustomerToDTO(customerRepository.findByIdAndEmployeeId(customerId, employeeId));
+        if(employeeRepository.findById(employeeId) == null){
+            return customResponseEntity.get404Response();
+        }
         if(found == null){
             return customResponseEntity.get404Response();
         }else{

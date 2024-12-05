@@ -55,13 +55,6 @@
                             <input type="email" class="form-control" id="customerEmail" required>
                             <div class="invalid-feedback" id="errorCustomerEmail"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="customerEmployee" class="form-label">Empleado</label>
-                            <select class="form-select" id="customerEmployee" required>
-                                <!-- Aquí se cargarán dinámicamente los empleados -->
-                            </select>
-                            
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -109,12 +102,6 @@
                         <label for="u_customerEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="u_customerEmail" required>
                         <div class="invalid-feedback" id="errorCustomerEmail"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="u_customerEmployee" class="form-label">Empleado</label>
-                        <select class="form-select" id="u_customerEmployee" >
-                            <!-- Aquí se cargarán dinámicamente los empleados -->
-                        </select>
                     </div>
                 </form>
             </div>
@@ -176,7 +163,6 @@
                         <th>Nombre Completo</th>
                         <th>Teléfono</th>
                         <th>Email</th>
-                        <th>Empleado</th>
                         <th>Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -191,7 +177,7 @@
     </main>
     </div>
     <script src="../../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../../js/controller/admin/customer/customer.controller.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
+    <script src="../../../js/controller/operator/customer.controller.js"></script>
 </body>
 </html>

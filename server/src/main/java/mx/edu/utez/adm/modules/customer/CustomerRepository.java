@@ -21,6 +21,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // Traer un cliente por ID
     Customer findById(long id);
 
+    //Traer clientes por empleado y por id
+    @Query(value = "SELECT * FROM customer WHERE id_employee = :employeeId AND id = :id", nativeQuery = true)
+    Customer findByIdAndEmployeeId(@Param("id") long id, @Param("employeeId") long employeeId);
+
     // Guardar/Actualizar un cliente
     Customer save(Customer customer);
 
@@ -35,6 +39,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             @Param("surname") String surname,
             @Param("lastname") String lastname
     );
+
 
     // Cambiar el estado de un cliente
     @Modifying

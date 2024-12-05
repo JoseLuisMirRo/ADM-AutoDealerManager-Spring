@@ -54,27 +54,22 @@
         </section>
 
         <!-- Contenido principal -->
-        <div class="container mt-5">
-            <!-- Tabla de servicios -->
-            <div class="table-responsive mt-5">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Code</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="services-table">
-                        <!-- Los servicios se inyectarán aquí dinámicamente -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table mt-0 table-sm text-center mt-5 table-hover">
+            <thead class="table-light table-header">
+                <tr class="table-header">
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="services-table">
+                <!-- Los servicios se inyectarán aquí dinámicamente -->
+            </tbody>
+        </table>
 
         <!-- Modal para agregar servicio -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceLabel" aria-hidden="true">

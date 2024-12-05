@@ -14,41 +14,45 @@
     <main class="px-5 mt-3">
         <!--//////// BANNER  /////////-->
         <section>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <a href="../car/car-catalog.html">
-                    <img src="../../../img/logoADM.png" style="height: 45px; width: 70px;">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #24465e;">
+                <div class="container-fluid" >
+                    <a class="navbar-brand d-flex text-end" href="../car/car-catalog.html">
+                        <img src="/ADM-AutoDealerManager-Spring/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
+                        <h1 class="mb-0 ms-2">ADM</h1>
                     </a>
-                <h1 class="me-auto mb-0 ms-2">ADM</h1>
-
-                    <div class="d-flex align-items-center">
-                        <!-- Botón Toggle -->
-                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <!-- Botón Cerrar Sesión -->
-                        <button class="btn btn-outline-light" onclick="logOut()">
-                        <img src="../../../img/logOutIcon.svg" alt="Cerrar Sesión">
-                        </button>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">   
+                                <a href="../../car/car-catalog.html" class="nav-link"><strong class="text-info-emphasis">Catálogo</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../brand/brands.html" class="nav-link"><strong class="text-info-emphasis">Marcas</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../service/service.html" class="nav-link"><strong class="text-info-emphasis">Servicios</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../customer/customer.html" class="nav-link"><strong class="text-info-emphasis">Clientes</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../employee/employee.html" class="nav-link"><strong class="text-info-emphasis">Empleados</strong></a>
+                            </li>
+                            <hr>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-light nav-link" onclick="logOut()">
+                                    <strong class="text-info-emphasis">Cerrar sesión</strong>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!-- Menú Desplegable -->
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../brand/brands.html"><strong>Marcas</strong></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../service/service.html"><strong>Servicios</strong></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../customer/customer.html"><strong>Clientes</strong></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../employee/employee.html"><strong>Empleados</strong></a>
-                        </li>
-                </ul>
-                </div>
+            </nav>
+            
             </nav>
             <hr>
             
@@ -79,11 +83,21 @@
             </div>
         </section> 
             
-        <!--//////// SECCIÓN DE CARDS /////////-->
+    
+        <!--//////// SECCIÓN DE CARDS incompleto el tab/////////-->
+        <div class="container my-4">
+            <!--NAVS AND TABS-->
+            <ul class="nav nav-tabs" id="cardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active">Disponibles</button>                
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active">Vendidas</button>                
+                </li>
+            </ul>
+        </div>
         <div class="row g-3 mt-1" id="cardContainer">
             <!--Se genera con JS-->
-
-            <!-- REVISA EL ARCHIVO CAR.CONTROLLER, SI QUIERES HACER PRUEBAS PEGA AQUI EL CODIGO Y LUEGO LO BORRAS-->
         </div>
 
 
@@ -99,7 +113,10 @@
 
             <div class="modal-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <h4 class="mb-0">Registrar automóvil</h4>
+                    <h4 class="mb-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                            <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"/>
+                        </svg> Agregar automóvil</h4>
                     <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addBrandModal">Registrar marca</button>
                 </div>
             </div>
@@ -134,13 +151,12 @@
                             <option value="VERDE">Verde Oscuro</option>
                             <option value="AMARILLO">Amarillo</option>
                             <option value="MARRON">Marrón Bronce</option>
-                          </select>
+                        </select>
                     </div>
-
                     <!--Botones del modal -->
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="saveCar()" data-bs-dismiss="modal" class="btn btn-primary">Registrar</button>
+                        <button type="button" onclick="saveCar()" data-bs-dismiss="modal" class="btn btn-primary">Agregar</button>
                     </div>
                     
                 </div>
@@ -217,7 +233,7 @@
                         </div>
 
                         <!-- Campo: Precio total-->
-                         <div class="col-6">
+                        <div class="col-6">
                             <label for="totalPriceField"><small>Precio total</small></label>
                             <input type="text" id="totalPriceField" name="totalPriceField" class="form-control" disabled>
                         </div>
@@ -274,7 +290,7 @@
                                 <option value="VERDE">Verde Oscuro</option>
                                 <option value="AMARILLO">Amarillo</option>
                                 <option value="MARRON">Marrón Bronce</option>
-                              </select>
+                            </select>
                         </div>
                     </div>
                     <div class="col-12 text-end">
@@ -288,7 +304,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="saleCarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Venta de automovil -->
+<div class="modal fade" id="saleCarModal" tabindex="-1" aria-labelledby="saleCar" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Encabezado del modal Corregir icono de carrito-->
@@ -296,7 +313,7 @@
                 <h5>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                      </svg>
+                    </svg>
                     Realizar Venta
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -340,9 +357,9 @@
         </div>
     </div>
 </div>
-</div>
     <script src="../../../js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
     <script src="../../../js/controller/admin/car/car.controller.js"></script>
+
 </body>
 </html>

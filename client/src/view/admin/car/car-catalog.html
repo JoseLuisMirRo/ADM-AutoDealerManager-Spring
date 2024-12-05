@@ -17,7 +17,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #24465e;">
                 <div class="container-fluid" >
                     <a class="navbar-brand d-flex text-end" href="../car/car-catalog.html">
-                        <img src="/ADM-AutoDealerManager-Spring/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
+                        <img src="../../../img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
                         <h1 class="mb-0 ms-2">ADM</h1>
                     </a>
                     
@@ -28,7 +28,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">   
-                                <a href="../../car/car-catalog.html" class="nav-link"><strong class="text-info-emphasis">Catálogo</strong></a>
+                                <a href="../car/car-catalog.html" class="nav-link"><strong class="text-info-emphasis">Catálogo</strong></a>
                             </li>
                             <li class="nav-item">
                                 <a href="../brand/brands.html" class="nav-link"><strong class="text-info-emphasis">Marcas</strong></a>
@@ -357,6 +357,30 @@
         </div>
     </div>
 </div>
+<!-- Modal Agregar marca  -->
+<div class="modal fade" id="addBrandModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Registrar Marca</h4>
+                <hr>
+                <form id="saveBrandForm" class="mb-0">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="nameBrand"><small>Marca del automóvil</small></label>
+                        <input id="nameBrand" type="text" class="form-control" name="nameBrand">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="saveBrand()" data-bs-dismiss="modal" class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="../../../js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
     <script src="../../../js/controller/admin/car/car.controller.js"></script>

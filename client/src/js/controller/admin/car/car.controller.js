@@ -81,7 +81,7 @@ const createCarCard = car => {
                                                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
                                             </svg>
                                         </button>
-                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateCar">
+                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#updateCar" data-car-id="${car.id}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                                             </svg>
@@ -177,6 +177,7 @@ const findAllBrands = async()=> {
     await fetch(`${URL}/adm/brand`, {
         method: 'GET',
         headers: {
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
@@ -362,11 +363,14 @@ const sellCar = async()=>{
 //Funcion para cargar los datos en el modal de actualizacion
 document.getElementById('updateCar').addEventListener('show.bs.modal', async event => {
     const button = event.relatedTarget;
+    console.log("modal actualizar")
     const carId = button.getAttribute('data-car-id');
 
+    console.log(carId);
     await loadBrands('updateBrand');
 
     car = carList.find(c => c.id == carId);
+    console.log(car);
 
     if(car){
         document.getElementById('updateId').value = car.id;
@@ -460,5 +464,31 @@ const confirmDeleteCar = id => {
         }
     });
 }
+
+//Funcion para guardar marca 
+const saveBrand = async () => {
+    let form = document.getElementById('saveBrandForm');
+    brand = {
+        name: document.getElementById('nameBrand').value
+    };
+
+    await fetch(`${URL}/adm/brand`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(brand)
+    }).then(response => response.json()).then(async response => {
+        brand = {};
+        const addCarModal = new bootstrap.Modal(document.getElementById('addCar'));
+        addCarModal.show();    
+        await loadBrands('addBrand').then(() => {
+            document.getElementById('addBrand').value = response.data.id;
+        });
+        form.reset();
+    }).catch(console.log);
+};
 
 

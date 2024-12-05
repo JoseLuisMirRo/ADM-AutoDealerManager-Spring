@@ -19,7 +19,7 @@ public class Service {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Column(name = "price", nullable = false)

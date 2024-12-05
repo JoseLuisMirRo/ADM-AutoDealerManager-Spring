@@ -7,6 +7,7 @@ import mx.edu.utez.adm.modules.car.DTO.FindCarDTO;
 import mx.edu.utez.adm.modules.customer.Customer;
 import mx.edu.utez.adm.modules.customer.CustomerRepository;
 import mx.edu.utez.adm.modules.customer.DTO.CustomerDTOForCar;
+import mx.edu.utez.adm.modules.employee.EmployeeRepository;
 import mx.edu.utez.adm.modules.service.DTO.ServiceCarDTO;
 import mx.edu.utez.adm.modules.service.ServiceRepository;
 import mx.edu.utez.adm.utils.CustomResponseEntity;
@@ -38,6 +39,8 @@ public class CarService {
 
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
 
     //Transformar Customer a CustomerDTOForCar
@@ -136,6 +139,23 @@ public class CarService {
         } else {
             message = "Operacion exitosa";
             list = transformCarsToDTOs(carRepository.findAllByIdCustomer(idCustomer));
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
+
+    //Traer autos de los clientes a cargo de un empleado
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllByEmployeeCustomer(long idEmployee){
+        List<FindCarDTO> list = new ArrayList<>();
+        String message = "";
+        if(employeeRepository.findById(idEmployee) == null){
+            return customResponseEntity.get404Response();
+        }
+        if(carRepository.findAllByEmployeeCustomer(idEmployee).isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            list = transformCarsToDTOs(carRepository.findAllByEmployeeCustomer(idEmployee));
         }
         return customResponseEntity.getOkResponse(message, list);
     }

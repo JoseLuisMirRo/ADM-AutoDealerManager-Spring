@@ -33,7 +33,7 @@ const login = async () => {
             localStorage.setItem('role', response.data.roleId);
             localStorage.setItem('employeeId', response.data.employeeId);
             if(response.data.roleId === 1) window.location.href = 'src/view/admin/car/car-catalog.html';
-            if(response.data.roleId === 2) window.location.href = 'src/view/operator/car/car-catalog.html';
+            if(response.data.roleId === 2) window.location.href = 'src/view/operator/car/car-catalog-operator.html';
         
         }else if (response.code === 404) {
             spinner.classList.add('visually-hidden');

@@ -65,12 +65,6 @@
                 <!--NO BORRAR-->
                 <div class="col"></div>
                 <!-- Sección del boton Circular para agregar un nuevo automóvil -->
-                <div class="col-auto text-end mt-3" style="color: #3d728f" ><h6>Agregar automóvil</h6></div>
-                <div class="col-auto text-end mt-3">
-                    <button class="btn rounded-circle" style="width: 50px; height: 50px; background-color: #3d728f ;" data-bs-toggle="modal" data-bs-target="#addCar" onclick="loadBrands('addBrand')">
-                        <img src="../../../img/addIcon.svg">
-                    </button>
-                </div>
             </div>
         </section> 
             
@@ -241,73 +235,22 @@
     </div>
 </div>
 
-
-<!-- Modal Actualización de información del vehiculo  -->
-<div class="modal fade" id="updateCar" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h4>Actualizar información del automóvil</h4>
-                <hr>
-                <form action="" method="post" class="mb-0" id="updateCarForm">
-                <div class="row g-3">
-                    <!-- Campo:  Marca -->
-                    <div class="row g-3">
-                        <input type="hidden" id="updateId" name="updateId">
-                        <div class="col-12">
-                            <label for="updateBrand"><small>Marca del automóvil</small></label>
-                            <select name="updateBrand" id="updateBrand" class="form-select"></select>
-                        </div>
-                        <div class="col-12">
-                            <label for="updateModel"><small>Modelo del automóvil</small></label>
-                            <input type="text" id="updateModel" name="addModel" autocomplete="false" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="updatePrice"><small>Precio</small></label>
-                            <input type="number" id="updatePrice" name="addPrice" autocomplete="false" class="form-control">
-                        </div>
-                        
-                        <div class="col-6">
-                            <label for="updateColor"><small>Color</small></label>
-                            <select id="updateColor" name="updateColor" class="form-select">
-                                <option value="" disabled selected>Seleccione un color</option>
-                                <option value="BLANCO">Blanco</option>
-                                <option value="NEGRO">Negro</option>
-                                <option value="GRIS">Gris Metálico</option>
-                                <option value="PLATEADO">Plateado</option>
-                                <option value="AZUL">Azul</option>
-                                <option value="ROJO">Rojo</option>
-                                <option value="BEIGE">Beige Champaña</option>
-                                <option value="VERDE">Verde Oscuro</option>
-                                <option value="AMARILLO">Amarillo</option>
-                                <option value="MARRON">Marrón Bronce</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 text-end">
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="updateCar()" class="btn btn-primary" data-bs-dismiss="modal">Actualizar</button>
-                    </div>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Venta de automovil -->
 <div class="modal fade" id="saleCarModal" tabindex="-1" aria-labelledby="saleCar" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Encabezado del modal Corregir icono de carrito-->
             <div class="modal-header">
-                <h5>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                    </svg>
-                    Realizar Venta
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h5>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                        </svg>
+                        Realizar Venta
+                    </h5>
+                        <button type="submit" class="btn btn-light text-end" data-bs-toggle="modal" data-bs-target="#addBrandModal">Registrar cliente</button>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Cuerpo del modal -->
@@ -343,29 +286,6 @@
                             <button type="button" onclick="sellCar()" class="btn btn-primary" data-bs-dismiss="modal">Vender</button>
                         </div>  
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Agregar marca  -->
-<div class="modal fade" id="addBrandModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h4>Registrar Marca</h4>
-                <hr>
-                <form id="saveBrandForm" class="mb-0">
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label for="nameBrand"><small>Marca del automóvil</small></label>
-                        <input id="nameBrand" type="text" class="form-control" name="nameBrand">
-                    </div>
-                    <div class="col-12 text-end">
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="saveBrand()" data-bs-dismiss="modal" class="btn btn-primary">Registrar</button>
-                    </div>
-                </div>
                 </form>
             </div>
         </div>

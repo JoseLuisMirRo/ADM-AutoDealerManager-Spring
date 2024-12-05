@@ -16,7 +16,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #24465e;">
                 <div class="container-fluid" >
                     <a class="navbar-brand d-flex text-end" href="../car/car-catalog.html">
-                        <img src="/ADM-AutoDealerManager-Spring/client/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
+                        <img src="/src/img/logoADM.png" alt="Logo" style="height: 45px; width: 70px;">
                         <h1 class="mb-0 ms-2">ADM</h1>
                     </a>
                     
@@ -84,14 +84,14 @@
             
     
         <!--//////// SECCIÓN DE CARDS incompleto el tab/////////-->
-        <div class="container my-4">
+        <div class="row ms-1 mt-2">
             <!--NAVS AND TABS-->
             <ul class="nav nav-tabs" id="cardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active">Disponibles</button>                
+                    <button class="btn btn-outline-info" onclick="btnAvailable()">Disponibles</button>                
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active">Vendidas</button>                
+                    <button class="btn btn-outline-info" onclick="btnSold()">Vendidas</button>                
                 </li>
             </ul>
         </div>

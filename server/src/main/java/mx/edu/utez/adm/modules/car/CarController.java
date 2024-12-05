@@ -15,16 +15,32 @@ public class CarController {
     private CarService carService;
 
     //ENDPOINTS
+    //Traer todos los autos
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
     @GetMapping("")
     public ResponseEntity<?> findAll(){
         return carService.findAll();
     }
 
+    //Traer auto por id
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
     @GetMapping("/{idCar}")
     public ResponseEntity<?> findById(@PathVariable long idCar){
         return carService.findById(idCar);
+    }
+
+    //Traer autos por id de cliente
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
+    @GetMapping("/customer/{idCustomer}")
+    public ResponseEntity<?> findAllByIdCustomer(@PathVariable long idCustomer){
+        return carService.findAllByIdCustomer(idCustomer);
+    }
+
+    //Traer autos en venta
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
+    @GetMapping("/onsale")
+    public ResponseEntity<?> findAllOnSale(){
+        return carService.findAllOnSale();
     }
 
     //Vender auto

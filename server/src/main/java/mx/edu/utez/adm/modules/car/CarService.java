@@ -112,6 +112,34 @@ public class CarService {
                 : customResponseEntity.getOkResponse("Operacion exitosa", found);
     }
 
+    //Traer todos los autos en venta
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllOnSale(){
+        List<FindCarDTO> list = new ArrayList<>();
+        String message = "";
+        if(carRepository.findByIsOnSale() == null) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            list = transformCarsToDTOs(carRepository.findByIsOnSale());
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
+
+    //Traer todos los autos por id de usuario
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllByIdCustomer(long idCustomer){
+        List<FindCarDTO> list = new ArrayList<>();
+        String message = "";
+        if(carRepository.findAllByIdCustomer(idCustomer).isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            list = transformCarsToDTOs(carRepository.findAllByIdCustomer(idCustomer));
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
+
     //Guardar carro
     @Transactional(rollbackFor = {Exception.class, SQLException.class})
     public ResponseEntity<?> save(Car car){

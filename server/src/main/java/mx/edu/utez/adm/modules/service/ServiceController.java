@@ -1,5 +1,6 @@
 package mx.edu.utez.adm.modules.service;
 
+import mx.edu.utez.adm.modules.customer.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,5 +36,12 @@ public class ServiceController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Service service, @PathVariable long id) {
         return serviceService.update(service, id);
+    }
+
+    // Cambiar el estado de un cliente
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @PutMapping("/status")
+    public ResponseEntity<?> changeStatus(@RequestBody Service service, @PathVariable long id) {
+        return serviceService.changeStatus(service, id);
     }
 }

@@ -169,7 +169,7 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
 
 //Funcion para cargar clientes para registrar nuevo auto
 const findAllCustomers = async()=> {
-    await fetch(`${URL}/adm/customer`, {
+    await fetch(`${URL}/adm/customer/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -183,7 +183,7 @@ const findAllCustomers = async()=> {
 
 //Funcion para cargar marcas para registrar nuevo auto 
 const findAllBrands = async()=> {
-    await fetch(`${URL}/adm/brand`, {
+    await fetch(`${URL}/adm/brand/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -197,7 +197,7 @@ const findAllBrands = async()=> {
 
 //Funcion para cargar servicios para registar nuevo auto 
 const findAllServices = async()=> {
-    await fetch([`${URL}/adm/service`], {
+    await fetch([`${URL}/adm/service/active`], {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -217,7 +217,7 @@ const loadCustomers = async()=> {
     let content = '<option value="" disabled selected>Seleccione un cliente</option>';
 
     if(customerList.length === 0){
-        content += '<opton>No hay clientes registrados</opton>'
+        content += '<option disabled>No hay clientes registrados</option>'
     }else{
         customerList.forEach(item => {
             content += `<option value=${item.id}>${item.name} ${item.lastname} ${item.surname}</option>`
@@ -235,7 +235,7 @@ const loadBrands = async (selectId) => {
     let content = '<option value="" disabled selected>Seleccione una marca</option>';
 
     if(brandList.length === 0){
-        content += '<option>No hay marcas registradas</option>'
+        content += '<option disabled>No hay marcas registradas</option>'
     }else{
         brandList.forEach(item => {
             content += `<option value=${item.id}>${item.name}</option>`
@@ -252,13 +252,9 @@ const loadServices = async()=> {
     let serviceSelect = document.getElementById('addServices');
     let content = '<option value="" disabled selected>Seleccione un servicio</option> <option value="">Ninguno</option>';
 
-    if(serviceList.length === 0){
-        content += '<option>No hay servicios registrados</option>'
-    }else{
         serviceList.forEach(item => {
             content += `<option value=${item.id} data-price=${item.price}>${item.name} | $${item.price}</option>`
         });
-    }
     serviceSelect.innerHTML = content;
 }
 

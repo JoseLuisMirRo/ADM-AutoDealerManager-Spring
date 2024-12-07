@@ -38,10 +38,18 @@ public class ServiceController {
         return serviceService.update(service, id);
     }
 
-    // Cambiar el estado de un cliente
+    // Cambiar el estado de un servicio
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
     @PutMapping("/status")
     public ResponseEntity<?> changeStatus(@RequestBody Service service) {
         return serviceService.changeStatus(service);
     }
+
+    //Traer servicios activos
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @GetMapping("/active")
+    public ResponseEntity<?> findAllActive() {
+        return serviceService.findAllActive();
+    }
+
 }

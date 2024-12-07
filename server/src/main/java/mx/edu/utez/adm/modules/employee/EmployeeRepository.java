@@ -31,4 +31,8 @@ public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     Employee findByPasswordAndEmailOrUsername(@Param("password") String password, @Param("username") String username);
 
     Employee findByUsername(String username);
+
+    //Traer empleados activos
+    @Query(value = "SELECT * FROM employee WHERE status = 1", nativeQuery = true)
+    List<Employee> findAllActive();
 }

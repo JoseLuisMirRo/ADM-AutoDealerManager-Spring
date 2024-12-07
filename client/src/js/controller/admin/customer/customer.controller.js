@@ -212,7 +212,7 @@ function clearErrors() {
 
 
 const findAllEmployees = async () => {
-    await fetch(`${URL}/adm/employee`, {
+    await fetch(`${URL}/adm/employee/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -229,10 +229,10 @@ const loadSelect = async () => {
     let content = '<option value="" disabled selected>Seleccione un empleado</option>';
 
     if (employeeList.length === 0) {
-        content += '<option>No hay empleados registrados</option>';
+        content += '<option disabled>No hay empleados registrados</option>';
     } else {
         employeeList.forEach(employee => {
-            content += `<option value="${employee.id}">${employee.name}</option>`;
+            content += `<option value="${employee.id}">${employee.name} ${employee.lastname} ${employee.surname}</option>`;
         });
     }
     selectEmployee.innerHTML = content;

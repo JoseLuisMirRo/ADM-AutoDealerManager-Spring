@@ -53,9 +53,15 @@ const findAllEmployees = async () => {
 
 const loadTable = async () => {
     await findAllEmployees();
+    //Filtrar lista de empleados para no mostrar el usuario actual
+    console.log(employeeList);
+    console.log(localStorage.getItem('employeeId'));
+    let employeeId = parseInt(localStorage.getItem('employeeId'), 10);
+    let employeeListFiltered = employeeList.filter(employee => employee.id !== employeeId);
+    console.log(employeeListFiltered);
     let tbody = document.getElementById('employee-table');
     let content = '';
-    employeeList.forEach(employee => {
+    employeeListFiltered.forEach(employee => {
         content += `<tr>
             <td>${employee.username}</td>
             <td>${employee.name}</td>

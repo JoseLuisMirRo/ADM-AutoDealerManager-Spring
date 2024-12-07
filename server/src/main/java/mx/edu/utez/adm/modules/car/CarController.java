@@ -36,6 +36,13 @@ public class CarController {
         return carService.findAllByIdCustomer(idCustomer);
     }
 
+    //Traer autos de los clientes a cargo de un empleado
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
+    @GetMapping("/employee/{idEmployee}")
+    public ResponseEntity<?> findAllByEmployeeCustomer(@PathVariable long idEmployee){
+        return carService.findAllByEmployeeCustomer(idEmployee);
+    }
+
     //Traer autos en venta
     @PreAuthorize("hasRole('ROLE_OPERATOR')")
     @GetMapping("/onsale")

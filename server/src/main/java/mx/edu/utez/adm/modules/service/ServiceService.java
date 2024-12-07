@@ -21,9 +21,10 @@ public class ServiceService {
     @Transactional(readOnly = true)
     public ResponseEntity<?> findAll(){
         List<mx.edu.utez.adm.modules.service.Service> list = serviceRepository.findAll();
-        return list.isEmpty()
-                ? customResponseEntity.get404Response()
-                : customResponseEntity.getOkResponse("Operación exitosa", list);
+        String message = list.isEmpty()
+                ? "Aún no hay registros"
+                : "Operación exitosa";
+        return customResponseEntity.getOkResponse(message, list);
     }
 
     @Transactional(readOnly = true)

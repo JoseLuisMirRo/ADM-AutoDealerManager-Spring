@@ -52,15 +52,27 @@ const findAllCars = async()=> {
     }).catch(console.log);
 }
 
-const loadCards = async()=> {
+const loadCards = async(filter = 'onSale')=> {
     await findAllCars();
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
-    carList.forEach(car => {
-        content += createCarCard(car); //Agregamos cada tarjeta
-        cardContainer.innerHTML = content;
-    });
-}
+
+    //Filtra los autos según el estado 
+    const filteredCarList = carList.filter(car => filter === 'onSale' ? car.onSale : !car.onSale);
+
+    //Ordenamos por orden alfabetico
+    filteredCarList.sort((a, b) => a.brand.name.localeCompare(b.brand.name));
+
+    //Creamos las tarjetas
+    if (filteredCarList.length === 0) {
+        content = '<div class="col-12 text-center"><h3>No hay autos registrados</h3></div>';
+    } else {
+        filteredCarList.forEach(car => {
+            content += createCarCard(car); 
+        });
+    }
+    cardContainer.innerHTML = content;
+};
 
 const createCarCard = car => { 
     return `
@@ -126,7 +138,13 @@ const createCarCard = car => {
 
     if (!validateSessionAndRole(requiredRoles)) return;
 
-    await loadCards();
+    const availableTab = document.getElementById('available-tab');
+    const soldTab = document.getElementById('sold-tab');
+
+    availableTab.addEventListener('click', () => loadCards('onSale'));
+    soldTab.addEventListener('click', () => loadCards('sold'));
+
+    await loadCards('onSale');
 })()
 
 //Funcion para cargar datos en boton de ver mas 

@@ -85,20 +85,20 @@
             
     
         <!--//////// SECCIÓN DE CARDS incompleto el tab/////////-->
-        <div class="container my-4">
-            <!--NAVS AND TABS-->
+        <div class="container-fluid my-4">
+            <!-- NAVS AND TABS -->
             <ul class="nav nav-tabs" id="cardTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active">Disponibles</button>                
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active">Vendidas</button>                
-                </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="available-tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Disponibles</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sold-tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Vendidos</button>
+              </li>
             </ul>
-        </div>
-        <div class="row g-3 mt-1" id="cardContainer">
-            <!--Se genera con JS-->
-        </div>
+            <div class="row g-3 mt-1" id="cardContainer">
+              <!-- Se genera con JS -->
+            </div>
+          </div>
 
 
 

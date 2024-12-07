@@ -13,5 +13,10 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     void deleteByCarId(long id);
 
     Service findById(long id);
+
+
+    @Modifying
+    @Query(value = "UPDATE service SET status = :status WHERE id = :id", nativeQuery = true)
+    void changeStatus(long id, boolean status);
 }
 

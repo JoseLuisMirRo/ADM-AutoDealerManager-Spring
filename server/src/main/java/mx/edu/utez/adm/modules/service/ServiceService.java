@@ -62,6 +62,27 @@ public class ServiceService {
             return customResponseEntity.get404Response();
         }
     }
-
-
+    //Cambiar el estado de un servicio
+    @Transactional(rollbackFor = {SQLException.class, Exception.class})
+    public ResponseEntity<?> changeStatus(mx.edu.utez.adm.modules.service.Service service){
+        long id = service.getId();
+        mx.edu.utez.adm.modules.service.Service found = serviceRepository.findById(id);
+        if(found == null){
+            return customResponseEntity.get404Response();
+        }else{
+            try{
+                found.setStatus(service.isStatus());
+                serviceRepository.changeStatus(found.getId(), found.isStatus());
+                return customResponseEntity.getOkResponse(
+                        "Actualizacion de estado exitosa",
+                        null
+                );
+            }catch (Exception e){
+                return customResponseEntity.get400Response();
+            }
+        }
+    }
 }
+
+
+

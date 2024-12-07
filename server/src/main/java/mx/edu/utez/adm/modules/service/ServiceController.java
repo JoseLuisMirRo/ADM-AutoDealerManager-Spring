@@ -41,7 +41,7 @@ public class ServiceController {
     // Cambiar el estado de un cliente
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
     @PutMapping("/status")
-    public ResponseEntity<?> changeStatus(@RequestBody Service service, @PathVariable long id) {
-        return serviceService.changeStatus(service, id);
+    public ResponseEntity<?> changeStatus(@RequestBody Service service) {
+        return serviceService.changeStatus(service);
     }
 }

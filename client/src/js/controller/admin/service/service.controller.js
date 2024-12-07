@@ -242,27 +242,6 @@ const updateService = async () => {
 });
 };
 
-
-
-// Eliminar un servicio
-const deleteService = async () => {
-    await fetch(`${URL}/adm/service/${service.id}`, {
-        method: 'DELETE',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    })
-    .then(response => response.json())
-    .then(async response => {
-        console.log(response);
-        service = {};
-        await loadTable();
-    })
-    .catch(console.log);
-};
-
 const confirmChangeStatusService = (id, status) => {
     Swal.fire({
         title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} el cliente?`,
@@ -279,12 +258,12 @@ const confirmChangeStatusService = (id, status) => {
                 const response = await fetch(`${URL}/adm/service/status`, {
                     method: 'PUT',
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                         'accept': 'application/json'
                     },
                     body: JSON.stringify({ id: id, status: !status })
                 });
-
                 if (response.ok) {
                     // Mostrar confirmación de eliminación
                     Swal.fire(

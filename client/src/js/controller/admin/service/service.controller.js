@@ -69,7 +69,7 @@ const loadTable = async () => {
                 <td>${service.description}</td>
                 <td>${service.price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
                 <td>
-                ${service.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
+                ${service.status ? `<span class="badge-active-status">Activo</span>` : `<span class="badge-inactive-status">Inactivo</span>`}
                 </td>
                 <td>
                 <div class="btn-group" role="group" aria-label="Grupo de botones">

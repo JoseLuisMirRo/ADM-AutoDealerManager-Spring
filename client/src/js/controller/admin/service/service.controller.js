@@ -57,19 +57,16 @@ const findAllServices = async () => {
 // Cargar tabla de servicios
 const loadTable = async () => {
     await findAllServices();
-
-    let tbody = document.getElementById('services-table');
     let content = '';
     serviceList.forEach(service => {
         content += `
             <tr>
-                <td>${service.id}</td>
                 <td>${service.name}</td>
                 <td>${service.code}</td>
                 <td>${service.description}</td>
                 <td>${service.price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</td>
                 <td>
-                ${service.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
+                ${service.status ? `<span class="badge-active-status">Activo</span>` : `<span class="badge-inactive-status">Inactivo</span>`}
                 </td>
                 <td>
                 <div class="btn-group" role="group" aria-label="Grupo de botones">
@@ -88,7 +85,37 @@ const loadTable = async () => {
                 </td>
             </tr>`;
     });
+    if ($.fn.DataTable.isDataTable('#service-table')) {
+        $('#service-table').DataTable().destroy(); 
+    }
+
+    const tbody = document.getElementById('service-tbody');
     tbody.innerHTML = content;
+
+    const table = $('#service-table').DataTable({
+        dom: "lrtip",
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        columnDefs: [
+            { className: "text-center align-middle", targets: [0, 1, 2, 3, 4, 5] }, 
+            { orderable: false, targets: [4,5] }, 
+            { searchable: false, targets: [4,5] } 
+        ],
+        lengthMenu: [5, 10, 25], 
+        pageLength: 10,          
+        scrollX: true            
+    });
+    document.getElementById('custom-search-button').addEventListener('click', (event) => {
+        event.preventDefault(); // Evita recargar la página
+        const searchValue = document.getElementById('custom-search').value;
+        $('#brand-table').DataTable().search(searchValue).draw();
+    });
+
 };
 
 // Buscar servicio por ID

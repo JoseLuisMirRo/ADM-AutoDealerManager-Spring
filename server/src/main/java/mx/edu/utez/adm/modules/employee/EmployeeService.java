@@ -165,4 +165,20 @@ public class EmployeeService {
             }
         }
     }
+
+    //Traer empleados activos
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllActive(){
+        List<EmployeeDTO> list = new ArrayList<>();
+        String message = "";
+        if(employeeRepository.findAllActive().isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            for(Employee e : employeeRepository.findAllActive()){
+                list.add(transformEmployeeToDTO(e));
+            }
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
 }

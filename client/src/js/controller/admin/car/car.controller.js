@@ -52,15 +52,27 @@ const findAllCars = async()=> {
     }).catch(console.log);
 }
 
-const loadCards = async()=> {
+const loadCards = async(filter = 'onSale')=> {
     await findAllCars();
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
-    carList.forEach(car => {
-        content += createCarCard(car); //Agregamos cada tarjeta
-        cardContainer.innerHTML = content;
-    });
-}
+
+    //Filtra los autos según el estado 
+    const filteredCarList = carList.filter(car => filter === 'onSale' ? car.onSale : !car.onSale);
+
+    //Ordenamos por orden alfabetico
+    filteredCarList.sort((a, b) => a.brand.name.localeCompare(b.brand.name));
+
+    //Creamos las tarjetas
+    if (filteredCarList.length === 0) {
+        content = '<div class="col-12 text-center"><h3>No hay autos registrados</h3></div>';
+    } else {
+        filteredCarList.forEach(car => {
+            content += createCarCard(car); 
+        });
+    }
+    cardContainer.innerHTML = content;
+};
 
 const createCarCard = car => { 
     return `
@@ -120,13 +132,18 @@ const createCarCard = car => {
     `;
 };
 
-
 (async () =>{
     const requiredRoles = ['1'];
 
     if (!validateSessionAndRole(requiredRoles)) return;
 
-    await loadCards();
+    const availableTab = document.getElementById('available-tab');
+    const soldTab = document.getElementById('sold-tab');
+
+    availableTab.addEventListener('click', () => loadCards('onSale'));
+    soldTab.addEventListener('click', () => loadCards('sold'));
+
+    await loadCards('onSale');
 })()
 
 //Funcion para cargar datos en boton de ver mas 
@@ -169,7 +186,7 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
 
 //Funcion para cargar clientes para registrar nuevo auto
 const findAllCustomers = async()=> {
-    await fetch(`${URL}/adm/customer`, {
+    await fetch(`${URL}/adm/customer/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -183,7 +200,7 @@ const findAllCustomers = async()=> {
 
 //Funcion para cargar marcas para registrar nuevo auto 
 const findAllBrands = async()=> {
-    await fetch(`${URL}/adm/brand`, {
+    await fetch(`${URL}/adm/brand/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -197,7 +214,7 @@ const findAllBrands = async()=> {
 
 //Funcion para cargar servicios para registar nuevo auto 
 const findAllServices = async()=> {
-    await fetch([`${URL}/adm/service`], {
+    await fetch([`${URL}/adm/service/active`], {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -217,7 +234,7 @@ const loadCustomers = async()=> {
     let content = '<option value="" disabled selected>Seleccione un cliente</option>';
 
     if(customerList.length === 0){
-        content += '<opton>No hay clientes registrados</opton>'
+        content += '<option disabled>No hay clientes registrados</option>'
     }else{
         customerList.forEach(item => {
             content += `<option value=${item.id}>${item.name} ${item.lastname} ${item.surname}</option>`
@@ -235,7 +252,7 @@ const loadBrands = async (selectId) => {
     let content = '<option value="" disabled selected>Seleccione una marca</option>';
 
     if(brandList.length === 0){
-        content += '<option>No hay marcas registradas</option>'
+        content += '<option disabled>No hay marcas registradas</option>'
     }else{
         brandList.forEach(item => {
             content += `<option value=${item.id}>${item.name}</option>`
@@ -252,13 +269,9 @@ const loadServices = async()=> {
     let serviceSelect = document.getElementById('addServices');
     let content = '<option value="" disabled selected>Seleccione un servicio</option> <option value="">Ninguno</option>';
 
-    if(serviceList.length === 0){
-        content += '<option>No hay servicios registrados</option>'
-    }else{
         serviceList.forEach(item => {
             content += `<option value=${item.id} data-price=${item.price}>${item.name} | $${item.price}</option>`
         });
-    }
     serviceSelect.innerHTML = content;
 }
 
@@ -499,5 +512,4 @@ const saveBrand = async () => {
         form.reset();
     }).catch(console.log);
 };
-
 

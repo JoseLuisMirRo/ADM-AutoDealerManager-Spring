@@ -82,6 +82,16 @@ public class ServiceService {
             }
         }
     }
+
+    //Traer servicios activos
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllActive(){
+        List<mx.edu.utez.adm.modules.service.Service> list = serviceRepository.findAllActive();
+        String message = list.isEmpty()
+                ? "Aún no hay registros"
+                : "Operación exitosa";
+        return customResponseEntity.getOkResponse(message, list);
+    }
 }
 
 

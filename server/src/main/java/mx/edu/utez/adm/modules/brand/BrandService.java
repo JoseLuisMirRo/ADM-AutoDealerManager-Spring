@@ -120,5 +120,21 @@ public class BrandService {
         }
     }
 
+    //Traer marcas activas
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllActive(){
+        List<Brand> list = new ArrayList<>();
+        String message = "";
+        if(brandRepository.findAllActive().isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            for(Brand b : brandRepository.findAllActive()){
+                list.add(b);
+            }
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
+
 
 }

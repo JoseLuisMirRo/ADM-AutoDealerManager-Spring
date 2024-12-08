@@ -60,4 +60,11 @@ public class EmployeeController {
     //private ResponseEntity<?> deleteById(@RequestBody Employee idEmployee){
       //  return employeeService.deleteById(idEmployee);
     //}
+
+    //Traer empleados activos
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/active")
+    public ResponseEntity<?> findAllActive(){
+        return employeeService.findAllActive();
+    }
 }

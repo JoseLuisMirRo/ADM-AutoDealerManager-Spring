@@ -48,4 +48,11 @@ public class BrandController {
         return brandService.changeStatus(brand);
     }
 
+    //Traer marcas activas
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/active")
+    public ResponseEntity<?> findAllActive(){
+        return brandService.findAllActive();
+    }
+
 }

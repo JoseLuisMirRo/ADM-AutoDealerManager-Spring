@@ -212,7 +212,7 @@ function clearErrors() {
 
 
 const findAllEmployees = async () => {
-    await fetch(`${URL}/adm/employee`, {
+    await fetch(`${URL}/adm/employee/active`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -229,14 +229,15 @@ const loadSelect = async () => {
     let content = '<option value="" disabled selected>Seleccione un empleado</option>';
 
     if (employeeList.length === 0) {
-        content += '<option>No hay empleados registrados</option>';
+        content += '<option disabled>No hay empleados registrados</option>';
     } else {
         employeeList.forEach(employee => {
-            content += `<option value="${employee.id}">${employee.name}</option>`;
+            content += `<option value="${employee.id}">${employee.name} ${employee.lastname} ${employee.surname}</option>`;
         });
     }
     selectEmployee.innerHTML = content;
 };
+
 (async () => {
     const requiredRoles = ['1'];
     if(!validateSessionAndRole(requiredRoles)) return;
@@ -245,7 +246,6 @@ const loadSelect = async () => {
 
 const loadCustomers = async () => {
     await findAllCustomers();
-    let tbody = document.getElementById('tableCustomers');
     let content = '';
     customerList.forEach(customer => {
         content += `<tr>
@@ -254,7 +254,7 @@ const loadCustomers = async () => {
             <td>${customer.email}</td>
             <td>${customer.employee.name} ${customer.employee.lastname} ${customer.employee.surname}</td>
             <td>
-            ${customer.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
+            ${customer.status ? `<span class="badge-active-status">Activo</span>` : `<span class="badge-inactive-status">Inactivo</span>`}
             </td>
             <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Grupo de botones">
@@ -273,7 +273,38 @@ const loadCustomers = async () => {
             </td>
         </tr>`;
     });
+    
+    if($.fn.DataTable.isDataTable('#customer-table')){
+        $('#customer-table').DataTable().destroy();
+    }
+
+    const tbody = document.getElementById('customer-tbody');
     tbody.innerHTML = content;
+
+    const table = $('#customer-table').DataTable({
+        dom: "lrtip",
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        columnDefs: [
+            { className: "text-center align-middle", targets: [0, 1, 2, 3, 4, 5] }, 
+            { orderable: false, targets: [4,5] }, 
+            { searchable: false, targets: [4,5] } 
+        ],
+        lengthMenu: [5, 10, 25], 
+        pageLength: 10,          
+        scrollX: true            
+    });
+
+document.getElementById('custom-search-button').addEventListener('click', (event) => {
+    event.preventDefault(); // Evita recargar la página
+    const searchValue = document.getElementById('custom-search').value;
+    $('#brand-table').DataTable().search(searchValue).draw();
+});
 };
 
 // Función que muestra el SweetAlert2 para confirmar el cambio de estado del cliente -> Se puede implementar en los otros controladores

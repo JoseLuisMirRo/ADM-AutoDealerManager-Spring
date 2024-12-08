@@ -178,5 +178,19 @@ public class CustomerService {
             }
         }
     }
+
+    //Traer todos los clientes activos
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> findAllActive(){
+        List<CustomerDTO> list = new ArrayList<>();
+        String message = "";
+        if(customerRepository.findAllActive().isEmpty()) {
+            message = "Aun no hay registros";
+        } else {
+            message = "Operacion exitosa";
+            list = transformCustomersToDTOs(customerRepository.findAllActive());
+        }
+        return customResponseEntity.getOkResponse(message, list);
+    }
 }
 

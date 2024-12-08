@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
     Brand findById(long id);
@@ -19,6 +21,10 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Modifying
     @Query(value = "UPDATE brand SET status = :status WHERE id = :id", nativeQuery = true)
     void changeStatus(long id, boolean status);
+
+    //Traer marcas activas
+    @Query(value = "SELECT * FROM brand WHERE status = 1", nativeQuery = true)
+    List<Brand> findAllActive();
 
 
 }

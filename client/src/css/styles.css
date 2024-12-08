@@ -95,3 +95,31 @@
 .hidden {
     display: none;
 }
+
+.dt-info{
+    padding-top: 20px;
+}
+
+.dt-length{
+    padding-bottom: 20px;
+}
+
+.page-link {
+    background-color: #0d404a; /* Color de fondo */
+    color: white;             /* Color del texto */
+    border: 1px solid #0d404a; /* Borde */
+}
+
+.page-link:hover {
+    background-color: #073238; /* Color al pasar el mouse */
+    color: white;
+    border: 1px solid #073238;
+}
+
+.page-link[aria-current="page"] {
+    background-color: #0d404a; /* Color del botón activo */
+    color: white;
+    border: 1px solid #0d404a;
+}
+
+

@@ -41,6 +41,13 @@ public class CustomerController {
         return customerService.findByIdEmployee(idEmployee, idCustomer);
     }
 
+    //Traer clientes activos
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
+    @GetMapping("/active")
+    public ResponseEntity<?> findAllActive() {
+        return customerService.findAllActive();
+    }
+
     // Crear un nuevo cliente
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_OPERATOR')")
     @PostMapping

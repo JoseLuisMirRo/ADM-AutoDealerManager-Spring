@@ -237,6 +237,7 @@ const loadSelect = async () => {
     }
     selectEmployee.innerHTML = content;
 };
+
 (async () => {
     const requiredRoles = ['1'];
     if(!validateSessionAndRole(requiredRoles)) return;
@@ -245,7 +246,6 @@ const loadSelect = async () => {
 
 const loadCustomers = async () => {
     await findAllCustomers();
-    let tbody = document.getElementById('tableCustomers');
     let content = '';
     customerList.forEach(customer => {
         content += `<tr>
@@ -273,7 +273,38 @@ const loadCustomers = async () => {
             </td>
         </tr>`;
     });
+    
+    if($.fn.DataTable.isDataTable('#customer-table')){
+        $('#customer-table').DataTable().destroy();
+    }
+
+    const tbody = document.getElementById('customer-tbody');
     tbody.innerHTML = content;
+
+    const table = $('#customer-table').DataTable({
+        dom: "lrtip",
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        columnDefs: [
+            { className: "text-center align-middle", targets: [0, 1, 2, 3, 4, 5] }, 
+            { orderable: false, targets: [4,5] }, 
+            { searchable: false, targets: [4,5] } 
+        ],
+        lengthMenu: [5, 10, 25], 
+        pageLength: 10,          
+        scrollX: true            
+    });
+
+document.getElementById('custom-search-button').addEventListener('click', (event) => {
+    event.preventDefault(); // Evita recargar la página
+    const searchValue = document.getElementById('custom-search').value;
+    $('#brand-table').DataTable().search(searchValue).draw();
+});
 };
 
 // Función que muestra el SweetAlert2 para confirmar el cambio de estado del cliente -> Se puede implementar en los otros controladores

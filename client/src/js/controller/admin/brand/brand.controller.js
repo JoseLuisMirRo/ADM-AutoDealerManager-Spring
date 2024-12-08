@@ -53,12 +53,10 @@ const findAllBrands = async () => {
 
 const loadTable = async () => {
     await findAllBrands();
-    let tbody = document.getElementById('brand-table');
     let content = "";
     brandList.forEach(brand => {
         //No me encanta el numeral pero asi viene el diseño!!!!
         content += `<tr>
-             <th scope="row">${brandList.indexOf(brand) + 1}</th> 
             <!--Nombre Marca-->
             <td>${brand.name}</td>
             <td>
@@ -82,7 +80,39 @@ const loadTable = async () => {
             </td>
             </tr>`
     });
+    if ($.fn.DataTable.isDataTable('#brand-table')) {
+        $('#brand-table').DataTable().destroy(); 
+    }
+    
+    // Insertar contenido en el tbody
+    const tbody = document.getElementById('brand-tbody');
     tbody.innerHTML = content;
+    
+    // Inicializar DataTable
+   const table = $('#brand-table').DataTable({
+        dom: "lrtip",
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        columnDefs: [
+            { className: "text-center align-middle", targets: [0, 1, 2] }, 
+            { orderable: false, targets: [1,2] }, 
+            { searchable: false, targets: [1,2] } 
+        ],
+        lengthMenu: [5, 10, 25], 
+        pageLength: 10,          
+        scrollX: true            
+    });
+
+document.getElementById('custom-search-button').addEventListener('click', (event) => {
+    event.preventDefault(); // Evita recargar la página
+    const searchValue = document.getElementById('custom-search').value;
+    $('#brand-table').DataTable().search(searchValue).draw();
+});
 }
 
 (async () => {

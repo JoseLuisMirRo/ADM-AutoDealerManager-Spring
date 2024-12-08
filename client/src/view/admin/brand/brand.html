@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../../css/navbar.css" rel="stylesheet">
     <link href="../../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../css/sweetalert2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cached" />
     <link rel="stylesheet" href="../../../css/styles.css">
+    <link href="../../../css/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.8/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=cached" />
     <title>AutoDealerManager-Marcas</title>
 </head>
 <body>
@@ -80,8 +81,8 @@
                 <!-- Filtro de búsqueda -->
                 <div class="col-md-6 text-start mb-1">
                     <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Filtro de búsqueda" aria-label="Search">
-                        <button class="btn btn-outline-secondary" type="submit">
+                        <input class="form-control me-2" id="custom-search" placeholder="Filtro de búsqueda" type="button"aria-label="Search">
+                        <button class="btn btn-outline-secondary" id="custom-search-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                             </svg>
@@ -101,18 +102,16 @@
             </div>
         </section> 
         
-        <div class="table-resposivle mt-5">
-            <table class="table table-hover">
-                <thead class="table-light">
+        <div class="m-5">
+            <table id="brand-table" class="table table-hover">
+                <thead class="table-header table-light">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Nombre de la marca</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="brand-table">
-                </tbody>
+                <tbody id="brand-tbody"></tbody>
             </table>
         </div>
     </main> 
@@ -170,6 +169,7 @@
 </div>
     </div>
     <script src="../../../js/navbar.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.8/datatables.min.js"></script>
     <script src="../../../js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/sweetalert2.all.min.js"></script>
     <script src="../../../js/controller/admin/brand/brand.controller.js"></script>"

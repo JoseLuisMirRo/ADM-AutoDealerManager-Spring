@@ -238,12 +238,6 @@ const loadSelect = async () => {
     selectEmployee.innerHTML = content;
 };
 
-(async () => {
-    const requiredRoles = ['1'];
-    if(!validateSessionAndRole(requiredRoles)) return;
-    await loadSelect();
-})();
-
 const loadCustomers = async () => {
     await findAllCustomers();
     let content = '';
@@ -280,6 +274,7 @@ const loadCustomers = async () => {
 
     const tbody = document.getElementById('customer-tbody');
     tbody.innerHTML = content;
+    document.getElementById('custom-search').value = '';
 
     const table = $('#customer-table').DataTable({
         dom: "lrtip",
@@ -303,9 +298,34 @@ const loadCustomers = async () => {
 document.getElementById('custom-search-button').addEventListener('click', (event) => {
     event.preventDefault(); // Evita recargar la página
     const searchValue = document.getElementById('custom-search').value;
-    $('#brand-table').DataTable().search(searchValue).draw();
+    $('#customer-table').DataTable().search(searchValue).draw();
 });
 };
+
+(async () => {
+    const requiredRoles = ['1'];
+    if(!validateSessionAndRole(requiredRoles)) return;
+
+    const searchInput = document.getElementById('custom-search');
+    const clearSearchButton = document.getElementById('clear-search-button');
+
+    searchInput.addEventListener('input', () => {
+        if(searchInput.value.trim() === ''){
+            clearSearchButton.style.display = 'none';
+        }else{
+            clearSearchButton.style.display = 'block';
+        }
+    });
+
+    clearSearchButton.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchButton.style.display = 'none';
+        loadCustomers();
+    });
+
+    await loadCustomers();
+    await loadSelect();
+})();
 
 // Función que muestra el SweetAlert2 para confirmar el cambio de estado del cliente -> Se puede implementar en los otros controladores
 const confirmChangeStatusCustomer = (id, status) => {
@@ -358,10 +378,6 @@ const confirmChangeStatusCustomer = (id, status) => {
         }
     });
 };
-// Cargar los clientes al inicio
-(async () => {
-    await loadCustomers();
-})();
 
 const findById = async id => {
     await fetch(`${URL}/adm/customer/${id}`, {

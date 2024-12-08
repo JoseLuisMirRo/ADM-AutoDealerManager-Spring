@@ -211,7 +211,6 @@ function clearErrors() {
 
 const loadCustomers = async () => {
     await findAllCustomers();
-    let tbody = document.getElementById('tableCustomers');
     let content = '';
     customerList.forEach(customer => {
         content += `<tr>
@@ -219,7 +218,7 @@ const loadCustomers = async () => {
             <td>${customer.phone}</td>
             <td>${customer.email}</td>
             <td>
-            ${customer.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
+            ${customer.status ? `<span class="badge-active-status">Activo</span>` : `<span class="badge-inactive-status">Inactivo</span>`}
             </td>
             <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Grupo de botones">
@@ -238,8 +237,41 @@ const loadCustomers = async () => {
             </td>
         </tr>`;
     });
+
+    if($.fn.DataTable.isDataTable('#customer-table')){
+        $('#customer-table').DataTable().destroy();
+    }
+
+    const tbody = document.getElementById('customer-tbody');
     tbody.innerHTML = content;
+    document.getElementById('custom-search').value = '';
+
+    const table = $('#customer-table').DataTable({
+        dom: "lrtip",
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        columnDefs: [
+            { className: "text-center align-middle", targets: [0, 1, 2, 3, 4] }, 
+            { orderable: false, targets: [3,4] }, 
+            { searchable: false, targets: [3,4] } 
+        ],
+        lengthMenu: [5, 10, 25], 
+        pageLength: 10,          
+        scrollX: true            
+    });
+
+document.getElementById('custom-search-button').addEventListener('click', (event) => {
+    event.preventDefault(); // Evita recargar la página
+    const searchValue = document.getElementById('custom-search').value;
+    $('#customer-table').DataTable().search(searchValue).draw();
+});
 };
+
 
 // Función que muestra el SweetAlert2 para confirmar el cambio de estado del cliente -> Se puede implementar en los otros controladores
 const confirmChangeStatusCustomer = (id, status) => {
@@ -387,5 +419,23 @@ const update = async () => {
 (async () => {
     const requiredRoles = ['2'];
     if (!validateSessionAndRole(requiredRoles)) return false;
+
+    const searchInput = document.getElementById('custom-search');
+    const clearSearchButton = document.getElementById('clear-search-button');
+
+    searchInput.addEventListener('input', () => {
+        if(searchInput.value.trim() === ''){
+            clearSearchButton.style.display = 'none';
+        }else{
+            clearSearchButton.style.display = 'block';
+        }
+    });
+
+    clearSearchButton.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchButton.style.display = 'none';
+        loadCustomers();
+    });
+
     await loadCustomers();
 })();

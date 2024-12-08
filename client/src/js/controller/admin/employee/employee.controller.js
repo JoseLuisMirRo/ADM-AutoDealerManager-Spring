@@ -96,6 +96,7 @@ const loadTable = async () => {
     // Insertar contenido en el tbody
     const tbody = document.getElementById('employee-tbody');
     tbody.innerHTML = content;
+    document.getElementById('custom-search').value = '';
 
     // Inicializar DataTable
     const table = $('#employee-table').DataTable({
@@ -128,6 +129,24 @@ const loadTable = async () => {
 (async () => {
     const requiredRoles = ['1'];
     if(!validateSessionAndRole(requiredRoles)) return;
+
+    const searchButton = document.getElementById('custom-search-button');
+    const searchInput = document.getElementById('custom-search');
+    const clearSearchButton = document.getElementById('clear-search-button');
+
+    searchInput.addEventListener('input', () => {
+        if(searchInput.value.trim() === ''){
+            clearSearchButton.style.display = 'none';
+        }else{
+            clearSearchButton.style.display = 'block';
+        }
+    });
+
+    clearSearchButton.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchButton.style.display = 'none';
+        loadTable();
+    });
 
     await loadTable();
 })();

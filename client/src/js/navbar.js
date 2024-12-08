@@ -7,6 +7,19 @@
             link.classList.add('active');
         }
     });
+
+    const userDataField = document.getElementById('user-data');
+    const userRoleField = document.getElementById('user-role');
+
+    let userData =localStorage.getItem('userData');
+    userDataField.innerHTML = userData;
+
+    let userRole = (localStorage.getItem('role') === '1')
+        ? 'Administrador'
+        : 'Empleado';
+
+    userRoleField.innerHTML = userRole;
+
 })();
 
 const logout = () => {

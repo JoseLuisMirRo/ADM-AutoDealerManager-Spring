@@ -56,8 +56,8 @@
                           </svg>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style="width: 250px;">
-                        <li><a class="dropdown-item-text text-end"><%=user.getFirstName()%> <%=user.getLastNameP()%> <%=user.getLastNameM()%></a></li>
-                        <li><a class="dropdown-item-text text-end"><%=user.getRole().getName()%></a></li>
+                        <li><a class="dropdown-item-text text-end" id="user-data"></a></li>
+                        <li><a class="dropdown-item-text text-end" id="user-role"></a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <button type="button" class="dropdown-item text-danger" onclick="logout()">Cerrar sesión</button>

@@ -32,6 +32,7 @@ const login = async () => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('role', response.data.roleId);
             localStorage.setItem('employeeId', response.data.employeeId);
+            localStorage.setItem('userData', response.data.userData)
             if(response.data.roleId === 1) window.location.href = 'src/view/admin/car/car-catalog.html';
             if(response.data.roleId === 2) window.location.href = 'src/view/operator/car/car-catalog-operator.html';
         
@@ -47,7 +48,15 @@ const login = async () => {
             });
         } else {
             spinner.classList.add('visually-hidden');
-            alert(response.message);
         }
-    }).catch(console.log);
+    }).catch(error){
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al iniciar sesión',
+            text: 'Ocurrió un error al iniciar sesión, intente de nuevo',
+            confirmButtonText: 'Reintentar',
+            confirmButtonColor: '#ff0000'
+        });
+    };
 }

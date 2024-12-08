@@ -132,7 +132,6 @@ const createCarCard = car => {
     `;
 };
 
-
 (async () =>{
     const requiredRoles = ['1'];
 
@@ -513,5 +512,4 @@ const saveBrand = async () => {
         form.reset();
     }).catch(console.log);
 };
-
 

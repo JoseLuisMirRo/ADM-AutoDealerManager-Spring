@@ -97,15 +97,23 @@ const findAllCars = async (employeeId) => {
 
 
 
-const loadCards = async()=> {
-    await findAllCars(employeeId);
+const loadCards = async(filter = 'onSale')=> {
+    let filteredCarList = await (filter === 'onSale' ? findOnSaleCars() : findEmployeeClientCars(employeeId));
+    filteredCarList.sort((a, b) => a.brand.name.localeCompare(b.brand.name));
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
-    console.log(carList);
-    carList.forEach(car => {
-        content += createCarCard(car); //Agregamos cada tarjeta
-        cardContainer.innerHTML = content;
-    });
+
+    if(filteredCarList.length === 0){
+        content = `<div class="col-12 text-center mt-5">
+                        <h3>No hay autos ${filter === 'onSale' ? 'disponibles' : 'vendidos'}</h3>
+                    </div>`;
+    } else {
+        filteredCarList.forEach(car => {
+            content += createCarCard(car); //Agregamos cada tarjeta
+        });
+    }
+    cardContainer.innerHTML = content;
+    carList = filteredCarList;
 }
 
 const createCarCard = car => {
@@ -151,7 +159,13 @@ const createCarCard = car => {
 
     if (!validateSessionAndRole(requiredRoles)) return;
 
-    await loadCards();
+    const availableTab = document.getElementById('available-tab');
+    const soldTab = document.getElementById('sold-tab');
+
+    availableTab.addEventListener('click', () => loadCards('onSale'));
+    soldTab.addEventListener('click', () => loadCards('sold'));
+
+    await loadCards('onSale');
 })()
 
 //Funcion para cargar datos en boton de ver mas 
@@ -192,47 +206,6 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
     }
 });
 
-//Funcion para cargar clientes para registrar nuevo auto
-const findAllEmployeeCustomers = async()=> {
-    await fetch(`${URL}/adm/customer/employee/${employeeId}`, {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    }).then(response => response.json()).then(response => {
-        customerList = response.data;
-    }).catch(console.log);
-}
-
-//Funcion para cargar marcas para registrar nuevo auto 
-const findAllBrands = async()=> {
-    await fetch(`${URL}/adm/brand`, {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    }).then(response => response.json()).then(response => {
-        brandList = response.data;
-    }).catch(console.log);
-}
-
-//Funcion para cargar servicios para registar nuevo auto 
-const findAllServices = async()=> {
-    await fetch([`${URL}/adm/service`], {
-        method: 'GET',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    }).then(response => response.json()).then(response => {
-        serviceList = response.data;
-    }).catch(console.log);
-}
 
 //Funcion para cargar los clientes para los select
 const loadCustomers = async()=> {
@@ -250,71 +223,6 @@ const loadCustomers = async()=> {
     }
     customerSelect.innerHTML = content;
 
-}
-
-//Funcion para cargar las marcas para los select
-const loadBrands = async (selectId) => {
-    await findAllBrands();
-    console.log(selectId);
-    let brandSelect = document.getElementById(selectId);
-    let content = '<option value="" disabled selected>Seleccione una marca</option>';
-
-    if(brandList.length === 0){
-        content += '<option>No hay marcas registradas</option>'
-    }else{
-        brandList.forEach(item => {
-            content += `<option value=${item.id}>${item.name}</option>`
-        });
-    }
-    brandSelect.innerHTML = content;
-
-}
-
-//Funcion para cargar los servicios para los select
-const loadServices = async()=> {
-    await findAllServices();
-
-    let serviceSelect = document.getElementById('addServices');
-    let content = '<option value="" disabled selected>Seleccione un servicio</option> <option value="">Ninguno</option>';
-
-    if(serviceList.length === 0){
-        content += '<option>No hay servicios registrados</option>'
-    }else{
-        serviceList.forEach(item => {
-            content += `<option value=${item.id} data-price=${item.price}>${item.name} | $${item.price}</option>`
-        });
-    }
-    serviceSelect.innerHTML = content;
-}
-
-
-const saveCar = async()=>{
-    let form = document.getElementById('saveCarForm')
-
-    car = {
-        model: document.getElementById('addModel').value,
-        color: document.getElementById('addColor').value,
-        basePrice: document.getElementById('addPrice').value,
-        brand:{
-            id: document.getElementById('addBrand').value
-        }
-    };
-
-    await fetch(`${URL}/adm/car`,{
-        method:"POST",
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(car)
-    }).then(response => response.json()).then(async response=>{
-        console.log(car);
-        console.log(response);
-        car={};
-        await loadCards();
-        form.reset();
-    }).catch(console.log);
 }
 
 //Funcion para cargar datos en modal de venta

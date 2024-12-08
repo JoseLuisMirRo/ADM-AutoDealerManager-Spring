@@ -254,7 +254,7 @@ const loadCustomers = async () => {
             <td>${customer.email}</td>
             <td>${customer.employee.name} ${customer.employee.lastname} ${customer.employee.surname}</td>
             <td>
-            ${customer.status ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`}
+            ${customer.status ? `<span class="badge-active-status">Activo</span>` : `<span class="badge-inactive-status">Inactivo</span>`}
             </td>
             <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Grupo de botones">

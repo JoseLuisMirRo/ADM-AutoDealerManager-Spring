@@ -49,7 +49,7 @@ const login = async () => {
         } else {
             spinner.classList.add('visually-hidden');
         }
-    }).catch(error){
+    }).catch((error) => {
         console.error('Error:', error);
         Swal.fire({
             icon: 'error',
@@ -58,5 +58,5 @@ const login = async () => {
             confirmButtonText: 'Reintentar',
             confirmButtonColor: '#ff0000'
         });
-    };
+    });
 }

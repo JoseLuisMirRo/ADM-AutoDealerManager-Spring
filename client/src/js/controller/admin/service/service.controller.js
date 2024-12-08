@@ -91,6 +91,7 @@ const loadTable = async () => {
 
     const tbody = document.getElementById('service-tbody');
     tbody.innerHTML = content;
+    document.getElementById('custom-search').value = '';
 
     const table = $('#service-table').DataTable({
         dom: "lrtip",
@@ -113,7 +114,7 @@ const loadTable = async () => {
     document.getElementById('custom-search-button').addEventListener('click', (event) => {
         event.preventDefault(); // Evita recargar la página
         const searchValue = document.getElementById('custom-search').value;
-        $('#brand-table').DataTable().search(searchValue).draw();
+        $('#service-table').DataTable().search(searchValue).draw();
     });
 
 };
@@ -322,5 +323,23 @@ const confirmChangeStatusService = (id, status) => {
 (async () => {
     const requiredRoles = ['1'];
     if(!validateSessionAndRole(requiredRoles)) return;
+
+    const searchInput = document.getElementById('custom-search');
+    const clearSearchButton = document.getElementById('clear-search-button');
+
+    searchInput.addEventListener('input', () => {
+        if(searchInput.value.trim() === ''){
+            clearSearchButton.style.display = 'none';
+        }else{
+            clearSearchButton.style.display = 'block';
+        }
+    });
+
+    clearSearchButton.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchButton.style.display = 'none';
+        loadTable();
+    });
+
     await loadTable();
 })();

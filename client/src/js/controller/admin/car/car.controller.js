@@ -52,13 +52,21 @@ const findAllCars = async()=> {
     }).catch(console.log);
 }
 
-const loadCards = async(filter = 'onSale')=> {
+const loadCards = async(filter = 'onSale', searchTerm = '')=> {
     await findAllCars();
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
 
     //Filtra los autos según el estado 
-    const filteredCarList = carList.filter(car => filter === 'onSale' ? car.onSale : !car.onSale);
+    const filteredCarList = carList
+        .filter(car => (filter === 'onSale' ? car.onSale : !car.onSale))
+        .filter(car => {
+            if(filter==='onSale') {
+                return car.brand.name.toLowerCase().includes(searchTerm.toLowerCase()) || car.model.toLowerCase().includes(searchTerm.toLowerCase());
+            } else {
+                return car.customer && car.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+            }
+        })
 
     //Ordenamos por orden alfabetico
     filteredCarList.sort((a, b) => a.brand.name.localeCompare(b.brand.name));
@@ -81,9 +89,12 @@ const createCarCard = car => {
                 <div class="card-body mb-1">
                     <div class="d-flex justify-content-between">
                         <h4>${car.brand.name}</h4>
-                        ${car.onSale ? `<div class="px-2 badge-activeAuto"> Disponible</div>` : `<div class="px-2 badge-soldAuto"> Vendido</div>`}
+                        ${car.onSale ? `<div class="px-2 badge-activeAuto"> Disponible</div>` : `<div class="px-2 badge-soldAuto"> Vendido</div> `}
                     </div>
+                    <div class="d-flex justify-content-between">
                     <h4>${car.model}</h4>
+                    ${!car.onSale ? `<span class="badge-owner"><small>Propietario: ${car.customer.name} ${car.customer.surname} ${car.customer.lastname}</small></span>` : ``}	
+                    </div>
                     <div class="row align-items-center">
                         <div class="col text-start m-3 ms-0">
                             <div class="d-flex justify-content-between">
@@ -139,9 +150,45 @@ const createCarCard = car => {
 
     const availableTab = document.getElementById('available-tab');
     const soldTab = document.getElementById('sold-tab');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const clearSearch = document.getElementById('clearSearch');
 
-    availableTab.addEventListener('click', () => loadCards('onSale'));
-    soldTab.addEventListener('click', () => loadCards('sold'));
+    searchInput.addEventListener('input', () => {
+        if(searchInput.value.trim() === ''){
+            clearSearch.style.display = 'none';
+        }else{
+            clearSearch.style.display = 'block';
+        }
+    });
+
+    clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearch.style.display = 'none';
+        loadCards(currentFilter, '');
+    });
+
+    let currentFilter = 'onSale';
+    searchInput.placeholder="Buscar por marca y/o modelo";
+
+    availableTab.addEventListener('click', () => {
+        currentFilter = 'onSale';
+        searchInput.value = '';
+        searchInput.placeholder="Buscar por marca y/o modelo";
+        loadCards(currentFilter, searchInput.value);
+    });
+
+    soldTab.addEventListener('click', () => {
+        currentFilter = 'sold';
+        searchInput.value = '';
+        searchInput.placeholder="Buscar por nombre cliente";
+        loadCards(currentFilter, searchInput.value);
+    });
+
+    searchButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        loadCards(currentFilter, searchInput.value);
+    });
 
     await loadCards('onSale');
 })()

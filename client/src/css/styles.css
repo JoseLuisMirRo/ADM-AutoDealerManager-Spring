@@ -37,6 +37,16 @@
     padding: 0 12px; 
     width: fit-content;
     background-color:#d1f6da;
+    color:;
+}
+
+.badge-owner{
+    border-radius: 16px;
+    height: 32px;
+    line-height: 32px; 
+    padding: 0 12px; 
+    width: fit-content;
+    background-color:#deecfa;
     color:#223f34;
 }
 

@@ -57,6 +57,9 @@ const loadCards = async(filter = 'onSale', searchTerm = '')=> {
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
 
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearSearch').style.display = 'none';
+
     //Filtra los autos según el estado 
     const filteredCarList = carList
         .filter(car => (filter === 'onSale' ? car.onSale : !car.onSale))
@@ -73,7 +76,9 @@ const loadCards = async(filter = 'onSale', searchTerm = '')=> {
 
     //Creamos las tarjetas
     if (filteredCarList.length === 0) {
-        content = '<div class="col-12 text-center"><h3>No hay autos registrados</h3></div>';
+        content = `<div class="col-12 text-center mt-5">
+                        <h3>No hay autos ${filter === 'onSale' ? 'disponibles' : 'vendidos'}</h3>
+                    </div>`;
     } else {
         filteredCarList.forEach(car => {
             content += createCarCard(car); 
@@ -181,7 +186,7 @@ const createCarCard = car => {
     soldTab.addEventListener('click', () => {
         currentFilter = 'sold';
         searchInput.value = '';
-        searchInput.placeholder="Buscar por nombre cliente";
+        searchInput.placeholder="Buscar por nombre de cliente";
         loadCards(currentFilter, searchInput.value);
     });
 

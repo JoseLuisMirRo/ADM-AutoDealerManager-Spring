@@ -52,7 +52,7 @@ const findOnSaleCars = async () => {
         });
 
         const data = await response.json();
-        return data.data; 
+        return data.data || []; 
     } catch (error) {
         console.error("Error en findOnSaleCars:", error);
         throw error; 
@@ -71,7 +71,7 @@ const findEmployeeClientCars = async (employeeId) => {
         });
 
         const data = await response.json();
-        return data.data; 
+        return data.data || []; 
     } catch (error) {
         console.error("Error en findEmployeeClientCars:", error);
         throw error; 
@@ -97,60 +97,78 @@ const findAllCars = async (employeeId) => {
 
 
 
-const loadCards = async(filter = 'onSale')=> {
-    let filteredCarList = await (filter === 'onSale' ? findOnSaleCars() : findEmployeeClientCars(employeeId));
-    filteredCarList.sort((a, b) => a.brand.name.localeCompare(b.brand.name));
+const loadCards = async (filter = 'onSale', searchTerm = '') => {
     let cardContainer = document.getElementById('cardContainer');
     let content = '';
 
-    if(filteredCarList.length === 0){
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearSearch').style.display = 'none';
+
+    const filteredCarList = await (filter === 'onSale' ? findOnSaleCars() : findEmployeeClientCars(employeeId));
+
+    const finalCarList = filteredCarList.filter(car => {
+        if (filter === 'onSale') {
+            return car.brand.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                car.model.toLowerCase().includes(searchTerm.toLowerCase());
+        } else {
+            return car.customer && car.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+    });
+
+    if(finalCarList.length === 0){
         content = `<div class="col-12 text-center mt-5">
                         <h3>No hay autos ${filter === 'onSale' ? 'disponibles' : 'vendidos'}</h3>
                     </div>`;
     } else {
-        filteredCarList.forEach(car => {
-            content += createCarCard(car); //Agregamos cada tarjeta
+        finalCarList.forEach(car => {
+            content += createCarCard(car); 
         });
     }
     cardContainer.innerHTML = content;
-    carList = filteredCarList;
+    carList = finalCarList;
 }
 
 const createCarCard = car => {
-    return `<div class="col-12 col-md-6 col-lg-3">
-                <div class="card shadow">
-                    <div class="card-body mb-1">
-                        <div class="d-flex justify-content-between">
-                            <h4>${car.brand.name}</h4>
-                            ${car.onSale ? `<div class="px-2 badge-activeAuto"> Disponible</div>` : `<div class="px-2 badge-soldAuto"> Vendido</div>`}
-                        </div>
-                        <h4>${car.model}</h4>
-                        <div class="row align-items-center">
-                            <div class="col text-start m-3 ms-0">
-                                <div class="d-flex justify-content-between">
-                                    <div class="btn-group " role="group" aria-label="Grupo de botones">
-                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#seeMore" data-car-id="${car.id}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-                                            </svg>
-                                        </button>
-                                    </div>
+    return `
+     <div class="col-12 col-md-6 col-lg-3">
+            <div class="card shadow">
+                <div class="card-body mb-1">
+                    <div class="d-flex justify-content-between">
+                        <h4>${car.brand.name}</h4>
+                        ${car.onSale ? `<div class="px-2 badge-activeAuto"> Disponible</div>` : `<div class="px-2 badge-soldAuto"> Vendido</div> `}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                    <h4>${car.model}</h4>
+                    ${!car.onSale ? `<span class="badge-owner"><small>Propietario: ${car.customer.name} ${car.customer.surname} ${car.customer.lastname}</small></span>` : ``}	
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col text-start m-3 ms-0">
+                            <div class="d-flex justify-content-between">
+                                <div class="btn-group" role="group" aria-label="Grupo de botones">
+                                    <!-- Botón Ver Más o Alternativa -->
+                                    ${car.onSale ? `
+                                        <button type="button" class="btn" data-bs-toggle="modal" style="background-color: #3d728f; color: white ;" data-bs-target="#seeMore" data-car-id="${car.id}">
+                                            Información del Auto
+                                        </button>` 
+                                        : `
+                                        <button type="button" class="btn" style="background-color: #3d728f; color: white ;" data-bs-toggle="modal" data-bs-target="#seeMore" data-car-id="${car.id}">
+                                            Informacion De Venta
+                                        </button>`}
                                 </div>
                             </div>
-                            ${car.onSale ? `
-                            <div class="col col-md col-lg text-end">
-                                <button class=" btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}"> 
-                                    <img src="../../../img/moneda.png" style="height: 43px; width: 43px;">
-                                </button>
-                                `: ``}
-                            </div>
                         </div>
-                        
+                        <!-- Botón Vender (Visible siempre) -->
+                        ${car.onSale ? `
+                        <div class="col col-md col-lg text-end">
+                            <button class="btn btn-outline-light rounded-circle" data-bs-toggle="modal" data-bs-target="#saleCarModal" data-car-id="${car.id}"> 
+                                <img src="../../../img/moneda.png" style="height: 43px; width: 43px;">
+                            </button>
+                        </div>` : ``}
                     </div>
                 </div>
             </div>
-                `;
+        </div>
+    `
 
 };
 
@@ -161,12 +179,45 @@ const createCarCard = car => {
 
     const availableTab = document.getElementById('available-tab');
     const soldTab = document.getElementById('sold-tab');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const clearSearch = document.getElementById('clearSearch');
 
-    availableTab.addEventListener('click', () => loadCards('onSale'));
-    soldTab.addEventListener('click', () => loadCards('sold'));
+    let currentFilter = 'onSale';
+    searchInput.placeholder="Buscar por marca o modelo";
+
+    // Manejadores de eventos para el filtro
+    searchInput.addEventListener('input', () => {
+        clearSearch.style.display = searchInput.value.trim() ? 'block' : 'none';
+    });
+
+    clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearch.style.display = 'none';
+        loadCards(currentFilter, '');
+    });
+
+    availableTab.addEventListener('click', () => {
+        currentFilter = 'onSale';
+        searchInput.value = '';
+        searchInput.placeholder="Buscar por marca o modelo";
+        loadCards(currentFilter, '');
+    });
+
+    soldTab.addEventListener('click', () => {
+        currentFilter = 'sold';
+        searchInput.value = '';
+        searchInput.placeholder="Buscar por nombre de cliente";
+        loadCards(currentFilter, '');
+    });
+
+    searchButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        loadCards(currentFilter, searchInput.value);
+    });
 
     await loadCards('onSale');
-})()
+})();
 
 //Funcion para cargar datos en boton de ver mas 
 document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
@@ -206,6 +257,47 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
     }
 });
 
+const findAllEmployeeCustomers = async()=> {
+    await fetch(`${URL}/adm/customer/employee/${employeeId}`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        customerList = response.data;
+    }).catch(console.log);
+}
+
+//Funcion para cargar servicios para registar nuevo auto 
+const findAllServices = async()=> {
+    await fetch([`${URL}/adm/service`], {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }).then(response => response.json()).then(response => {
+        serviceList = response.data;
+    }).catch(console.log);
+}
+
+//Funcion para cargar los servicios para los select
+const loadServices = async()=> {
+    await findAllServices();
+    let serviceSelect = document.getElementById('addServices');
+    let content = '<option value="" disabled selected>Seleccione un servicio</option> <option value="">Ninguno</option>';
+    if(serviceList.length === 0){
+        content += '<option>No hay servicios registrados</option>'
+    }else{
+        serviceList.forEach(item => {
+            content += `<option value=${item.id} data-price=${item.price}>${item.name} | $${item.price}</option>`
+        });
+    }
+    serviceSelect.innerHTML = content;
+}
 
 //Funcion para cargar los clientes para los select
 const loadCustomers = async()=> {
@@ -224,6 +316,8 @@ const loadCustomers = async()=> {
     customerSelect.innerHTML = content;
 
 }
+
+
 
 //Funcion para cargar datos en modal de venta
 document.getElementById('saleCarModal').addEventListener('show.bs.modal', event => {

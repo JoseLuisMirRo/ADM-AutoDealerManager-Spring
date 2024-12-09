@@ -34,6 +34,9 @@ const logout = () => {
     }).then((result) => {
         if (result.isConfirmed) {
             localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            localStorage.removeItem('role');
+            localStorage.removeItem('employeeId');
             window.location.href = '/client/index.html';
         }
     });

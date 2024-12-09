@@ -351,9 +351,25 @@ const saveCar = async()=>{
         console.log(car);
         console.log(response);
         car={};
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Auto registrado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          })
         await loadCards();
         form.reset();
-    }).catch(console.log);
+    }).catch(error => {
+        console.log(error);
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error al registrar auto',
+            showConfirmButton: false,
+            timer: 1500
+          })
+    });
 }
 
 //Funcion para cargar datos en modal de venta
@@ -435,8 +451,25 @@ const sellCar = async()=>{
     }).then(response => response.json()).then(async response => {
         console.log(response);
         car = {};
+        swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Auto vendido con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          })
         await loadCards();
-    }).catch(console.log);
+    }).catch(error => {
+        console.log(error);
+        swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error al vender auto',
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+    );
 }
 
 //Funcion para cargar los datos en el modal de actualizacion
@@ -484,9 +517,26 @@ const updateCar = async()=>{
     }).then(response => response.json()).then(async response => {
         console.log(response);
         car = {};
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Auto actualizado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          });
         await loadCards();
         form.reset();
-    }).catch(console.log);
+    }).catch(error => {
+        console.log(error);
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error al actualizar auto',
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+    );
 }
 
 //Funcion sweetalert para eliminar auto 

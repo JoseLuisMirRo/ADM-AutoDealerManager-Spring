@@ -397,6 +397,13 @@ const sellCar = async()=>{
     }).then(response => response.json()).then(async response => {
         console.log(response);
         car = {};
+        swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Auto vendido con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          })
         await loadCards();
     }).catch(console.log);
 }

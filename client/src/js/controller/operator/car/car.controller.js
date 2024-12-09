@@ -139,7 +139,6 @@ const createCarCard = car => {
                     </div>
                     <div class="d-flex justify-content-between">
                     <h4>${car.model}</h4>
-                    ${!car.onSale ? `<span class="badge-owner"><small>Propietario: ${car.customer.name} ${car.customer.surname} ${car.customer.lastname}</small></span>` : ``}	
                     </div>
                     <div class="row align-items-center">
                         <div class="col text-start m-3 ms-0">
@@ -240,7 +239,7 @@ document.getElementById('seeMore').addEventListener('show.bs.modal', event => {
             document.getElementById("saleHeader").style.display = "block";
             document.getElementById("saleDate").parentElement.style.display = "block";
 
-            document.getElementById("clientName").value = `${car.customer.name} ${car.customer.lastname} ${car.customer.surname}`;
+            document.getElementById("clientName").value = `${car.customer.name} ${car.customer.surname} ${car.customer.lastname}`;
             const services = car.services && car.services.length > 0 
                 ? car.services.map(service => service.name).join(", ")
                 : "No hay servicios seleccionados";

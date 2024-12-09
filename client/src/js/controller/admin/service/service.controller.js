@@ -164,7 +164,8 @@ const saveService = async () => {
                 title: "¡Éxito!",
                 text: "El servicio ha sido guardado correctamente.",
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                showConfirmButton:false,
+                timer:2000
             });
 
             // Limpiar el formulario
@@ -224,7 +225,11 @@ const updateService = async () => {
     icon: 'question',
     title: '¿Realizar operación?',
     showConfirmButton: true,
-    showCancelButton: true
+    confirmButtonColor:"#0d6efd",
+    confirmButtonText:"continuar",
+    showCancelButton: true,
+    cancelButtonColor:"#d33",
+    cancelButtonText: "cancelar"
 }).then(async (result) => {
     if (result.isConfirmed) {
         await fetch(`${URL}/adm/service/${service.id}`, {
@@ -248,7 +253,8 @@ const updateService = async () => {
                 title: "¡Actualización exitosa!",
                 text: "El empleado ha sido actualizado correctamente.",
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                showConfirmButton: false,
+                timer: 2000
             }).then(() => {
                 // Cerrar el modal después de que el usuario haga clic en "Aceptar"
                 const modal = document.getElementById('updateServiceModal');
@@ -272,10 +278,10 @@ const updateService = async () => {
 
 const confirmChangeStatusService = (id, status) => {
     Swal.fire({
-        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} el cliente?`,
+        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} el servicio?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0d6efd",
         cancelButtonColor: "#d33",
         confirmButtonText: `${status ? 'Deshabilitar' : 'Habilitar'}`,
         cancelButtonText: "Cancelar"
@@ -293,12 +299,13 @@ const confirmChangeStatusService = (id, status) => {
                     body: JSON.stringify({ id: id, status: !status })
                 });
                 if (response.ok) {
-                    // Mostrar confirmación de eliminación
-                    Swal.fire(
-                        `${status ? 'Deshabilitado' : 'Habilitado'}`,
-                        `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
-                        "success"
-                    );
+                    Swal.fire({
+                        title: `${status ? 'Deshabilitado' : 'Habilitado'}`,
+                        text: `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
+                        icon: "success",
+                        showConfirmButton: false,  // Esto desactiva el botón "OK"
+                        timer: 2000  // Opcional: se cerrará automáticamente después de 2 segundos
+                    });
                     // Recargar la tabla de clientes
                     await loadTable();
                 } else {

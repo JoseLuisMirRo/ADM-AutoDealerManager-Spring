@@ -409,12 +409,18 @@ const sellCar = async()=>{
                                 .map(option => option.value);
 
     car = {
-        id: document.getElementById('saleCarId').value,
+        id: document.getElementById('saleCarId')?.value || null,
         customer: {
-            id: document.getElementById('addCustomer').value
+            id: document.getElementById('addCustomer')?.value || null
         },
-        services: selectedServices.map(serviceId => ({id: parseInt(serviceId)})),
-        totalPrice: parseFloat(document.getElementById('totalPriceFieldAdd').value.replace(/[^0-9.-]+/g,""))
+        services: Array.isArray(selectedServices)
+            ? selectedServices
+                .filter(serviceId => !isNaN(parseInt(serviceId, 10))) // Filtra valores no numéricos
+                .map(serviceId => ({ id: parseInt(serviceId, 10) })) // Mapea solo los válidos
+            : [], // Si no es un array, usa un array vacío
+        totalPrice: parseFloat(
+            document.getElementById('totalPriceFieldAdd')?.value.replace(/[^0-9.-]+/g, "") || 0
+        )
     };
 
     console.log(car);

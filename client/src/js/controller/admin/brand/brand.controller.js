@@ -140,28 +140,65 @@ document.getElementById('custom-search-button').addEventListener('click', (event
 
     await loadTable();
 })();
-
-//Funcion para guardar marca 
+// Función para guardar marca
 const saveBrand = async () => {
     let form = document.getElementById('saveBrandForm');
-    brand = {
+    let brand = {
         name: document.getElementById('nameBrand').value
     };
 
-    await fetch(`${URL}/adm/brand`, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(brand)
-    }).then(response => response.json()).then(async response => {
-        brand = {};
-        await loadTable();
-        form.reset();
-    }).catch(console.log);
+    try {
+        // Realizar la solicitud POST para guardar la marca
+        const response = await fetch(`${URL}/adm/brand`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(brand)
+        });
+
+        if (response.ok) {
+            // Alerta de éxito al agregar la marca
+            Swal.fire({
+                title: "¡Éxito!",
+                text: "La marca ha sido agregada correctamente.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000 // Se cerrará automáticamente después de 2 segundos
+            });
+
+            // Recargar la tabla de marcas
+            await loadTable();
+
+            // Limpiar el formulario
+            form.reset();
+        } else {
+            // Alerta de error al agregar la marca
+            Swal.fire({
+                title: "Error",
+                text: "Hubo un problema al agregar la marca. Intenta nuevamente.",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 2000 // Se cerrará automáticamente después de 2 segundos
+            });
+        }
+    } catch (error) {
+        console.error('Error al agregar marca:', error);
+
+        // Alerta de error general en la solicitud
+        Swal.fire({
+            title: "Error",
+            text: "Hubo un problema al guardar la marca.",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2000 // Se cerrará automáticamente después de 2 segundos
+        });
+    }
 };
+
+
 
 //Funcion para cargar marca por id
 const findBrandById = async id => {
@@ -217,10 +254,10 @@ const updateBrand = async () => {
 //Funcion para cambiar estado de marca
 const confirmChangeStatusBrand = async (id, status) => {
     Swal.fire({
-        title: `¿Estás seguro de ${status ? 'desactivar' : 'activar'} la marca?`,
-        icon: 'warning',
+        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} la marca?`,
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0d6efd",
         cancelButtonColor: "#d33",
         confirmButtonText: `${status ? 'Deshabilitar' : 'Habilitar'}`,
         cancelButtonText: "Cancelar"
@@ -241,11 +278,13 @@ const confirmChangeStatusBrand = async (id, status) => {
                 });
 
                 if(response.ok){
-                    Swal.fire(
-                        `${status ? 'Deshabilitada' : 'Habilitada'}`,
-                        `La marca ha sido ${status ? 'deshabilitada' : 'habilitada'} correctamente`,
-                        'success'
-                    );
+                    Swal.fire({
+                        title: `${status ? 'Deshabilitado' : 'Habilitado'}`,
+                        text: `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
+                        icon: "success",
+                        showConfirmButton: false,  // Esto desactiva el botón "OK"
+                        timer: 2000  // Opcional: se cerrará automáticamente después de 2 segundos
+                    });
 
                     await loadTable();
                 }else{

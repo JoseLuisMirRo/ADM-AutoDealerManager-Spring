@@ -85,7 +85,8 @@ document.getElementById('saveCustomer').addEventListener('click', async () => {
                     title: "¡Éxito!",
                     text: "El cliente ha sido agregado correctamente.",
                     icon: "success",
-                    confirmButtonText: "Aceptar"
+                    showConfirmButton:false,
+                    timer:2000
                 });
 
                 // Recargar la tabla de clientes
@@ -330,10 +331,10 @@ document.getElementById('custom-search-button').addEventListener('click', (event
 // Función que muestra el SweetAlert2 para confirmar el cambio de estado del cliente -> Se puede implementar en los otros controladores
 const confirmChangeStatusCustomer = (id, status) => {
     Swal.fire({
-        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} el cliente?`,
+        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} al cliente?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0d6efd",
         cancelButtonColor: "#d33",
         confirmButtonText: `${status ? 'Deshabilitar' : 'Habilitar'}`,
         cancelButtonText: "Cancelar"
@@ -353,11 +354,13 @@ const confirmChangeStatusCustomer = (id, status) => {
 
                 if (response.ok) {
                     // Mostrar confirmación de eliminación
-                    Swal.fire(
-                        `${status ? 'Deshabilitado' : 'Habilitado'}`,
-                        `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
-                        "success"
-                    );
+                    Swal.fire({
+                        title: `${status ? 'Deshabilitado' : 'Habilitado'}`,
+                        text: `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
+                        icon: "success",
+                        showConfirmButton: false,  // Esto desactiva el botón "OK"
+                        timer: 2000  // Opcional: se cerrará automáticamente después de 2 segundos
+                    });
                     // Recargar la tabla de clientes
                     await loadCustomers();
                 } else {
@@ -428,7 +431,11 @@ const update = async () => {
         icon: 'question',
         title: '¿Realizar operación?',
         showConfirmButton: true,
-        showCancelButton: true
+        confirmButtonColor:"#0d6efd",
+        confirmButtonText:"continuar",
+        showCancelButton: true,
+        cancelButtonColor:"#d33",
+        cancelButtonText: "cancelar"
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
@@ -449,7 +456,9 @@ const update = async () => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Operación exitosa',
-                    text: 'La actualización se realizó de manera correcta'
+                    text: 'La actualización se realizó de manera correcta',
+                    showConfirmButton: false,
+                    timer: 2000
                 });
 
                 // Cierra el modal

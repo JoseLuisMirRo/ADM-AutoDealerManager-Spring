@@ -195,7 +195,8 @@ const saveEmployee = async () => {
                 title: "¡Éxito!",
                 text: "El empleado ha sido guardado correctamente.",
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                showConfirmButton:false,
+                timer:2000
             });
 
             // Limpiar el formulario y recargar la tabla
@@ -264,7 +265,11 @@ const updateEmployee = async () => {
         icon: 'question',
         title: '¿Realizar operación?',
         showConfirmButton: true,
-        showCancelButton: true
+        confirmButtonColor:"#0d6efd",
+        confirmButtonText:"continuar",
+        showCancelButton: true,
+        cancelButtonColor:"#d33",
+        cancelButtonText: "cancelar"
     }).then(async (result) => {
         if (result.isConfirmed) {
             await fetch(`${URL}/adm/employee`, {
@@ -287,7 +292,9 @@ const updateEmployee = async () => {
                     title: "¡Actualización exitosa!",
                     text: "El empleado ha sido actualizado correctamente.",
                     icon: "success",
-                    confirmButtonText: "Aceptar"
+                    confirmButtonText: "Aceptar",
+                    showConfirmButton: false,
+                    timer: 2000
                 }).then(() => {
                     // Cerrar el modal después de que el usuario haga clic en "Aceptar"
                     const modal = document.getElementById('updateEmployeeModal');
@@ -312,10 +319,10 @@ const updateEmployee = async () => {
 // Función para cambiar el estado de empleado con confirmación SweetAlert
 const confirmChangeStatusEmployee = (id, status) => {
     Swal.fire({
-        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} el cliente?`,
+        title: `¿Estás seguro de ${status ? 'deshabilitar' : 'habilitar'} al empleado?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0d6efd",
         cancelButtonColor: "#d33",
         confirmButtonText: `${status ? 'Deshabilitar' : 'Habilitar'}`,
         cancelButtonText: "Cancelar"
@@ -335,11 +342,13 @@ const confirmChangeStatusEmployee = (id, status) => {
 
                 if (response.ok) {
                     // Mostrar confirmación de eliminación
-                    Swal.fire(
-                        `${status ? 'Deshabilitado' : 'Habilitado'}`,
-                        `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
-                        "success"
-                    );
+                    Swal.fire({
+                        title: `${status ? 'Deshabilitado' : 'Habilitado'}`,
+                        text: `El cliente ha sido ${status ? 'deshabilitado' : 'habilitado'} correctamente.`,
+                        icon: "success",
+                        showConfirmButton: false,  // Esto desactiva el botón "OK"
+                        timer: 2000  // Opcional: se cerrará automáticamente después de 2 segundos
+                    });
                     // Recargar la tabla de clientes
                     await loadTable();
                 } else {
